@@ -1,0 +1,491 @@
+Analysis Run: 2025-03-25 13:30:50
+================================================================================
+
+=== Data Validation Results ===
+DEBUG: Processing check: distributions
+DEBUG: distributions completed successfully
+DEBUG: Processing check: group_sizes
+DEBUG: group_sizes completed successfully
+DEBUG: Processing check: multicollinearity
+DEBUG: multicollinearity completed successfully
+DEBUG: Processing check: stationarity
+DEBUG: stationarity completed successfully
+DEBUG: Processing check: heteroscedasticity
+DEBUG: heteroscedasticity completed successfully
+=== Data Validation Summary ===
+
+
+1. Distribution Summary:
+
+STATUS (numeric):
+  Mean: 3.55
+  Median: 4.00
+  Std: 1.58
+  Skewness: 0.72
+  Kurtosis: 0.21
+  Shapiro-Wilk p-value: 2.49e-59
+  D'Agostino p-value: 0.00e+00
+
+TOTIDE1 (numeric):
+  Mean: 10.23
+  Median: 10.00
+  Std: 1.55
+  Skewness: -1.00
+  Kurtosis: 1.24
+  Shapiro-Wilk p-value: 9.05e-51
+  D'Agostino p-value: 0.00e+00
+
+TOTIDE2 (numeric):
+  Mean: 10.05
+  Median: 10.00
+  Std: 1.61
+  Skewness: -1.05
+  Kurtosis: 1.75
+  Shapiro-Wilk p-value: 7.30e-50
+  D'Agostino p-value: 0.00e+00
+
+NERVES (numeric):
+  Mean: 1.58
+  Median: 0.00
+  Std: 6.33
+  Skewness: 6.34
+  Kurtosis: 46.36
+  Shapiro-Wilk p-value: 7.65e-89
+  D'Agostino p-value: 0.00e+00
+
+SAD (numeric):
+  Mean: 1.48
+  Median: 1.00
+  Std: 0.74
+  Skewness: 1.55
+  Kurtosis: 1.97
+  Shapiro-Wilk p-value: 3.54e-70
+  D'Agostino p-value: 0.00e+00
+
+FEARFULA (numeric):
+  Mean: 1.22
+  Median: 1.00
+  Std: 0.59
+  Skewness: 3.62
+  Kurtosis: 15.67
+  Shapiro-Wilk p-value: 1.39e-83
+  D'Agostino p-value: 0.00e+00
+
+HOTFLAS (numeric):
+  Mean: 1.84
+  Median: 1.00
+  Std: 1.23
+  Skewness: 1.55
+  Kurtosis: 1.30
+  Shapiro-Wilk p-value: 6.84e-76
+  D'Agostino p-value: 0.00e+00
+
+NUMHOTF (numeric):
+  Mean: 2.90
+  Median: 2.00
+  Std: 2.69
+  Skewness: 4.62
+  Kurtosis: 40.99
+  Shapiro-Wilk p-value: 1.64e-73
+  D'Agostino p-value: 0.00e+00
+
+BOTHOTF (numeric):
+  Mean: 2.37
+  Median: 2.00
+  Std: 0.74
+  Skewness: 0.22
+  Kurtosis: -0.20
+  Shapiro-Wilk p-value: 1.58e-57
+  D'Agostino p-value: 6.64e-37
+
+NITESWE (numeric):
+  Mean: 1.59
+  Median: 1.00
+  Std: 1.02
+  Skewness: 2.07
+  Kurtosis: 3.79
+  Shapiro-Wilk p-value: 7.75e-77
+  D'Agostino p-value: 0.00e+00
+
+NUMNITS (numeric):
+  Mean: 1.74
+  Median: 1.00
+  Std: 1.34
+  Skewness: 5.94
+  Kurtosis: 64.89
+  Shapiro-Wilk p-value: 8.34e-78
+  D'Agostino p-value: 0.00e+00
+
+BOTNITS (numeric):
+  Mean: 2.45
+  Median: 2.00
+  Std: 0.77
+  Skewness: 0.15
+  Kurtosis: -0.35
+  Shapiro-Wilk p-value: 2.79e-56
+  D'Agostino p-value: 1.54e-33
+
+COLDSWE (numeric):
+  Mean: 1.18
+  Median: 1.00
+  Std: 0.62
+  Skewness: 4.39
+  Kurtosis: 21.15
+  Shapiro-Wilk p-value: 1.35e-87
+  D'Agostino p-value: 0.00e+00
+
+NUMCLDS (numeric):
+  Mean: 2.08
+  Median: 2.00
+  Std: 1.84
+  Skewness: 3.56
+  Kurtosis: 17.41
+  Shapiro-Wilk p-value: 1.53e-75
+  D'Agostino p-value: 0.00e+00
+
+BOTCLDS (numeric):
+  Mean: 2.42
+  Median: 2.00
+  Std: 0.80
+  Skewness: 0.24
+  Kurtosis: -0.40
+  Shapiro-Wilk p-value: 2.38e-55
+  D'Agostino p-value: 1.22e-24
+
+STIFF (numeric):
+  Mean: 2.54
+  Median: 2.00
+  Std: 1.44
+  Skewness: 0.73
+  Kurtosis: -0.89
+  Shapiro-Wilk p-value: 9.18e-63
+  D'Agostino p-value: 0.00e+00
+
+IRRITAB (numeric):
+  Mean: 1.83
+  Median: 2.00
+  Std: 0.83
+  Skewness: 1.49
+  Kurtosis: 3.30
+  Shapiro-Wilk p-value: 1.45e-65
+  D'Agostino p-value: 0.00e+00
+
+MOODCHG (numeric):
+  Mean: 1.56
+  Median: 1.00
+  Std: 0.82
+  Skewness: 1.90
+  Kurtosis: 4.31
+  Shapiro-Wilk p-value: 2.67e-69
+  D'Agostino p-value: 0.00e+00
+
+LANGCOG (numeric):
+  Mean: 1.22
+  Median: 1.00
+  Std: 0.71
+  Skewness: 3.19
+  Kurtosis: 8.68
+  Shapiro-Wilk p-value: 1.79e-86
+  D'Agostino p-value: 0.00e+00
+
+LISTEN (numeric):
+  Mean: 4.34
+  Median: 5.00
+  Std: 0.80
+  Skewness: -1.28
+  Kurtosis: 1.66
+  Shapiro-Wilk p-value: 7.24e-64
+  D'Agostino p-value: 0.00e+00
+
+TAKETOM (numeric):
+  Mean: 4.34
+  Median: 5.00
+  Std: 0.94
+  Skewness: -1.63
+  Kurtosis: 2.41
+  Shapiro-Wilk p-value: 2.03e-67
+  D'Agostino p-value: 0.00e+00
+
+HELPSIC (numeric):
+  Mean: 3.89
+  Median: 4.00
+  Std: 1.14
+  Skewness: -0.82
+  Kurtosis: -0.17
+  Shapiro-Wilk p-value: 2.20e-55
+  D'Agostino p-value: 0.00e+00
+
+CONFIDE (numeric):
+  Mean: 4.31
+  Median: 5.00
+  Std: 0.85
+  Skewness: -1.31
+  Kurtosis: 1.69
+  Shapiro-Wilk p-value: 5.48e-64
+  D'Agostino p-value: 0.00e+00
+
+EMOCTDW (numeric):
+  Mean: 1.14
+  Median: 1.00
+  Std: 0.35
+  Skewness: 2.09
+  Kurtosis: 2.35
+  Shapiro-Wilk p-value: 8.31e-83
+  D'Agostino p-value: 0.00e+00
+
+EMOACCO (numeric):
+  Mean: 1.23
+  Median: 1.00
+  Std: 0.42
+  Skewness: 1.25
+  Kurtosis: -0.43
+  Shapiro-Wilk p-value: 5.24e-78
+  D'Agostino p-value: 0.00e+00
+
+EMOCARE (numeric):
+  Mean: 1.15
+  Median: 1.00
+  Std: 0.36
+  Skewness: 1.95
+  Kurtosis: 1.81
+  Shapiro-Wilk p-value: 4.98e-82
+  D'Agostino p-value: 0.00e+00
+
+INTERFR (numeric):
+  Mean: 1.63
+  Median: 1.00
+  Std: 0.91
+  Skewness: 1.47
+  Kurtosis: 1.59
+  Shapiro-Wilk p-value: 6.86e-66
+  D'Agostino p-value: 0.00e+00
+
+SOCIAL (numeric):
+  Mean: 1.72
+  Median: 1.00
+  Std: 0.99
+  Skewness: 1.37
+  Kurtosis: 1.27
+  Shapiro-Wilk p-value: 1.68e-65
+  D'Agostino p-value: 0.00e+00
+
+INCOME (numeric):
+  Mean: 2.84
+  Median: 3.00
+  Std: 0.96
+  Skewness: -0.29
+  Kurtosis: -0.96
+  Shapiro-Wilk p-value: 7.71e-53
+  D'Agostino p-value: 0.00e+00
+
+HOW_HAR (numeric):
+  Mean: 2.68
+  Median: 3.00
+  Std: 0.55
+  Skewness: -1.54
+  Kurtosis: 1.42
+  Shapiro-Wilk p-value: 1.10e-75
+  D'Agostino p-value: 0.00e+00
+
+BCINCML (numeric):
+  Mean: 1.20
+  Median: 1.00
+  Std: 0.40
+  Skewness: 1.51
+  Kurtosis: 0.28
+  Shapiro-Wilk p-value: 3.55e-80
+  D'Agostino p-value: 0.00e+00
+
+DEGREE (numeric):
+  Mean: 3.50
+  Median: 3.00
+  Std: 1.15
+  Skewness: -0.20
+  Kurtosis: -0.86
+  Shapiro-Wilk p-value: 2.13e-50
+  D'Agostino p-value: 0.00e+00
+
+2. Group Size Analysis:
+
+STATUS:
+  Min group size: 3
+  Max group size: 8576
+  Max/Min ratio: 2858.67
+  Balance status: Imbalanced
+
+  Group counts:
+    4.0: 8576
+    2.0: 7890
+    5.0: 2840
+    3.0: 1864
+    7.0: 1646
+    1.0: 793
+    8.0: 389
+    6.0: 3
+
+INCOME:
+  Min group size: 1978
+  Max group size: 7044
+  Max/Min ratio: 3.56
+  Balance status: Imbalanced
+
+  Group counts:
+    3.0: 7044
+    4.0: 6504
+    2.0: 6070
+    1.0: 1978
+
+DEGREE:
+  Min group size: 97
+  Max group size: 7160
+  Max/Min ratio: 73.81
+  Balance status: Imbalanced
+
+  Group counts:
+    3: 7160
+    5: 5635
+    4: 4786
+    2: 3399
+    1: 897
+    3: 604
+    4: 549
+    5: 504
+    2: 311
+     : 139
+    1: 97
+
+3. Stationarity Test Results:
+STATUS: ADF p-value = 4.8780e-07, KPSS p-value = 1.0000e-02
+TOTIDE1: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-02
+TOTIDE2: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-02
+NERVES: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-01
+SAD: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-02
+FEARFULA: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-01
+HOTFLAS: ADF p-value = 3.8992e-25, KPSS p-value = 1.0000e-02
+NUMHOTF: ADF p-value = 0.0000e+00, KPSS p-value = 7.4347e-02
+BOTHOTF: ADF p-value = 0.0000e+00, KPSS p-value = 6.0429e-02
+NITESWE: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-02
+NUMNITS: ADF p-value = 1.1160e-29, KPSS p-value = 1.0000e-01
+BOTNITS: ADF p-value = 2.0253e-30, KPSS p-value = 1.0000e-01
+COLDSWE: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-02
+NUMCLDS: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-01
+BOTCLDS: ADF p-value = 2.2503e-28, KPSS p-value = 1.0000e-01
+STIFF: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-02
+IRRITAB: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-02
+MOODCHG: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-02
+LANGCOG: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-01
+LISTEN: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-02
+TAKETOM: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-02
+HELPSIC: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-02
+CONFIDE: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-02
+EMOCTDW: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-02
+EMOACCO: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-02
+EMOCARE: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-02
+INTERFR: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-02
+SOCIAL: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-02
+INCOME: ADF p-value = 1.5714e-28, KPSS p-value = 1.0000e-02
+HOW_HAR: ADF p-value = 0.0000e+00, KPSS p-value = 8.0035e-02
+BCINCML: ADF p-value = 0.0000e+00, KPSS p-value = 5.4907e-02
+DEGREE: ADF p-value = 0.0000e+00, KPSS p-value = 1.0000e-01
+
+4. Heteroscedasticity Test Results:
+STATUS: ARCH LM p-value = 2.7651e-08, F-test p-value = 2.7089e-08
+TOTIDE1: ARCH LM p-value = 5.5239e-15, F-test p-value = 5.1766e-15
+TOTIDE2: ARCH LM p-value = 4.0897e-12, F-test p-value = 3.9171e-12
+NERVES: ARCH LM p-value = 2.2550e-03, F-test p-value = 2.2440e-03
+SAD: ARCH LM p-value = 3.6387e-01, F-test p-value = 3.6393e-01
+FEARFULA: ARCH LM p-value = 1.4551e-03, F-test p-value = 1.4503e-03
+HOTFLAS: ARCH LM p-value = 2.6014e-22, F-test p-value = 2.2585e-22
+NUMHOTF: ARCH LM p-value = 4.2314e-02, F-test p-value = 4.2279e-02
+BOTHOTF: ARCH LM p-value = 6.3052e-06, F-test p-value = 6.2150e-06
+NITESWE: ARCH LM p-value = 2.7867e-04, F-test p-value = 2.7725e-04
+NUMNITS: ARCH LM p-value = 7.6584e-01, F-test p-value = 7.6601e-01
+BOTNITS: ARCH LM p-value = 2.5666e-05, F-test p-value = 2.5302e-05
+COLDSWE: ARCH LM p-value = 2.5861e-01, F-test p-value = 2.5863e-01
+NUMCLDS: ARCH LM p-value = 1.2449e-02, F-test p-value = 1.2374e-02
+BOTCLDS: ARCH LM p-value = 6.8471e-02, F-test p-value = 6.8365e-02
+STIFF: ARCH LM p-value = 3.0154e-06, F-test p-value = 2.9803e-06
+IRRITAB: ARCH LM p-value = 2.7669e-02, F-test p-value = 2.7645e-02
+MOODCHG: ARCH LM p-value = 9.1762e-01, F-test p-value = 9.1767e-01
+LANGCOG: ARCH LM p-value = 6.6488e-04, F-test p-value = 6.5850e-04
+LISTEN: ARCH LM p-value = 8.4846e-01, F-test p-value = 8.4855e-01
+TAKETOM: ARCH LM p-value = 2.9667e-02, F-test p-value = 2.9638e-02
+HELPSIC: ARCH LM p-value = 7.8723e-01, F-test p-value = 7.8734e-01
+CONFIDE: ARCH LM p-value = 1.7709e-01, F-test p-value = 1.7710e-01
+EMOCTDW: ARCH LM p-value = 3.4737e-02, F-test p-value = 3.4698e-02
+EMOACCO: ARCH LM p-value = 5.5983e-02, F-test p-value = 5.5942e-02
+EMOCARE: ARCH LM p-value = 1.4922e-01, F-test p-value = 1.4921e-01
+INTERFR: ARCH LM p-value = 4.4564e-02, F-test p-value = 4.4523e-02
+SOCIAL: ARCH LM p-value = 6.7138e-01, F-test p-value = 6.7154e-01
+INCOME: ARCH LM p-value = 1.1196e-10, F-test p-value = 1.0782e-10
+HOW_HAR: ARCH LM p-value = 4.8385e-11, F-test p-value = 4.6669e-11
+BCINCML: ARCH LM p-value = 9.8720e-03, F-test p-value = 9.8503e-03
+DEGREE: ARCH LM p-value = 1.5058e-08, F-test p-value = 1.4731e-08
+
+5. Multicollinearity Analysis:
+  Correlation matrix analysis:
+  High correlations detected:
+  High correlation between TOTIDE1 and TOTIDE2: 0.80
+  High correlation between LISTEN and CONFIDE: 0.82
+
+  Variance Inflation Factors (VIF):
+    TOTIDE1: 77.29808950383313
+    LISTEN: 66.65074840630712
+    TOTIDE2: 64.3867419720728
+    CONFIDE: 63.48571526045351
+    TAKETOM: 39.29494097831
+    BOTNITS: 25.441750643766497
+    BOTHOTF: 23.985893376148756
+    EMOCTDW: 22.87409499380688
+    EMOACCO: 22.628659676963412
+    HOW_HAR: 22.139585594053294
+    EMOCARE: 19.721598524944657
+    BOTCLDS: 17.378820479818202
+    HELPSIC: 17.194414342982665
+    DEGREE: 11.468414238889343
+    BCINCML: 10.892601068812953
+    IRRITAB: 10.407959036210752
+    HOTFLAS: 10.194072107514165
+    MOODCHG: 9.868472225576156
+    INCOME: 9.50897301232979
+    INTERFR: 9.477916462969022
+    NITESWE: 9.319728959488407
+    LANGCOG: 8.99178832608671
+    SOCIAL: 8.657222937440721
+    SAD: 7.061551806956514
+    FEARFULA: 6.621322781075912
+    STIFF: 5.940102813103
+    COLDSWE: 4.830413932288059
+    NUMNITS: 4.620576734022311
+    STATUS: 4.464639197643512
+    NUMCLDS: 4.30976025169594
+    NUMHOTF: 3.620731644664012
+    NERVES: 1.2166364266924923
+
+  Variables with high VIF (>5):
+    TOTIDE1
+    LISTEN
+    TOTIDE2
+    CONFIDE
+    TAKETOM
+    BOTNITS
+    BOTHOTF
+    EMOCTDW
+    EMOACCO
+    HOW_HAR
+    EMOCARE
+    BOTCLDS
+    HELPSIC
+    DEGREE
+    BCINCML
+    IRRITAB
+    HOTFLAS
+    MOODCHG
+    INCOME
+    INTERFR
+    NITESWE
+    LANGCOG
+    SOCIAL
+    SAD
+    FEARFULA
+    STIFF
