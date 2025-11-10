@@ -31,7 +31,8 @@ class MenopauseCognitionAnalysis:
             'STIFF': 'Stiffness',
             'IRRITAB': 'Irritability',
             'MOODCHG': 'Mood Changes',
-            'TOTIDE_avg': 'Total IDE Score (averaged)',
+            'TOTIDE1': 'Cognitive Performance (Immediate Recall)',
+            'TOTIDE2': 'Cognitive Performance (Delayed Recall)',
             'NERVES': 'Nervousness Score',
             'SAD': 'Sadness Score',
             'FEARFULA': 'Fearfulness Score',
@@ -114,17 +115,14 @@ class MenopauseCognitionAnalysis:
             if var in self.data.columns:
                 self.transformed_symptom_vars.append(var)
         
-        # Create TOTIDE average
-        if 'TOTIDE1' in self.data.columns and 'TOTIDE2' in self.data.columns:
-            self.data['TOTIDE_avg'] = (self.data['TOTIDE1'] + self.data['TOTIDE2']) / 2
-            self.var_labels['TOTIDE_avg'] = 'Total IDE Score (averaged)'
-        
-        # Apply transformations to other cognitive variables
+        # Use TOTIDE1 and TOTIDE2 separately instead of averaging
         self.transformed_outcome_vars = []
-        
-        # Add TOTIDE_avg to transformed outcomes
-        if 'TOTIDE_avg' in self.data.columns:
-            self.transformed_outcome_vars.append('TOTIDE_avg')
+
+        # Add TOTIDE1 and TOTIDE2 to transformed outcomes
+        if 'TOTIDE1' in self.data.columns:
+            self.transformed_outcome_vars.append('TOTIDE1')
+        if 'TOTIDE2' in self.data.columns:
+            self.transformed_outcome_vars.append('TOTIDE2')
 
     def run_mixed_models(self):
         """

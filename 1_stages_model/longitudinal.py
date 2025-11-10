@@ -29,14 +29,12 @@ class MenopauseCognitionAnalysis:
         # Log transformation for heavily skewed variables
         self.data['NERVES_log'] = np.log1p(self.data['NERVES'])  # log(x+1)
 
-        # Average for TOTIDE to reduce multicollinearity
-        self.data['TOTIDE_avg'] = (self.data['TOTIDE1'] + self.data['TOTIDE2']) / 2
-        
         # Square root for moderately skewed variables
         self.data['SAD_sqrt'] = np.sqrt(self.data['SAD'])
         self.data['FEARFULA_sqrt'] = np.sqrt(self.data['FEARFULA'])
 
-        self.outcome_vars = ['TOTIDE_avg', 'NERVES_log', 'SAD_sqrt', 'FEARFULA_sqrt']
+        # Use TOTIDE1 and TOTIDE2 separately instead of averaging
+        self.outcome_vars = ['TOTIDE1', 'TOTIDE2', 'NERVES_log', 'SAD_sqrt', 'FEARFULA_sqrt']
 
         # Make langauge categorical
         self.data['LANGCOG'] = self.data['LANGCOG'].astype('category')
@@ -233,17 +231,18 @@ class MenopauseCognitionAnalysis:
         
         # Set up nice labels for the measures
         measure_labels = {
-            'TOTIDE_avg': 'Cognitive Performance',
+            'TOTIDE1': 'Cognitive Performance (Immediate Recall)',
+            'TOTIDE2': 'Cognitive Performance (Delayed Recall)',
             'NERVES_log': 'Nervousness',
-            'SAD_sqrt': 'Sadness', 
+            'SAD_sqrt': 'Sadness',
             'FEARFULA_sqrt': 'Fearfulness'
         }
-        
+
         # Define the status effects we want to plot
         status_effects = ['Early Peri', 'Late Peri', 'Post-menopause', 'Surgical']
-        
-        # Create the figure
-        fig, axes = plt.subplots(4, 1, figsize=(14, 20), sharex=False)  # sharex=False to allow different x scales
+
+        # Create the figure with 5 subplots (TOTIDE1, TOTIDE2, NERVES, SAD, FEARFULA)
+        fig, axes = plt.subplots(5, 1, figsize=(14, 24), sharex=False)  # sharex=False to allow different x scales
         axes = axes.flatten()
         
         # Import the palette and select distinct colors

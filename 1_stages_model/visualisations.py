@@ -16,9 +16,10 @@ class MenopauseVisualisations:
     def __init__(self, data):
         self.data = data
         self.outcome_vars = ['TOTIDE1', 'TOTIDE2', 'NERVES', 'SAD', 'FEARFULA']
-        self.transformed_vars = ['TOTIDE_avg', 'NERVES_log', 'SAD_sqrt', 'FEARFULA_sqrt']
+        self.transformed_vars = ['TOTIDE1', 'TOTIDE2', 'NERVES_log', 'SAD_sqrt', 'FEARFULA_sqrt']
         self.var_labels = {
-            'TOTIDE_avg': 'Cognitive Performance',
+            'TOTIDE1': 'Cognitive Performance (Immediate Recall)',
+            'TOTIDE2': 'Cognitive Performance (Delayed Recall)',
             'NERVES_log': 'Nervousness (Log)',
             'SAD_sqrt': 'Sadness (Sqrt)',
             'FEARFULA_sqrt': 'Fearfulness (Sqrt)'
@@ -31,8 +32,8 @@ class MenopauseVisualisations:
         Create violin plots for each symptom and outcome measure across menopausal stages.
         Uses orange-scale themed colors and improves data point visualization.
         """
-        # Create a figure with subplots for outcome variables
-        fig, axes = plt.subplots(2, 2, figsize=(16, 14))
+        # Create a figure with subplots for outcome variables (5 measures now)
+        fig, axes = plt.subplots(3, 2, figsize=(16, 20))
         axes = axes.flatten()
         
         # Define a green color palette
@@ -105,13 +106,16 @@ class MenopauseVisualisations:
                 fontsize=8
             )
         
+        # Hide the last (6th) subplot since we only have 5 measures
+        axes[5].set_visible(False)
+
         # Add an overall title
         fig.suptitle(
-            'Distribution of Cognitive and Emotional Measures Across Menopausal Stages', 
-            fontsize=16, 
+            'Distribution of Cognitive and Emotional Measures Across Menopausal Stages',
+            fontsize=16,
             y=0.98
         )
-        
+
         # Adjust spacing
         plt.tight_layout(rect=[0, 0, 1, 0.96])
         plt.savefig(os.path.join(self.output_dir, 'outcome_violin_plots.png'), dpi=300)
@@ -154,8 +158,8 @@ class MenopauseVisualisations:
             Count=('Score', 'count')
         ).reset_index()
         
-        # Create figure with subplots
-        fig, axes = plt.subplots(4, 1, figsize=(14, 18), sharex=True)
+        # Create figure with subplots (5 measures now)
+        fig, axes = plt.subplots(5, 1, figsize=(14, 22), sharex=True)
         axes = axes.flatten()
         
         # Define green color for lines
