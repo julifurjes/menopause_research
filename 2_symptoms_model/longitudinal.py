@@ -18,7 +18,7 @@ from utils.save_output import OutputCapture, get_output_dir
 class MenopauseCognitionAnalysis:
     def __init__(self, file_path):
         self.data = pd.read_csv(file_path, low_memory=False)
-        self.symptom_vars = ['NUMHOTF', 'NUMNITS', 'NUMCLDS', 'STIFF', 'IRRITAB', 'MOODCHG']
+        self.symptom_vars = ['NUMHOTF', 'NUMNITS', 'NUMCLDS', 'STIFF', 'IRRITAB', 'MOODCHG', 'SLEEPQL']
         self.outcome_vars = ['TOTIDE1', 'TOTIDE2', 'NERVES', 'SAD', 'FEARFULA']
         self.transformed_symptom_vars = []  # Will be populated after transformations
         self.transformed_outcome_vars = []  # Will be populated after transformations
@@ -31,6 +31,7 @@ class MenopauseCognitionAnalysis:
             'STIFF': 'Stiffness',
             'IRRITAB': 'Irritability',
             'MOODCHG': 'Mood Changes',
+            'SLEEPQL': 'Sleep Quality',
             'TOTIDE1': 'Cognitive Performance (Immediate Recall)',
             'TOTIDE2': 'Cognitive Performance (Delayed Recall)',
             'NERVES': 'Nervousness Score',
@@ -91,7 +92,7 @@ class MenopauseCognitionAnalysis:
         log_transform_vars = ['NERVES', 'NUMHOTF', 'NUMNITS', 'NUMCLDS']
 
         # Variables needing sqrt transformation (moderately skewed)
-        sqrt_transform_vars = ['FEARFULA', 'SAD', 'MOODCHG', 'IRRITAB']
+        sqrt_transform_vars = ['FEARFULA', 'SAD', 'MOODCHG', 'IRRITAB', 'SLEEPQL']
 
         # Variables to keep as-is (low skewness)
         no_transform_vars = ['STIFF']
