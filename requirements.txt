@@ -7,3 +7,9 @@ statsmodels
 semopy
 imblearn
 pingouin
+pyampute
+networkx
+scipy
+scikit-learn
+matplotlib
+numpy

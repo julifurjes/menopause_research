@@ -62,46 +62,46 @@ project-folder/
 
 ## Running the Analysis
 
+**IMPORTANT**: All scripts must be run from the main project directory. Do NOT navigate into subdirectories before running scripts, as this will cause import errors.
+
 ### Step 1: Data Processing
 
-The analysis requires specific data preparation steps that must be completed in order. Navigate to: the preparations folder:
-
-```bash
-cd preparations
-```
-
-Run these two scripts in the exact same order:
+The analysis requires specific data preparation steps that must be completed in order. Run these scripts from the main directory:
 
 ```bash
 # First: Create the main data structure
-python create_dataframe.py
+python preparations/create_dataframe.py
 
 # Second: Handle missing data
-python impute_data.py
+python preparations/impute_data.py
 ```
 
 ### Step 2: Optional Data Description
 
-After preparing your data, you can run additional analysis:
+After preparing your data, you can run additional analysis (from the main directory):
 
 ```bash
 # Descriptive statistics
-python data_desc.py
+python preparations/data_desc.py
 
 # Validate data quality
-python run_data_validation.py
+python preparations/run_data_validation.py
 ```
 
 ### Step 3: Running the Models
 
-The project includes three different modeling approaches. Each model is in its own folder and can be run separately:
+The project includes three different modeling approaches. Each model can be run from the main directory:
 
 ```bash
-cd [model-folder-name]
-python longitudinal.py
-```
+# Model 1: Stages model
+python 1_stages_model/longitudinal.py
 
-Repeat this process for each of the three model folders to complete the full analysis.
+# Model 2: Symptoms model
+python 2_symptoms_model/longitudinal.py
+
+# Model 3: Social model
+python 3_social_model/longitudinal.py
+```
 
 ## AI Declaration
 

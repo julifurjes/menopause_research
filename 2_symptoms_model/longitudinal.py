@@ -16,7 +16,7 @@ if project_root not in sys.path:
 from utils.save_output import OutputCapture, get_output_dir
 
 class MenopauseCognitionAnalysis:
-    def __init__(self, file_path):
+    def __init__(self, file_path, use_langcog=True):
         self.data = pd.read_csv(file_path, low_memory=False)
         self.symptom_vars = ['NUMHOTF', 'NUMNITS', 'NUMCLDS', 'STIFF', 'IRRITAB', 'MOODCHG', 'SLEEPQL']
         self.outcome_vars = ['TOTIDE1', 'TOTIDE2', 'NERVES', 'SAD', 'FEARFULA']
@@ -24,6 +24,7 @@ class MenopauseCognitionAnalysis:
         self.transformed_outcome_vars = []  # Will be populated after transformations
         self.control_vars = ['STATUS', 'AGE', 'AGE_BASELINE']
         self.mixed_model_results = {}
+        self.use_langcog = use_langcog
         self.var_labels = {
             'NUMHOTF': 'Number of Hot Flashes',
             'NUMNITS': 'Number of Night Sweats',
@@ -81,8 +82,9 @@ class MenopauseCognitionAnalysis:
         self.data[self.symptom_vars] = (self.data[self.symptom_vars] -
                                        self.data[self.symptom_vars].mean()) / self.data[self.symptom_vars].std()
 
-        # Make langauge categorical
-        self.data['LANGCOG'] = self.data['LANGCOG'].astype('category')
+        # Make language categorical if using it
+        if self.use_langcog and 'LANGCOG' in self.data.columns:
+            self.data['LANGCOG'] = self.data['LANGCOG'].astype('category')
 
         self.transform_variables()
     
@@ -133,9 +135,10 @@ class MenopauseCognitionAnalysis:
         """
         print("\nRunning linear mixed-effects models with transformed variables...")
 
-        # Get the reference language for the model (the most common one)
-        reference_language = self.data['LANGCOG'].mode()[0]
-        
+        # Get the reference language for the model (the most common one) if using LANGCOG
+        if self.use_langcog and 'LANGCOG' in self.data.columns:
+            reference_language = self.data['LANGCOG'].mode()[0]
+
         # Loop through all transformed outcome variables
         for transformed_outcome in self.transformed_outcome_vars:
             print(f"Analyzing models for {self.var_labels.get(transformed_outcome, transformed_outcome)}")
@@ -152,13 +155,19 @@ class MenopauseCognitionAnalysis:
             
             # Loop through each symptom
             for symptom in self.symptom_vars:
-                # Create formula with status, symptom, baseline age, and VISIT
-                formula = (f"{transformed_outcome} ~ {symptom} + C(STATUS_Label, Treatment('Pre-menopause')) + "
-                          f"AGE_BASELINE + VISIT + C(LANGCOG, Treatment({reference_language}))")
-                
+                # Create formula with status, symptom, baseline age, VISIT, and optionally LANGCOG
+                if self.use_langcog and 'LANGCOG' in self.data.columns:
+                    formula = (f"{transformed_outcome} ~ {symptom} + C(STATUS_Label, Treatment('Pre-menopause')) + "
+                              f"AGE_BASELINE + VISIT + C(LANGCOG, Treatment({reference_language}))")
+                    required_cols = [transformed_outcome, symptom, 'STATUS_Label', 'AGE_BASELINE', 'VISIT', 'LANGCOG']
+                else:
+                    formula = (f"{transformed_outcome} ~ {symptom} + C(STATUS_Label, Treatment('Pre-menopause')) + "
+                              f"AGE_BASELINE + VISIT")
+                    required_cols = [transformed_outcome, symptom, 'STATUS_Label', 'AGE_BASELINE', 'VISIT']
+
                 try:
                     # Drop rows with missing values for the current variables
-                    analysis_data = self.data.dropna(subset=[transformed_outcome, symptom, 'STATUS_Label', 'AGE_BASELINE', 'VISIT', 'LANGCOG'])
+                    analysis_data = self.data.dropna(subset=required_cols)
                     
                     # Reset index to avoid potential index issues
                     analysis_data = analysis_data.reset_index(drop=True)
@@ -868,5 +877,6 @@ class MenopauseCognitionAnalysis:
 
 if __name__ == "__main__":
     file_path = "processed_combined_data.csv"
-    analysis = MenopauseCognitionAnalysis(file_path)
+    # Set use_langcog=True to include language as a covariate, or False to exclude it
+    analysis = MenopauseCognitionAnalysis(file_path, use_langcog=True)
     analysis.run_complete_analysis()

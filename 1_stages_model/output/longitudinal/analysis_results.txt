@@ -1,40 +1,72 @@
-Analysis Run: 2025-05-26 15:58:52
+Analysis Run: 2025-11-17 11:52:55
 ================================================================================
 
 
 Running linear mixed-effects models...
 
-Mixed Model Results for TOTIDE_avg
+Mixed Model Results for TOTIDE1
 ==================================================
                                   Mixed Linear Model Regression Results
 =========================================================================================================
-Model:                            MixedLM                 Dependent Variable:                 TOTIDE_avg 
+Model:                            MixedLM                 Dependent Variable:                 TOTIDE1    
 No. Observations:                 9434                    Method:                             REML       
-No. Groups:                       2297                    Scale:                              1.6414     
-Min. group size:                  1                       Log-Likelihood:                     -17256.0879
+No. Groups:                       2297                    Scale:                              1.9532     
+Min. group size:                  1                       Log-Likelihood:                     -17871.9378
 Max. group size:                  5                       Converged:                          Yes        
 Mean group size:                  4.1                                                                    
 ---------------------------------------------------------------------------------------------------------
                                                               Coef.  Std.Err.    z    P>|z| [0.025 0.975]
 ---------------------------------------------------------------------------------------------------------
-Intercept                                                      9.772    0.469  20.845 0.000  8.853 10.691
-C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]       -0.395    0.136  -2.906 0.004 -0.662 -0.129
-C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]     -0.126    0.104  -1.206 0.228 -0.330  0.079
-C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]      -0.077    0.113  -0.677 0.498 -0.298  0.145
-C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause] -0.172    0.112  -1.528 0.126 -0.392  0.048
-C(LANGCOG, Treatment(1.0))[T.2.0]                             -2.242    0.194 -11.572 0.000 -2.622 -1.862
-C(LANGCOG, Treatment(1.0))[T.3.0]                             -0.501    0.122  -4.098 0.000 -0.741 -0.261
-C(LANGCOG, Treatment(1.0))[T.4.0]                             -0.266    0.124  -2.149 0.032 -0.509 -0.023
-VISIT                                                          0.038    0.012   3.214 0.001  0.015  0.061
-AGE                                                            0.006    0.010   0.643 0.520 -0.013  0.026
-Group Var                                                      1.531    0.182                            
-Group x VISIT Cov                                             -0.060    0.021                            
+Intercept                                                      9.774    0.477  20.483 0.000  8.839 10.710
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]       -0.375    0.142  -2.638 0.008 -0.653 -0.096
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]     -0.148    0.111  -1.339 0.181 -0.366  0.069
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]      -0.076    0.120  -0.633 0.527 -0.312  0.160
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause] -0.186    0.119  -1.566 0.117 -0.419  0.047
+C(LANGCOG, Treatment(1.0))[T.2.0]                             -2.294    0.201 -11.403 0.000 -2.688 -1.900
+C(LANGCOG, Treatment(1.0))[T.3.0]                             -0.531    0.124  -4.278 0.000 -0.775 -0.288
+C(LANGCOG, Treatment(1.0))[T.4.0]                             -0.321    0.124  -2.580 0.010 -0.564 -0.077
+VISIT                                                          0.040    0.009   4.436 0.000  0.022  0.057
+AGE_BASELINE                                                   0.009    0.010   0.927 0.354 -0.011  0.029
+Group Var                                                      1.420    0.188                            
+Group x VISIT Cov                                             -0.058    0.022                            
 VISIT Var                                                      0.007    0.003                            
 =========================================================================================================
 
 
-Approximate Marginal R² (fixed effects): 0.0221
-Approximate Conditional R² (fixed + random): 0.4940
+Approximate Marginal R² (fixed effects): 0.0215
+Approximate Conditional R² (fixed + random): 0.4334
+
+Mixed Model Results for TOTIDE2
+==================================================
+                                  Mixed Linear Model Regression Results
+=========================================================================================================
+Model:                            MixedLM                 Dependent Variable:                 TOTIDE2    
+No. Observations:                 9434                    Method:                             REML       
+No. Groups:                       2297                    Scale:                              2.0321     
+Min. group size:                  1                       Log-Likelihood:                     -18151.8711
+Max. group size:                  5                       Converged:                          Yes        
+Mean group size:                  4.1                                                                    
+---------------------------------------------------------------------------------------------------------
+                                                              Coef.  Std.Err.    z    P>|z| [0.025 0.975]
+---------------------------------------------------------------------------------------------------------
+Intercept                                                      9.993    0.504  19.837 0.000  9.006 10.980
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]       -0.447    0.148  -3.016 0.003 -0.737 -0.156
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]     -0.124    0.115  -1.084 0.279 -0.349  0.101
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]      -0.106    0.124  -0.853 0.394 -0.350  0.138
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause] -0.184    0.123  -1.493 0.135 -0.425  0.057
+C(LANGCOG, Treatment(1.0))[T.2.0]                             -2.353    0.210 -11.209 0.000 -2.765 -1.942
+C(LANGCOG, Treatment(1.0))[T.3.0]                             -0.491    0.131  -3.757 0.000 -0.748 -0.235
+C(LANGCOG, Treatment(1.0))[T.4.0]                             -0.213    0.132  -1.615 0.106 -0.471  0.045
+VISIT                                                          0.050    0.009   5.480 0.000  0.032  0.068
+AGE_BASELINE                                                  -0.001    0.011  -0.089 0.929 -0.022  0.020
+Group Var                                                      1.718    0.198                            
+Group x VISIT Cov                                             -0.070    0.023                            
+VISIT Var                                                      0.008    0.003                            
+=========================================================================================================
+
+
+Approximate Marginal R² (fixed effects): 0.0206
+Approximate Conditional R² (fixed + random): 0.4693
 
 Mixed Model Results for NERVES_log
 ==================================================
@@ -43,30 +75,30 @@ Mixed Model Results for NERVES_log
 Model:                            MixedLM                 Dependent Variable:                 NERVES_log
 No. Observations:                 9188                    Method:                             REML      
 No. Groups:                       2285                    Scale:                              0.2314    
-Min. group size:                  1                       Log-Likelihood:                     -9005.4595
+Min. group size:                  1                       Log-Likelihood:                     -9005.3436
 Max. group size:                  5                       Converged:                          No        
 Mean group size:                  4.0                                                                   
 --------------------------------------------------------------------------------------------------------
                                                               Coef.  Std.Err.   z    P>|z| [0.025 0.975]
 --------------------------------------------------------------------------------------------------------
-Intercept                                                      0.984    0.232  4.235 0.000  0.529  1.440
-C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]        0.209    0.060  3.461 0.001  0.091  0.327
-C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]      0.064    0.041  1.564 0.118 -0.016  0.145
-C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]       0.090    0.045  1.990 0.047  0.001  0.178
-C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause]  0.118    0.045  2.603 0.009  0.029  0.207
-C(LANGCOG, Treatment(1.0))[T.2.0]                             -0.149    0.079 -1.879 0.060 -0.304  0.006
-C(LANGCOG, Treatment(1.0))[T.3.0]                             -0.223    0.060 -3.686 0.000 -0.341 -0.104
+Intercept                                                      0.999    0.236  4.240 0.000  0.537  1.460
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]        0.209    0.060  3.466 0.001  0.091  0.328
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]      0.064    0.041  1.562 0.118 -0.016  0.145
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]       0.090    0.045  1.993 0.046  0.001  0.178
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause]  0.118    0.045  2.608 0.009  0.029  0.207
+C(LANGCOG, Treatment(1.0))[T.2.0]                             -0.150    0.079 -1.893 0.058 -0.305  0.005
+C(LANGCOG, Treatment(1.0))[T.3.0]                             -0.223    0.060 -3.687 0.000 -0.341 -0.104
 C(LANGCOG, Treatment(1.0))[T.4.0]                             -0.258    0.062 -4.167 0.000 -0.379 -0.136
-VISIT                                                          0.008    0.006  1.430 0.153 -0.003  0.020
-AGE                                                           -0.015    0.005 -3.020 0.003 -0.025 -0.005
-Group Var                                                      0.312    0.078                           
+VISIT                                                         -0.007    0.004 -1.724 0.085 -0.015  0.001
+AGE_BASELINE                                                  -0.016    0.005 -3.041 0.002 -0.026 -0.006
+Group Var                                                      0.313    0.078                           
 Group x VISIT Cov                                             -0.034    0.014                           
 VISIT Var                                                      0.011    0.003                           
 ========================================================================================================
 
 
-Approximate Marginal R² (fixed effects): 0.0130
-Approximate Conditional R² (fixed + random): 0.5801
+Approximate Marginal R² (fixed effects): 0.0131
+Approximate Conditional R² (fixed + random): 0.5802
 
 Mixed Model Results for SAD_sqrt
 ==================================================
@@ -75,22 +107,22 @@ Mixed Model Results for SAD_sqrt
 Model:                             MixedLM                 Dependent Variable:                 SAD_sqrt 
 No. Observations:                  9342                    Method:                             REML     
 No. Groups:                        2297                    Scale:                              0.0429   
-Min. group size:                   1                       Log-Likelihood:                     -140.1511
+Min. group size:                   1                       Log-Likelihood:                     -140.1996
 Max. group size:                   5                       Converged:                          Yes      
 Mean group size:                   4.1                                                                  
 --------------------------------------------------------------------------------------------------------
                                                               Coef.  Std.Err.   z    P>|z| [0.025 0.975]
 --------------------------------------------------------------------------------------------------------
-Intercept                                                      1.349    0.075 18.025 0.000  1.202  1.495
-C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]        0.047    0.022  2.107 0.035  0.003  0.090
-C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]      0.013    0.017  0.753 0.452 -0.021  0.047
-C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]       0.019    0.019  0.996 0.319 -0.018  0.055
-C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause]  0.021    0.018  1.115 0.265 -0.016  0.057
-C(LANGCOG, Treatment(1.0))[T.2.0]                              0.164    0.031  5.257 0.000  0.103  0.226
-C(LANGCOG, Treatment(1.0))[T.3.0]                             -0.115    0.019 -5.902 0.000 -0.153 -0.077
-C(LANGCOG, Treatment(1.0))[T.4.0]                             -0.037    0.020 -1.884 0.060 -0.075  0.001
-VISIT                                                          0.000    0.002  0.068 0.946 -0.004  0.004
-AGE                                                           -0.004    0.002 -2.193 0.028 -0.007 -0.000
+Intercept                                                      1.348    0.075 17.914 0.000  1.200  1.495
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]        0.047    0.022  2.104 0.035  0.003  0.090
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]      0.013    0.017  0.750 0.453 -0.021  0.047
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]       0.018    0.019  0.991 0.321 -0.018  0.055
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause]  0.020    0.018  1.108 0.268 -0.016  0.057
+C(LANGCOG, Treatment(1.0))[T.2.0]                              0.164    0.031  5.245 0.000  0.103  0.225
+C(LANGCOG, Treatment(1.0))[T.3.0]                             -0.115    0.019 -5.903 0.000 -0.153 -0.077
+C(LANGCOG, Treatment(1.0))[T.4.0]                             -0.037    0.020 -1.886 0.059 -0.076  0.001
+VISIT                                                         -0.003    0.001 -2.401 0.016 -0.006 -0.001
+AGE_BASELINE                                                  -0.003    0.002 -2.168 0.030 -0.007 -0.000
 Group Var                                                      0.053    0.032                           
 Group x VISIT Cov                                             -0.004    0.004                           
 VISIT Var                                                      0.000    0.000                           
@@ -98,7 +130,7 @@ VISIT Var                                                      0.000    0.000
 
 
 Approximate Marginal R² (fixed effects): 0.0105
-Approximate Conditional R² (fixed + random): 0.5568
+Approximate Conditional R² (fixed + random): 0.5569
 
 Mixed Model Results for FEARFULA_sqrt
 ==================================================
@@ -107,22 +139,22 @@ Mixed Model Results for FEARFULA_sqrt
 Model:                           MixedLM                Dependent Variable:                FEARFULA_sqrt
 No. Observations:                9273                   Method:                            REML         
 No. Groups:                      2288                   Scale:                             0.0231       
-Min. group size:                 1                      Log-Likelihood:                    2301.2315    
+Min. group size:                 1                      Log-Likelihood:                    2301.2098    
 Max. group size:                 5                      Converged:                         Yes          
 Mean group size:                 4.1                                                                    
 --------------------------------------------------------------------------------------------------------
                                                               Coef.  Std.Err.   z    P>|z| [0.025 0.975]
 --------------------------------------------------------------------------------------------------------
-Intercept                                                      1.099    0.063 17.378 0.000  0.975  1.223
-C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]        0.070    0.018  3.936 0.000  0.035  0.105
-C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]      0.026    0.013  1.924 0.054 -0.000  0.052
-C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]       0.038    0.014  2.655 0.008  0.010  0.067
-C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause]  0.038    0.014  2.626 0.009  0.010  0.066
-C(LANGCOG, Treatment(1.0))[T.2.0]                              0.178    0.025  6.993 0.000  0.128  0.228
-C(LANGCOG, Treatment(1.0))[T.3.0]                              0.008    0.016  0.508 0.611 -0.024  0.040
-C(LANGCOG, Treatment(1.0))[T.4.0]                             -0.034    0.017 -2.006 0.045 -0.067 -0.001
-VISIT                                                         -0.001    0.002 -0.833 0.405 -0.004  0.002
-AGE                                                           -0.001    0.001 -0.550 0.582 -0.003  0.002
+Intercept                                                      1.095    0.064 17.162 0.000  0.970  1.220
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]        0.070    0.018  3.931 0.000  0.035  0.105
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]      0.026    0.013  1.921 0.055 -0.001  0.052
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]       0.038    0.014  2.648 0.008  0.010  0.067
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause]  0.038    0.014  2.613 0.009  0.009  0.066
+C(LANGCOG, Treatment(1.0))[T.2.0]                              0.178    0.025  6.990 0.000  0.128  0.228
+C(LANGCOG, Treatment(1.0))[T.3.0]                              0.008    0.016  0.508 0.612 -0.024  0.040
+C(LANGCOG, Treatment(1.0))[T.4.0]                             -0.034    0.017 -2.009 0.045 -0.067 -0.001
+VISIT                                                         -0.002    0.001 -1.887 0.059 -0.004  0.000
+AGE_BASELINE                                                  -0.001    0.001 -0.488 0.626 -0.003  0.002
 Group Var                                                      0.043    0.028                           
 Group x VISIT Cov                                             -0.003    0.003                           
 VISIT Var                                                      0.000    0.000                           
@@ -131,17 +163,21 @@ VISIT Var                                                      0.000    0.000
 
 Approximate Marginal R² (fixed effects): 0.0075
 Approximate Conditional R² (fixed + random): 0.6525
-Found coefficient for Early Peri: -0.126
-Found coefficient for Late Peri: -0.077
-Found coefficient for Post-menopause: -0.172
-Found coefficient for Surgical: -0.395
+Found coefficient for Early Peri: -0.148
+Found coefficient for Late Peri: -0.076
+Found coefficient for Post-menopause: -0.186
+Found coefficient for Surgical: -0.375
+Found coefficient for Early Peri: -0.124
+Found coefficient for Late Peri: -0.106
+Found coefficient for Post-menopause: -0.184
+Found coefficient for Surgical: -0.447
 Found coefficient for Early Peri: 0.064
 Found coefficient for Late Peri: 0.090
 Found coefficient for Post-menopause: 0.118
 Found coefficient for Surgical: 0.209
 Found coefficient for Early Peri: 0.013
-Found coefficient for Late Peri: 0.019
-Found coefficient for Post-menopause: 0.021
+Found coefficient for Late Peri: 0.018
+Found coefficient for Post-menopause: 0.020
 Found coefficient for Surgical: 0.047
 Found coefficient for Early Peri: 0.026
 Found coefficient for Late Peri: 0.038

@@ -136,11 +136,12 @@ class DataValidator:
             min_size = min(group_counts.values()) if group_counts else 0
             max_size = max(group_counts.values()) if group_counts else 0
             ratio = max_size / min_size if min_size > 0 else float('inf')
-            
+
             results[var] = {
                 'counts': group_counts,
                 'min_size': min_size,
                 'max_size': max_size,
+                'ratio': ratio,
                 'balanced': ratio < 1.5,
                 'unique_values': len(var_values)
             }

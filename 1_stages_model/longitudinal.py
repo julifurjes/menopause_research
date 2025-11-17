@@ -18,11 +18,12 @@ if project_root not in sys.path:
 from utils.save_output import OutputCapture, get_output_dir
 
 class MenopauseCognitionAnalysis:
-    def __init__(self, file_path):
+    def __init__(self, file_path, use_langcog=True):
         self.data = pd.read_csv(file_path, low_memory=False)
         self.outcome_vars = ['TOTIDE1', 'TOTIDE2', 'NERVES', 'SAD', 'FEARFULA']
         self.mixed_model_results = {}
         self.output_dir = get_output_dir('1_stages_model', 'longitudinal')
+        self.use_langcog = use_langcog
 
     def transform_variables(self):
         """Apply transformations to address heteroscedasticity and multicollinearity."""
@@ -36,8 +37,9 @@ class MenopauseCognitionAnalysis:
         # Use TOTIDE1 and TOTIDE2 separately instead of averaging
         self.outcome_vars = ['TOTIDE1', 'TOTIDE2', 'NERVES_log', 'SAD_sqrt', 'FEARFULA_sqrt']
 
-        # Make langauge categorical
-        self.data['LANGCOG'] = self.data['LANGCOG'].astype('category')
+        # Make language categorical if using it
+        if self.use_langcog and 'LANGCOG' in self.data.columns:
+            self.data['LANGCOG'] = self.data['LANGCOG'].astype('category')
     
     def filter_status(self):
         """Include both natural and surgical menopause cases and create group labels."""
@@ -78,21 +80,28 @@ class MenopauseCognitionAnalysis:
         This model includes random intercepts for each subject.
         """
 
-        # Get the reference language for the model (the most common one)
-        reference_language = self.data['LANGCOG'].mode()[0]
-        
+        # Get the reference language for the model (the most common one) if using LANGCOG
+        if self.use_langcog and 'LANGCOG' in self.data.columns:
+            reference_language = self.data['LANGCOG'].mode()[0]
+
         # Ensure numeric types for cognitive variables
         for var in self.outcome_vars:
             self.data[var] = pd.to_numeric(self.data[var], errors='coerce')
 
-        covariates = ['AGE_BASELINE', 'LANGCOG']
+        # Build covariates list based on whether LANGCOG is used
+        covariates = ['AGE_BASELINE']
+        if self.use_langcog and 'LANGCOG' in self.data.columns:
+            covariates.append('LANGCOG')
 
         # Dictionary to store results
         self.mixed_model_results = {}
 
         for outcome in self.outcome_vars:
-            # Create formula with baseline age instead of current age
-            covariate_formula = f"AGE_BASELINE + C(LANGCOG, Treatment({reference_language}))"
+            # Create formula with baseline age and optionally LANGCOG
+            if self.use_langcog and 'LANGCOG' in self.data.columns:
+                covariate_formula = f"AGE_BASELINE + C(LANGCOG, Treatment({reference_language}))"
+            else:
+                covariate_formula = "AGE_BASELINE"
             formula = (f"{outcome} ~ C(STATUS_Label, Treatment('Pre-menopause')) + VISIT + {covariate_formula}")
             
             try:
@@ -404,7 +413,8 @@ class MenopauseCognitionAnalysis:
 
 if __name__ == "__main__":
     # Initialize analysis with your data file
-    analysis = MenopauseCognitionAnalysis("processed_combined_data.csv")
+    # Set use_langcog=True to include language as a covariate, or False to exclude it
+    analysis = MenopauseCognitionAnalysis("processed_combined_data.csv", use_langcog=True)
     analysis.run_complete_analysis()
     proportion_analysis = MenopauseDeclineAnalysis(analysis.data)
     proportion_analysis.run_analysis()

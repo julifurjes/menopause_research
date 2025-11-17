@@ -19,7 +19,7 @@ class ImputationValidator:
         self.data = pd.read_csv(input_file, low_memory=False)
         self.output_dir = output_dir
         self.variables = ['TOTIDE1', 'TOTIDE2']
-        self.variables += ['NUMHOTF', 'BOTHOTF', 'NUMNITS', 'BOTNITS', 'NUMCLDS', 'BOTCLDS', 'HOW_HAR', 'BCINCML']
+        self.variables += ['NUMHOTF', 'BOTHOTF', 'NUMNITS', 'BOTNITS', 'NUMCLDS', 'BOTCLDS', 'HOW_HAR', 'BCINCML', 'SLEEPQL']
         self.imputed_data = None
         self.original_values = None
         self.imputed_values = None
@@ -74,7 +74,8 @@ class ImputationValidator:
             'NUMCLDS': 'Cold Sweat Count',
             'BOTCLDS': 'Cold Sweat Bother',
             'HOW_HAR': 'Financial Strain',
-            'BCINCML': 'Income Discrimination'
+            'BCINCML': 'Income Discrimination',
+            'SLEEPQL': 'Sleep Quality'
         }
         
         # Clean up variable names for display (remove 'missing_' prefix and use proper names)

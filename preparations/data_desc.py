@@ -184,8 +184,17 @@ class DemographicAnalyzer:
         """
         Save the demographic summary to a CSV file.
         """
-        summary_df = pd.DataFrame.from_dict(self.summary, orient='index', columns=['Value'])
-        summary_df.to_csv(self.output_file)
+        # Convert summary dict to a format suitable for DataFrame
+        summary_data = []
+        for key, value in self.summary.items():
+            if isinstance(value, (dict, pd.DataFrame)):
+                # Skip complex structures or handle them separately
+                continue
+            else:
+                summary_data.append({'Metric': key, 'Value': value})
+
+        summary_df = pd.DataFrame(summary_data)
+        summary_df.to_csv(self.output_file, index=False)
         print(f"\nDemographic summary saved to {self.output_file}")
 
     def main(self):

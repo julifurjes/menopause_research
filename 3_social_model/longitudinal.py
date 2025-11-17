@@ -27,7 +27,7 @@ class MenopauseCognitionMixedModels:
         self.social_struggle_vars = ['INTERFR', 'SOCIAL']
         self.cognitive_vars = ['TOTIDE1', 'TOTIDE2']
         self.symptom_vars = ['NUMHOTF', 'NUMNITS', 'NUMCLDS', 'STIFF', 'IRRITAB', 'MOODCHG']
-        self.control_vars = ['INCOME', 'DEGREE', 'VISIT', 'STATUS', 'AGE', 'AGE_BASELINE']
+        self.control_vars = ['INCOME', 'DEGREE', 'VISIT', 'STATUS', 'AGE']  # AGE_BASELINE will be created during preprocessing
         self.socioeco_vars = ['INCOME', 'DEGREE', 'HOW_HAR', 'BCINCML']
 
         self.model_coefficients = {}
@@ -116,8 +116,8 @@ class MenopauseCognitionMixedModels:
         # As separate variables, so we need to drop na values from the specific variables
         
         # Drop rows with missing values in the composite scores or key variables
-        composite_vars = ['social_support', 'emotional_struggle', 'social_struggle', 
-                         'cognitive_function', 'symptom_severity'] + self.control_vars
+        composite_vars = ['social_support', 'emotional_struggle', 'social_struggle',
+                         'cognitive_function', 'symptom_severity'] + self.control_vars + ['AGE_BASELINE']
         self.data = self.data.dropna(subset=composite_vars)
         
         print(f"Final dataset has {len(self.data)} observations from {self.data['SWANID'].nunique()} subjects")

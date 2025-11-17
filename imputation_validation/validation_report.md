@@ -3,7 +3,7 @@
 ## Methodology
 
 - Method: K-Nearest Neighbors (KNN) Imputation
-- Variables imputed: TOTIDE1, TOTIDE2, NUMHOTF, BOTHOTF, NUMNITS, BOTNITS, NUMCLDS, BOTCLDS, HOW_HAR, BCINCML
+- Variables imputed: TOTIDE1, TOTIDE2, NUMHOTF, BOTHOTF, NUMNITS, BOTNITS, NUMCLDS, BOTCLDS, HOW_HAR, BCINCML, SLEEPQL
 - Parameters used:
   - k values tested: 2, 3, 4, 5
   - Distance metric: Euclidean
@@ -239,4 +239,27 @@ min          1.000000
 50%          1.000000
 75%          1.000000
 max          2.000000
+
+
+### SLEEPQL
+
+Original Data:
+count    15913.000000
+mean         2.014202
+std          0.750933
+min          1.000000
+25%          2.000000
+50%          2.000000
+75%          2.000000
+max          4.000000
+
+Imputed Data:
+count    8151.000000
+mean        1.986382
+std         0.679362
+min         1.000000
+25%         2.000000
+50%         2.000000
+75%         2.000000
+max         4.000000
 
