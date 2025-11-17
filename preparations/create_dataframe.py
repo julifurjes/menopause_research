@@ -251,7 +251,8 @@ class TSVDataProcessor:
             'STIFF': {'min': 1, 'max': 5},
             'IRRITAB': {'min': 1, 'max': 5},
             'MOODCHG': {'min': 1, 'max': 5},
-            
+            'SLEEPQL': {'min': 1, 'max': 4},
+
             # Social support domain
             'LISTEN': {'min': 1, 'max': 5},
             'TAKETOM': {'min': 1, 'max': 5},
