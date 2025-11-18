@@ -8,7 +8,7 @@ from pyampute.exploration.mcar_statistical_tests import MCARTest
 import os
 
 class ImputationValidator:
-    def __init__(self, input_file, output_file, run_sensitivity, output_dir='imputation_validation'):
+    def __init__(self, input_file, output_file, run_sensitivity, output_dir='output/imputation_validation'):
         """
         Initialize the ImputationValidator.
         
@@ -704,10 +704,10 @@ class ImputationValidator:
 if __name__ == "__main__":
     # Initialize validator with your data file
     validator = ImputationValidator(
-        input_file="processed_data.csv",
-        output_file="processed_combined_data.csv",
+        input_file="../processed_data.csv",
+        output_file="../processed_combined_data.csv",
         run_sensitivity=True,
-        output_dir="imputation_validation"
+        output_dir="output/imputation_validation"
     )
     
     # Run all validation checks

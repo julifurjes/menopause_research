@@ -1,0 +1,51 @@
+Model,Predictor,Coef_Imputed,Coef_Complete_Cases,Pct_Change,PValue_Imputed,PValue_Complete_Cases,Sig_Change
+Stages_TOTIDE1,Intercept,9.712,9.9135,2.0748,0.0,0.0,No change
+Stages_TOTIDE1,AGE_BASELINE,0.0086,0.0063,-26.0844,0.4141,0.727,No change
+Stages_TOTIDE1,"C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]",-0.3816,0.0424,111.1018,0.0086,0.5593,Lost significance (imputed was sig)
+Stages_TOTIDE1,Group x VISIT Cov,-0.0448,-0.2917,-551.2322,0.0077,,No change
+Stages_TOTIDE1,Group Var,0.9519,8.4682,789.6578,0.0,,No change
+Stages_TOTIDE1,"C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]",-0.1594,-0.0697,56.2311,0.1584,0.0096,Gained significance (complete cases sig)
+Stages_TOTIDE1,"C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]",-0.0801,-0.0125,84.3734,0.5128,0.7293,No change
+Stages_TOTIDE1,"C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause]",-0.1942,-0.0541,72.158,0.1091,0.1712,No change
+Stages_TOTIDE1,VISIT,0.046,0.0099,-78.5113,0.0,0.5955,Lost significance (imputed was sig)
+Stages_TOTIDE1,VISIT Var,0.0046,1.2404,26592.3829,0.0358,,No change
+Stages_TOTIDE2,Intercept,9.9258,10.0168,0.9162,0.0,0.0,No change
+Stages_TOTIDE2,AGE_BASELINE,-0.0016,-0.0001,93.6723,0.8831,0.9956,No change
+Stages_TOTIDE2,"C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]",-0.4569,-0.0609,86.669,0.0025,0.4122,Lost significance (imputed was sig)
+Stages_TOTIDE2,Group x VISIT Cov,-0.0473,-0.252,-432.7831,0.0052,,No change
+Stages_TOTIDE2,Group Var,1.0376,8.625,731.2686,0.0,,No change
+Stages_TOTIDE2,"C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]",-0.1394,-0.0749,46.2379,0.2323,0.0066,Gained significance (complete cases sig)
+Stages_TOTIDE2,"C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]",-0.1151,-0.0544,52.7232,0.3628,0.1418,No change
+Stages_TOTIDE2,"C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause]",-0.1971,-0.0567,71.2143,0.1163,0.1609,No change
+Stages_TOTIDE2,VISIT,0.0572,0.0131,-77.0751,0.0,0.4905,Lost significance (imputed was sig)
+Stages_TOTIDE2,VISIT Var,0.0047,1.2385,26207.7228,0.0331,,No change
+Stages_NERVES_log,Intercept,0.9034,0.9034,0.0,0.0001,0.0001,No change
+Stages_NERVES_log,AGE_BASELINE,-0.0138,-0.0138,0.0,0.0066,0.0066,No change
+Stages_NERVES_log,"C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]",0.1619,0.1619,0.0,0.0041,0.0041,No change
+Stages_NERVES_log,Group x VISIT Cov,-0.2884,-0.2884,0.0,0.0,0.0,No change
+Stages_NERVES_log,Group Var,3.5002,3.5002,0.0,0.0,0.0,No change
+Stages_NERVES_log,"C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]",0.065,0.065,0.0,0.0955,0.0955,No change
+Stages_NERVES_log,"C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]",0.069,0.069,0.0,0.1028,0.1028,No change
+Stages_NERVES_log,"C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause]",0.0921,0.0921,0.0,0.0321,0.0321,No change
+Stages_NERVES_log,VISIT,-0.0049,-0.0049,0.0,0.1544,0.1544,No change
+Stages_NERVES_log,VISIT Var,0.0433,0.0433,0.0,0.0,0.0,No change
+Stages_SAD_sqrt,Intercept,1.4121,1.4121,0.0,0.0,0.0,No change
+Stages_SAD_sqrt,AGE_BASELINE,-0.0047,-0.0047,0.0,0.0009,0.0009,No change
+Stages_SAD_sqrt,"C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]",0.0306,0.0306,0.0,0.0242,0.0242,No change
+Stages_SAD_sqrt,Group x VISIT Cov,-0.0542,-0.0542,0.0,0.0,0.0,No change
+Stages_SAD_sqrt,Group Var,0.8034,0.8034,0.0,0.0,0.0,No change
+Stages_SAD_sqrt,"C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]",0.0123,0.0123,0.0,0.0497,0.0497,No change
+Stages_SAD_sqrt,"C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]",0.0212,0.0212,0.0,0.0146,0.0146,No change
+Stages_SAD_sqrt,"C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause]",0.0203,0.0203,0.0,0.0232,0.0232,No change
+Stages_SAD_sqrt,VISIT,-0.0047,-0.0047,0.0,0.0,0.0,No change
+Stages_SAD_sqrt,VISIT Var,0.0121,0.0121,0.0,0.0,0.0,No change
+Stages_FEARFULA_sqrt,Intercept,1.109,1.109,0.0,0.0,0.0,No change
+Stages_FEARFULA_sqrt,AGE_BASELINE,-0.0007,-0.0007,0.0,0.577,0.577,No change
+Stages_FEARFULA_sqrt,"C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]",0.039,0.039,0.0,0.0001,0.0001,No change
+Stages_FEARFULA_sqrt,Group x VISIT Cov,-0.0337,-0.0337,0.0,0.0,0.0,No change
+Stages_FEARFULA_sqrt,Group Var,0.9789,0.9789,0.0,0.0,0.0,No change
+Stages_FEARFULA_sqrt,"C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]",0.0146,0.0146,0.0,0.0012,0.0012,No change
+Stages_FEARFULA_sqrt,"C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]",0.0263,0.0263,0.0,0.0,0.0,No change
+Stages_FEARFULA_sqrt,"C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause]",0.024,0.024,0.0,0.0002,0.0002,No change
+Stages_FEARFULA_sqrt,VISIT,-0.0023,-0.0023,0.0,0.0003,0.0003,No change
+Stages_FEARFULA_sqrt,VISIT Var,0.0065,0.0065,0.0,0.0,0.0,No change

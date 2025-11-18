@@ -192,7 +192,7 @@ class MenopauseCognitionAnalysis:
                     self.mixed_model_results[key] = results
                     
                     # Print detailed results
-                    print(f"\nMixed Model Results for {self.var_labels.get(symptom, symptom)} → "
+                    print(f"\nMixed Model Results for {self.var_labels.get(symptom, symptom)} -> "
                           f"{self.var_labels.get(original_outcome, original_outcome)}")
                     print(f"Using transformed variable: {transformed_outcome}")
                     print("=" * 50)
@@ -222,7 +222,7 @@ class MenopauseCognitionAnalysis:
                     self.check_model_diagnostics(results, original_outcome, transformed_outcome, symptom, analysis_data)
                     
                 except Exception as e:
-                    print(f"Error in mixed model analysis for {symptom} → {original_outcome}: {str(e)}")
+                    print(f"Error in mixed model analysis for {symptom} -> {original_outcome}: {str(e)}")
     
     def check_model_diagnostics(self, model_results, outcome, transformed_outcome, symptom, data):
         """Check model residuals and diagnostics for the mixed model."""

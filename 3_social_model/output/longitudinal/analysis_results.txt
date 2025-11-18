@@ -1,4 +1,4 @@
-Analysis Run: 2025-11-17 12:01:37
+Analysis Run: 2025-11-18 11:18:31
 ================================================================================
 
 ================================================================================
@@ -23,15 +23,17 @@ Socioeconomic Status: 0.674
 Final dataset has 12632 observations from 2287 subjects
 
 Descriptive Statistics for Composite Variables:
-       social_support  emotional_struggle  social_struggle  cognitive_function  symptom_severity  socioeconomic_status
-count    12632.000000        12632.000000     12632.000000        12632.000000      12632.000000          12632.000000
-mean         4.219390            1.173119         1.670123           10.181879          2.047698              2.853240
-std          0.753988            0.320018         0.857558            1.461278          0.848373              0.683050
-min          1.000000            1.000000         1.000000            0.000000          0.600000              1.000000
-25%          3.750000            1.000000         1.000000            9.500000          1.500000              2.333333
-50%          4.500000            1.000000         1.500000           10.500000          1.833333              3.000000
-75%          4.750000            1.333333         2.000000           11.000000          2.400000              3.333333
-max          5.000000            2.000000         5.000000           12.000000         15.400000              4.200000
+       social_support  ...  socioeconomic_status
+count    12632.000000  ...          12632.000000
+mean         4.219390  ...              2.853240
+std          0.753988  ...              0.683050
+min          1.000000  ...              1.000000
+25%          3.750000  ...              2.333333
+50%          4.500000  ...              3.000000
+75%          4.750000  ...              3.333333
+max          5.000000  ...              4.200000
+
+[8 rows x 6 columns]
 
 Fitting mixed-effects models...
 
@@ -77,20 +79,4 @@ MAE: 0.4932
 Creating visualizations...
 
 Creating visualizations...
-Coefficient table saved to: C:\Users\julif\OneDrive\المستندات\GitHub\menopause_research\3_social_model\output\longitudinal\coefficient_table.csv
-Correlation network saved to: C:\Users\julif\OneDrive\المستندات\GitHub\menopause_research\3_social_model\output\longitudinal\correlation_network.png
-Edge correlation info:
-('social_support', 'emotional_struggle'): -0.182 (negative)
-('social_support', 'social_struggle'): -0.246 (negative)
-('social_support', 'cognitive_function'): 0.101 (positive)
-('emotional_struggle', 'social_struggle'): 0.567 (positive)
-('emotional_struggle', 'symptom_severity'): 0.260 (positive)
-('social_struggle', 'symptom_severity'): 0.311 (positive)
-('social_struggle', 'cognitive_function'): -0.104 (negative)
-Path coefficient forest plot saved to: C:\Users\julif\OneDrive\المستندات\GitHub\menopause_research\3_social_model\output\longitudinal\path_coefficient_forest.png
-Creating integrated visualization plots...
-Correlation heatmap saved to: C:\Users\julif\OneDrive\المستندات\GitHub\menopause_research\3_social_model\output\longitudinal\correlation_matrix.png
-Menopausal status effects saved to: C:\Users\julif\OneDrive\المستندات\GitHub\menopause_research\3_social_model\output\longitudinal\menopausal_status_effects.png
-
-Analysis completed successfully!
-Results saved to: C:\Users\julif\OneDrive\المستندات\GitHub\menopause_research\3_social_model\output\longitudinal
+Error in analysis: 'charmap' codec can't encode characters in position 52-60: character maps to <undefined>

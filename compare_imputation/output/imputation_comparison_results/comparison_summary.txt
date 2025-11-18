@@ -1,0 +1,278 @@
+================================================================================
+IMPUTATION COMPARISON SUMMARY REPORT
+Generated: 2025-11-18 11:18:34
+================================================================================
+
+SAMPLE SIZE CHANGES
+--------------------------------------------------------------------------------
+
+STAGES MODEL:
+  TOTIDE1:
+    Imputed: 9424 obs, 2297 subjects
+    Complete: 22352 obs, 2309 subjects
+    Lost: -12928 obs (-137.2%)
+  TOTIDE2:
+    Imputed: 9419 obs, 2297 subjects
+    Complete: 22352 obs, 2309 subjects
+    Lost: -12933 obs (-137.3%)
+  NERVES_log:
+    Imputed: 12819 obs, 2295 subjects
+    Complete: 12819 obs, 2295 subjects
+    Lost: 0 obs (0.0%)
+  SAD_sqrt:
+    Imputed: 21256 obs, 2309 subjects
+    Complete: 21256 obs, 2309 subjects
+    Lost: 0 obs (0.0%)
+  FEARFULA_sqrt:
+    Imputed: 21680 obs, 2309 subjects
+    Complete: 21680 obs, 2309 subjects
+    Lost: 0 obs (0.0%)
+
+SYMPTOMS MODEL:
+  TOTIDE1_NERVES_log:
+    Imputed: 9180 obs, 2285 subjects
+    Complete: 12819 obs, 2295 subjects
+    Lost: -3639 obs (-39.6%)
+  TOTIDE1_NUMHOTF_log:
+    Imputed: 2891 obs, 1488 subjects
+    Complete: 15751 obs, 1626 subjects
+    Lost: -12860 obs (-444.8%)
+  TOTIDE1_NUMNITS_log:
+    Imputed: 2087 obs, 1160 subjects
+    Complete: 12545 obs, 1303 subjects
+    Lost: -10458 obs (-501.1%)
+  TOTIDE1_NUMCLDS_log:
+    Imputed: 604 obs, 430 subjects
+    Complete: 5009 obs, 525 subjects
+    Lost: -4405 obs (-729.3%)
+  TOTIDE1_FEARFULA_sqrt:
+    Imputed: 9265 obs, 2288 subjects
+    Complete: 21680 obs, 2309 subjects
+    Lost: -12415 obs (-134.0%)
+  TOTIDE1_SAD_sqrt:
+    Imputed: 9332 obs, 2297 subjects
+    Complete: 21256 obs, 2309 subjects
+    Lost: -11924 obs (-127.8%)
+  TOTIDE1_MOODCHG_sqrt:
+    Imputed: 3671 obs, 1460 subjects
+    Complete: 9180 obs, 1858 subjects
+    Lost: -5509 obs (-150.1%)
+  TOTIDE1_IRRITAB_sqrt:
+    Imputed: 5665 obs, 1902 subjects
+    Complete: 13963 obs, 2160 subjects
+    Lost: -8298 obs (-146.5%)
+  TOTIDE1_SLEEPQL_sqrt:
+    Imputed: 1912 obs, 916 subjects
+    Complete: 4485 obs, 1116 subjects
+    Lost: -2573 obs (-134.6%)
+  TOTIDE1_STIFF:
+    Imputed: 9264 obs, 2289 subjects
+    Complete: 21952 obs, 2309 subjects
+    Lost: -12688 obs (-137.0%)
+  TOTIDE2_NERVES_log:
+    Imputed: 9176 obs, 2285 subjects
+    Complete: 12819 obs, 2295 subjects
+    Lost: -3643 obs (-39.7%)
+  TOTIDE2_NUMHOTF_log:
+    Imputed: 2889 obs, 1487 subjects
+    Complete: 15751 obs, 1626 subjects
+    Lost: -12862 obs (-445.2%)
+  TOTIDE2_NUMNITS_log:
+    Imputed: 2084 obs, 1157 subjects
+    Complete: 12545 obs, 1303 subjects
+    Lost: -10461 obs (-502.0%)
+  TOTIDE2_NUMCLDS_log:
+    Imputed: 604 obs, 430 subjects
+    Complete: 5009 obs, 525 subjects
+    Lost: -4405 obs (-729.3%)
+  TOTIDE2_FEARFULA_sqrt:
+    Imputed: 9261 obs, 2288 subjects
+    Complete: 21680 obs, 2309 subjects
+    Lost: -12419 obs (-134.1%)
+  TOTIDE2_SAD_sqrt:
+    Imputed: 9327 obs, 2297 subjects
+    Complete: 21256 obs, 2309 subjects
+    Lost: -11929 obs (-127.9%)
+  TOTIDE2_MOODCHG_sqrt:
+    Imputed: 3669 obs, 1459 subjects
+    Complete: 9180 obs, 1858 subjects
+    Lost: -5511 obs (-150.2%)
+  TOTIDE2_IRRITAB_sqrt:
+    Imputed: 5663 obs, 1902 subjects
+    Complete: 13963 obs, 2160 subjects
+    Lost: -8300 obs (-146.6%)
+  TOTIDE2_SLEEPQL_sqrt:
+    Imputed: 1910 obs, 915 subjects
+    Complete: 4485 obs, 1116 subjects
+    Lost: -2575 obs (-134.8%)
+  TOTIDE2_STIFF:
+    Imputed: 9260 obs, 2289 subjects
+    Complete: 21952 obs, 2309 subjects
+    Lost: -12692 obs (-137.1%)
+
+SOCIAL MODEL:
+  cognitive_function:
+    Imputed: 4689 obs, 2111 subjects
+    Complete: 12632 obs, 2287 subjects
+    Lost: -7943 obs (-169.4%)
+
+
+SIGNIFICANCE CHANGES
+--------------------------------------------------------------------------------
+Total predictors with significance changes: 6
+
+Model: Stages_TOTIDE1
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]
+  Change: Lost significance (imputed was sig)
+  P-value (imputed): 0.0086
+  P-value (complete cases): 0.5593
+  Coefficient change: 111.10%
+
+Model: Stages_TOTIDE1
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]
+  Change: Gained significance (complete cases sig)
+  P-value (imputed): 0.1584
+  P-value (complete cases): 0.0096
+  Coefficient change: 56.23%
+
+Model: Stages_TOTIDE1
+  Predictor: VISIT
+  Change: Lost significance (imputed was sig)
+  P-value (imputed): 0.0000
+  P-value (complete cases): 0.5955
+  Coefficient change: -78.51%
+
+Model: Stages_TOTIDE2
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]
+  Change: Lost significance (imputed was sig)
+  P-value (imputed): 0.0025
+  P-value (complete cases): 0.4122
+  Coefficient change: 86.67%
+
+Model: Stages_TOTIDE2
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]
+  Change: Gained significance (complete cases sig)
+  P-value (imputed): 0.2323
+  P-value (complete cases): 0.0066
+  Coefficient change: 46.24%
+
+Model: Stages_TOTIDE2
+  Predictor: VISIT
+  Change: Lost significance (imputed was sig)
+  P-value (imputed): 0.0000
+  P-value (complete cases): 0.4905
+  Coefficient change: -77.08%
+
+
+LARGE COEFFICIENT CHANGES (>20%)
+--------------------------------------------------------------------------------
+Total predictors with >20% change: 18
+
+Model: Stages_TOTIDE1
+  Predictor: VISIT Var
+  Coefficient (imputed): 0.0046
+  Coefficient (complete): 1.2404
+  Percent change: 26592.38%
+
+Model: Stages_TOTIDE2
+  Predictor: VISIT Var
+  Coefficient (imputed): 0.0047
+  Coefficient (complete): 1.2385
+  Percent change: 26207.72%
+
+Model: Stages_TOTIDE1
+  Predictor: Group Var
+  Coefficient (imputed): 0.9519
+  Coefficient (complete): 8.4682
+  Percent change: 789.66%
+
+Model: Stages_TOTIDE2
+  Predictor: Group Var
+  Coefficient (imputed): 1.0376
+  Coefficient (complete): 8.6250
+  Percent change: 731.27%
+
+Model: Stages_TOTIDE1
+  Predictor: Group x VISIT Cov
+  Coefficient (imputed): -0.0448
+  Coefficient (complete): -0.2917
+  Percent change: -551.23%
+
+Model: Stages_TOTIDE2
+  Predictor: Group x VISIT Cov
+  Coefficient (imputed): -0.0473
+  Coefficient (complete): -0.2520
+  Percent change: -432.78%
+
+Model: Stages_TOTIDE1
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]
+  Coefficient (imputed): -0.3816
+  Coefficient (complete): 0.0424
+  Percent change: 111.10%
+
+Model: Stages_TOTIDE2
+  Predictor: AGE_BASELINE
+  Coefficient (imputed): -0.0016
+  Coefficient (complete): -0.0001
+  Percent change: 93.67%
+
+Model: Stages_TOTIDE2
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]
+  Coefficient (imputed): -0.4569
+  Coefficient (complete): -0.0609
+  Percent change: 86.67%
+
+Model: Stages_TOTIDE1
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]
+  Coefficient (imputed): -0.0801
+  Coefficient (complete): -0.0125
+  Percent change: 84.37%
+
+Model: Stages_TOTIDE1
+  Predictor: VISIT
+  Coefficient (imputed): 0.0460
+  Coefficient (complete): 0.0099
+  Percent change: -78.51%
+
+Model: Stages_TOTIDE2
+  Predictor: VISIT
+  Coefficient (imputed): 0.0572
+  Coefficient (complete): 0.0131
+  Percent change: -77.08%
+
+Model: Stages_TOTIDE1
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause]
+  Coefficient (imputed): -0.1942
+  Coefficient (complete): -0.0541
+  Percent change: 72.16%
+
+Model: Stages_TOTIDE2
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause]
+  Coefficient (imputed): -0.1971
+  Coefficient (complete): -0.0567
+  Percent change: 71.21%
+
+Model: Stages_TOTIDE1
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]
+  Coefficient (imputed): -0.1594
+  Coefficient (complete): -0.0697
+  Percent change: 56.23%
+
+Model: Stages_TOTIDE2
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]
+  Coefficient (imputed): -0.1151
+  Coefficient (complete): -0.0544
+  Percent change: 52.72%
+
+Model: Stages_TOTIDE2
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]
+  Coefficient (imputed): -0.1394
+  Coefficient (complete): -0.0749
+  Percent change: 46.24%
+
+Model: Stages_TOTIDE1
+  Predictor: AGE_BASELINE
+  Coefficient (imputed): 0.0086
+  Coefficient (complete): 0.0063
+  Percent change: -26.08%
+
