@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import statsmodels.formula.api as smf
 from statsmodels.formula.api import mixedlm
+from scipy import stats
 import os
 import sys
 
@@ -100,7 +101,6 @@ class ModerationAnalysis:
     def fit_moderation_models(self):
         """Fit mixed-effects models testing moderation"""
 
-        print("\n" + "=" * 80)
         print("MODERATION ANALYSIS: Social Support × Menopausal Stage")
         print("=" * 80)
 
@@ -147,7 +147,6 @@ class ModerationAnalysis:
         print(f"BIC: {result_interaction.bic:.2f}")
 
         # Compare models
-        print("\n" + "=" * 80)
         print("MODEL COMPARISON")
         print("=" * 80)
 
@@ -298,7 +297,6 @@ class ModerationAnalysis:
         params = result.params
         pvalues = result.pvalues
 
-        print("\n" + "=" * 80)
         print("INTERPRETATION OF MODERATION RESULTS")
         print("=" * 80)
 
@@ -341,16 +339,6 @@ class ModerationAnalysis:
                 print(f"    → No significant difference in social support effect")
                 print(f"       between {stage} and pre-menopause")
 
-        print("\n" + "=" * 80)
-        print("SUMMARY")
-        print("=" * 80)
-        print("\nThis moderation analysis properly accounts for repeated measures by using")
-        print("mixed-effects models with random intercepts for each subject.")
-        print("\nIt tests whether social support differentially predicts cognitive function")
-        print("across menopausal stages, addressing the question: Does social support")
-        print("buffer cognitive changes during the menopausal transition?")
-        print("=" * 80)
-
     def run_analysis(self):
         """Run complete moderation analysis"""
         os.makedirs(self.output_dir, exist_ok=True)
@@ -360,13 +348,6 @@ class ModerationAnalysis:
         sys.stdout = output_capture
 
         try:
-            print("=" * 80)
-            print("MODERATION ANALYSIS: Social Support × Menopausal Stage")
-            print("=" * 80)
-            print("\nThis analysis uses mixed-effects models to test whether social support")
-            print("moderates the relationship between menopausal stage and cognitive function,")
-            print("while properly accounting for repeated measures from the same individuals.")
-            print("=" * 80)
 
             self.preprocess_data()
 
@@ -379,7 +360,6 @@ class ModerationAnalysis:
             print("\nInterpreting results...")
             self.interpret_results()
 
-            print("\n" + "=" * 80)
             print("MODERATION ANALYSIS COMPLETE")
             print("=" * 80)
             print(f"\nResults saved to: {self.output_dir}")
@@ -391,6 +371,6 @@ class ModerationAnalysis:
             output_capture.close()
 
 if __name__ == "__main__":
-    from scipy import stats  # Import here for simple slopes calculation
+    from scipy import stats
     analysis = ModerationAnalysis("processed_combined_data.csv")
     analysis.run_analysis()

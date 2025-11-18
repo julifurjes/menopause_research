@@ -878,5 +878,5 @@ class MenopauseCognitionAnalysis:
 if __name__ == "__main__":
     file_path = "processed_combined_data.csv"
     # Set use_langcog=True to include language as a covariate, or False to exclude it
-    analysis = MenopauseCognitionAnalysis(file_path, use_langcog=True)
+    analysis = MenopauseCognitionAnalysis(file_path, use_langcog=False)
     analysis.run_complete_analysis()

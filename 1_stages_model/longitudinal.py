@@ -414,7 +414,7 @@ class MenopauseCognitionAnalysis:
 if __name__ == "__main__":
     # Initialize analysis with your data file
     # Set use_langcog=True to include language as a covariate, or False to exclude it
-    analysis = MenopauseCognitionAnalysis("processed_combined_data.csv", use_langcog=True)
+    analysis = MenopauseCognitionAnalysis("processed_combined_data.csv", use_langcog=False)
     analysis.run_complete_analysis()
     proportion_analysis = MenopauseDeclineAnalysis(analysis.data)
     proportion_analysis.run_analysis()

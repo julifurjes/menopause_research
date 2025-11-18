@@ -16,10 +16,6 @@ from utils.save_output import OutputCapture, get_output_dir
 class StratifiedNetworkAnalysis:
     """
     Network analysis stratified by menopausal stage to account for repeated measures.
-
-    This addresses the reviewer concern about pooling all observations by creating
-    separate networks for each menopausal stage, similar to the approach in:
-    https://www.nature.com/articles/s44294-024-00045-9
     """
 
     def __init__(self, data_path):
@@ -315,13 +311,6 @@ class StratifiedNetworkAnalysis:
         sys.stdout = output_capture
 
         try:
-            print("=" * 80)
-            print("STRATIFIED NETWORK ANALYSIS BY MENOPAUSAL STAGE")
-            print("=" * 80)
-            print("\nThis analysis addresses the concern about pooling repeated measures")
-            print("by creating separate networks for each menopausal stage.")
-            print("=" * 80)
-
             self.preprocess_data()
 
             print("\nCreating stratified networks...")
@@ -330,9 +319,7 @@ class StratifiedNetworkAnalysis:
             print("\nComparing networks across stages...")
             comparison = self.compare_networks_across_stages()
 
-            print("\n" + "=" * 80)
             print("STRATIFIED ANALYSIS COMPLETE")
-            print("=" * 80)
             print(f"\nResults saved to: {self.output_dir}")
 
             return stats, comparison

@@ -1,0 +1,269 @@
+================================================================================
+LANGCOG COMPARISON SUMMARY REPORT
+Generated: 2025-11-18 10:33:36
+================================================================================
+
+SIGNIFICANCE CHANGES
+--------------------------------------------------------------------------------
+Total predictors with significance changes: 9
+
+Model: Stages_TOTIDE1
+  Predictor: VISIT Var
+  Change: Gained significance
+  P-value with LANGCOG: 0.0907
+  P-value without LANGCOG: 0.0358
+  Coefficient change: 27.18%
+
+Model: Stages_TOTIDE1
+  Predictor: Group x VISIT Cov
+  Change: Gained significance
+  P-value with LANGCOG: 0.0640
+  P-value without LANGCOG: 0.0077
+  Coefficient change: -51.38%
+
+Model: Stages_TOTIDE2
+  Predictor: VISIT Var
+  Change: Gained significance
+  P-value with LANGCOG: 0.0718
+  P-value without LANGCOG: 0.0331
+  Coefficient change: 20.87%
+
+Model: Stages_NERVES_log
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]
+  Change: Lost significance
+  P-value with LANGCOG: 0.0463
+  P-value without LANGCOG: 0.1028
+  Coefficient change: -23.34%
+
+Model: Stages_SAD_sqrt
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause]
+  Change: Gained significance
+  P-value with LANGCOG: 0.2681
+  P-value without LANGCOG: 0.0232
+  Coefficient change: -0.31%
+
+Model: Stages_SAD_sqrt
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]
+  Change: Gained significance
+  P-value with LANGCOG: 0.4533
+  P-value without LANGCOG: 0.0497
+  Coefficient change: -4.51%
+
+Model: Stages_SAD_sqrt
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]
+  Change: Gained significance
+  P-value with LANGCOG: 0.3215
+  P-value without LANGCOG: 0.0146
+  Coefficient change: 14.84%
+
+Model: Stages_FEARFULA_sqrt
+  Predictor: VISIT
+  Change: Gained significance
+  P-value with LANGCOG: 0.0592
+  P-value without LANGCOG: 0.0003
+  Coefficient change: -10.55%
+
+Model: Stages_FEARFULA_sqrt
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]
+  Change: Gained significance
+  P-value with LANGCOG: 0.0548
+  P-value without LANGCOG: 0.0012
+  Coefficient change: -42.90%
+
+
+LARGE COEFFICIENT CHANGES (>10%)
+--------------------------------------------------------------------------------
+Total predictors with >10% change: 32
+
+Model: Stages_NERVES_log
+  Predictor: Group Var
+  Coefficient with LANGCOG: 1.3507
+  Coefficient without LANGCOG: 3.5002
+  Percent change: 159.13%
+
+Model: Stages_NERVES_log
+  Predictor: Group x VISIT Cov
+  Coefficient with LANGCOG: -0.1490
+  Coefficient without LANGCOG: -0.2884
+  Percent change: -93.59%
+
+Model: Stages_FEARFULA_sqrt
+  Predictor: Group x VISIT Cov
+  Coefficient with LANGCOG: -0.1248
+  Coefficient without LANGCOG: -0.0337
+  Percent change: 72.97%
+
+Model: Stages_FEARFULA_sqrt
+  Predictor: VISIT Var
+  Coefficient with LANGCOG: 0.0161
+  Coefficient without LANGCOG: 0.0065
+  Percent change: -59.54%
+
+Model: Stages_TOTIDE1
+  Predictor: Group x VISIT Cov
+  Coefficient with LANGCOG: -0.0296
+  Coefficient without LANGCOG: -0.0448
+  Percent change: -51.38%
+
+Model: Stages_FEARFULA_sqrt
+  Predictor: Group Var
+  Coefficient with LANGCOG: 1.8562
+  Coefficient without LANGCOG: 0.9789
+  Percent change: -47.26%
+
+Model: Stages_FEARFULA_sqrt
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]
+  Coefficient with LANGCOG: 0.0699
+  Coefficient without LANGCOG: 0.0390
+  Percent change: -44.22%
+
+Model: Stages_TOTIDE2
+  Predictor: AGE_BASELINE
+  Coefficient with LANGCOG: -0.0011
+  Coefficient without LANGCOG: -0.0016
+  Percent change: -44.13%
+
+Model: Stages_FEARFULA_sqrt
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]
+  Coefficient with LANGCOG: 0.0256
+  Coefficient without LANGCOG: 0.0146
+  Percent change: -42.90%
+
+Model: Stages_SAD_sqrt
+  Predictor: VISIT
+  Coefficient with LANGCOG: -0.0034
+  Coefficient without LANGCOG: -0.0047
+  Percent change: -38.37%
+
+Model: Stages_TOTIDE2
+  Predictor: Group x VISIT Cov
+  Coefficient with LANGCOG: -0.0344
+  Coefficient without LANGCOG: -0.0473
+  Percent change: -37.52%
+
+Model: Stages_FEARFULA_sqrt
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause]
+  Coefficient with LANGCOG: 0.0378
+  Coefficient without LANGCOG: 0.0240
+  Percent change: -36.34%
+
+Model: Stages_SAD_sqrt
+  Predictor: Group x VISIT Cov
+  Coefficient with LANGCOG: -0.0833
+  Coefficient without LANGCOG: -0.0542
+  Percent change: 34.93%
+
+Model: Stages_SAD_sqrt
+  Predictor: Group Var
+  Coefficient with LANGCOG: 1.2334
+  Coefficient without LANGCOG: 0.8034
+  Percent change: -34.86%
+
+Model: Stages_SAD_sqrt
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]
+  Coefficient with LANGCOG: 0.0466
+  Coefficient without LANGCOG: 0.0306
+  Percent change: -34.49%
+
+Model: Stages_SAD_sqrt
+  Predictor: AGE_BASELINE
+  Coefficient with LANGCOG: -0.0035
+  Coefficient without LANGCOG: -0.0047
+  Percent change: -33.78%
+
+Model: Stages_FEARFULA_sqrt
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]
+  Coefficient with LANGCOG: 0.0383
+  Coefficient without LANGCOG: 0.0263
+  Percent change: -31.41%
+
+Model: Stages_TOTIDE1
+  Predictor: Group Var
+  Coefficient with LANGCOG: 0.7268
+  Coefficient without LANGCOG: 0.9519
+  Percent change: 30.97%
+
+Model: Stages_NERVES_log
+  Predictor: VISIT
+  Coefficient with LANGCOG: -0.0069
+  Coefficient without LANGCOG: -0.0049
+  Percent change: 27.93%
+
+Model: Stages_TOTIDE1
+  Predictor: VISIT Var
+  Coefficient with LANGCOG: 0.0037
+  Coefficient without LANGCOG: 0.0046
+  Percent change: 27.18%
+
+Model: Stages_NERVES_log
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]
+  Coefficient with LANGCOG: 0.0899
+  Coefficient without LANGCOG: 0.0690
+  Percent change: -23.34%
+
+Model: Stages_TOTIDE2
+  Predictor: Group Var
+  Coefficient with LANGCOG: 0.8426
+  Coefficient without LANGCOG: 1.0376
+  Percent change: 23.15%
+
+Model: Stages_NERVES_log
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]
+  Coefficient with LANGCOG: 0.2093
+  Coefficient without LANGCOG: 0.1619
+  Percent change: -22.66%
+
+Model: Stages_NERVES_log
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause]
+  Coefficient with LANGCOG: 0.1181
+  Coefficient without LANGCOG: 0.0921
+  Percent change: -21.98%
+
+Model: Stages_TOTIDE2
+  Predictor: VISIT Var
+  Coefficient with LANGCOG: 0.0039
+  Coefficient without LANGCOG: 0.0047
+  Percent change: 20.87%
+
+Model: Stages_TOTIDE1
+  Predictor: VISIT
+  Coefficient with LANGCOG: 0.0395
+  Coefficient without LANGCOG: 0.0460
+  Percent change: 16.51%
+
+Model: Stages_SAD_sqrt
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]
+  Coefficient with LANGCOG: 0.0185
+  Coefficient without LANGCOG: 0.0212
+  Percent change: 14.84%
+
+Model: Stages_TOTIDE2
+  Predictor: VISIT
+  Coefficient with LANGCOG: 0.0504
+  Coefficient without LANGCOG: 0.0572
+  Percent change: 13.53%
+
+Model: Stages_SAD_sqrt
+  Predictor: VISIT Var
+  Coefficient with LANGCOG: 0.0107
+  Coefficient without LANGCOG: 0.0121
+  Percent change: 12.66%
+
+Model: Stages_TOTIDE2
+  Predictor: C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]
+  Coefficient with LANGCOG: -0.1250
+  Coefficient without LANGCOG: -0.1394
+  Percent change: -11.50%
+
+Model: Stages_NERVES_log
+  Predictor: AGE_BASELINE
+  Coefficient with LANGCOG: -0.0155
+  Coefficient without LANGCOG: -0.0138
+  Percent change: 10.99%
+
+Model: Stages_FEARFULA_sqrt
+  Predictor: VISIT
+  Coefficient with LANGCOG: -0.0021
+  Coefficient without LANGCOG: -0.0023
+  Percent change: -10.55%
+

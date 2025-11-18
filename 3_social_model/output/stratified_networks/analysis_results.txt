@@ -1,0 +1,50 @@
+Analysis Run: 2025-11-18 09:50:58
+================================================================================
+
+================================================================================
+STRATIFIED NETWORK ANALYSIS BY MENOPAUSAL STAGE
+================================================================================
+
+This analysis addresses the concern about pooling repeated measures
+by creating separate networks for each menopausal stage.
+================================================================================
+
+Data preprocessed: 13840 observations from 2308 subjects
+Observations by stage:
+STATUS_Label
+Early Peri        5833
+Post-menopause    3943
+Pre-menopause     2507
+Late Peri          972
+Surgical           585
+Name: count, dtype: int64
+
+Creating stratified networks...
+
+Stratified networks saved to: c:\Users\julif\OneDrive\المستندات\GitHub\menopause_research\3_social_model\output\stratified_networks\stratified_networks.png
+
+Network Statistics by Stage:
+         Stage    N  N_Edges  Avg_Correlation
+ Pre-menopause 2507        4         0.258679
+    Early Peri 5833        3         0.316683
+     Late Peri  972        5         0.227488
+Post-menopause 3943        5         0.251098
+      Surgical  585        6         0.295105
+
+Comparing networks across stages...
+
+Network Comparison Across Stages:
+================================================================================
+         Stage  N_Observations  Network_Density  Avg_Clustering  N_Edges  Avg_Correlation  Max_Correlation
+ Pre-menopause            2507         0.666667        0.583333        4         0.058372         0.531044
+    Early Peri            5833         0.500000        0.750000        3         0.051884         0.552851
+     Late Peri             972         0.833333        0.833333        5         0.000962         0.571124
+Post-menopause            3943         0.833333        0.833333        5         0.027480         0.571045
+      Surgical             585         1.000000        1.000000        6        -0.032429         0.648272
+================================================================================
+
+================================================================================
+STRATIFIED ANALYSIS COMPLETE
+================================================================================
+
+Results saved to: c:\Users\julif\OneDrive\المستندات\GitHub\menopause_research\3_social_model\output\stratified_networks
