@@ -117,12 +117,17 @@ class ModerationAnalysis:
                             groups=self.data["SWANID"],
                             re_formula="~1")  # Random intercept only
 
-        result_main = model_main.fit(reml=True)
-        self.results['main_effects'] = result_main
+        # Fit with ML for model comparison (not REML)
+        result_main_ml = model_main.fit(reml=False, method='lbfgs')
 
-        print(result_main.summary())
-        print(f"\nAIC: {result_main.aic:.2f}")
-        print(f"BIC: {result_main.bic:.2f}")
+        # Also fit with REML for final parameter estimates
+        result_main_reml = model_main.fit(reml=True, method='lbfgs')
+        self.results['main_effects'] = result_main_reml
+
+        print(result_main_reml.summary())
+        print(f"\nAIC (ML): {result_main_ml.aic:.2f}")
+        print(f"BIC (ML): {result_main_ml.bic:.2f}")
+        print(f"Log-Likelihood (ML): {result_main_ml.llf:.2f}")
 
         # Model 2: With interaction terms (moderation model)
         print("\n" + "=" * 80)
@@ -139,34 +144,53 @@ class ModerationAnalysis:
                                     groups=self.data["SWANID"],
                                     re_formula="~1")
 
-        result_interaction = model_interaction.fit(reml=True)
-        self.results['moderation'] = result_interaction
+        # Fit with ML for model comparison (not REML)
+        result_interaction_ml = model_interaction.fit(reml=False, method='lbfgs')
 
-        print(result_interaction.summary())
-        print(f"\nAIC: {result_interaction.aic:.2f}")
-        print(f"BIC: {result_interaction.bic:.2f}")
+        # Also fit with REML for final parameter estimates
+        result_interaction_reml = model_interaction.fit(reml=True, method='lbfgs')
+        self.results['moderation'] = result_interaction_reml
 
-        # Compare models
-        print("MODEL COMPARISON")
+        print(result_interaction_reml.summary())
+        print(f"\nAIC (ML): {result_interaction_ml.aic:.2f}")
+        print(f"BIC (ML): {result_interaction_ml.bic:.2f}")
+        print(f"Log-Likelihood (ML): {result_interaction_ml.llf:.2f}")
+
+        # Compare models using ML estimates
+        print("\n" + "=" * 80)
+        print("MODEL COMPARISON (using ML estimates)")
         print("=" * 80)
+        print("\nNote: Models must be compared using ML (not REML) when fixed effects differ.")
+        print("REML estimates shown above are for interpretation only.\n")
 
-        aic_diff = result_main.aic - result_interaction.aic
-        bic_diff = result_main.bic - result_interaction.bic
+        aic_diff = result_main_ml.aic - result_interaction_ml.aic
+        bic_diff = result_main_ml.bic - result_interaction_ml.bic
 
         print(f"AIC difference (Main - Moderation): {aic_diff:.2f}")
         print(f"BIC difference (Main - Moderation): {bic_diff:.2f}")
 
         if aic_diff > 2:
-            print("\nModeration model shows better fit (ΔAIC > 2)")
+            print("  -> Moderation model shows better fit (AIC diff > 2)")
+        elif aic_diff < -2:
+            print("  -> Main effects model shows better fit (AIC diff < -2)")
         else:
-            print("\nNo substantial improvement from adding interactions")
+            print("  -> Models show similar fit (|AIC diff| < 2)")
 
-        # Likelihood ratio test
-        lr_stat = -2 * (result_main.llf - result_interaction.llf)
-        df_diff = len(result_interaction.params) - len(result_main.params)
+        # Likelihood ratio test using ML estimates
+        lr_stat = -2 * (result_main_ml.llf - result_interaction_ml.llf)
+        df_diff = len(result_interaction_ml.params) - len(result_main_ml.params)
 
         from scipy import stats
-        p_value = stats.chi2.sf(lr_stat, df_diff)
+
+        # LR test is only valid if lr_stat is positive
+        if lr_stat >= 0:
+            p_value = stats.chi2.sf(lr_stat, df_diff)
+        else:
+            # If negative, the more complex model actually fits worse
+            print(f"\nWARNING: LR statistic is negative ({lr_stat:.2f})")
+            print("This suggests the moderation model fits worse than main effects.")
+            print("This can happen when interactions add noise rather than signal.")
+            p_value = 1.0  # Not significant
 
         print(f"\nLikelihood Ratio Test:")
         print(f"  LR statistic: {lr_stat:.2f}")
@@ -176,9 +200,13 @@ class ModerationAnalysis:
         if p_value < 0.05:
             print("  *** Moderation model significantly better (p < 0.05)")
         else:
-            print("  No significant improvement from moderation model")
+            print("  -> No significant improvement from moderation model")
 
-        return result_main, result_interaction
+        # Store ML results for proper model comparison
+        self.results['main_effects_ml'] = result_main_ml
+        self.results['moderation_ml'] = result_interaction_ml
+
+        return result_main_reml, result_interaction_reml
 
     def plot_moderation_effects(self):
         """Visualize the moderation effects"""
@@ -308,9 +336,9 @@ class ModerationAnalysis:
 
         if p_support < 0.05:
             direction = "higher" if coef_support > 0 else "lower"
-            print(f"  → Social support is associated with {direction} cognitive function (p < 0.05)")
+            print(f"  -> Social support is associated with {direction} cognitive function (p < 0.05)")
         else:
-            print(f"  → No significant main effect of social support")
+            print(f"  -> No significant main effect of social support")
 
         print("\nInteraction Effects (Moderation):")
 
@@ -330,13 +358,13 @@ class ModerationAnalysis:
 
             if p_val < 0.05:
                 if coef > 0:
-                    print(f"    → Social support has a STRONGER protective effect in {stage}")
+                    print(f"    -> Social support has a STRONGER protective effect in {stage}")
                     print(f"       compared to pre-menopause (p < 0.05)")
                 else:
-                    print(f"    → Social support has a WEAKER protective effect in {stage}")
+                    print(f"    -> Social support has a WEAKER protective effect in {stage}")
                     print(f"       compared to pre-menopause (p < 0.05)")
             else:
-                print(f"    → No significant difference in social support effect")
+                print(f"    -> No significant difference in social support effect")
                 print(f"       between {stage} and pre-menopause")
 
     def run_analysis(self):

@@ -1,14 +1,6 @@
-Analysis Run: 2025-11-18 09:51:01
+Analysis Run: 2025-11-19 10:57:50
 ================================================================================
 
-================================================================================
-MODERATION ANALYSIS: Social Support × Menopausal Stage
-================================================================================
-
-This analysis uses mixed-effects models to test whether social support
-moderates the relationship between menopausal stage and cognitive function,
-while properly accounting for repeated measures from the same individuals.
-================================================================================
 
 Data preprocessed: 17924 observations from 2309 subjects
 
@@ -22,8 +14,6 @@ Surgical           825
 Name: count, dtype: int64
 
 Fitting moderation models...
-
-================================================================================
 MODERATION ANALYSIS: Social Support × Menopausal Stage
 ================================================================================
 
@@ -51,8 +41,9 @@ Group Var                1.657    0.070
 ==================================================================
 
 
-AIC: nan
-BIC: nan
+AIC (ML): 49492.88
+BIC (ML): 49563.03
+Log-Likelihood (ML): -24737.44
 
 ================================================================================
 Model 2: Moderation Model (with interactions)
@@ -68,11 +59,11 @@ Mean group size:   7.8
 -------------------------------------------------------------------
                          Coef.  Std.Err.   z    P>|z| [0.025 0.975]
 -------------------------------------------------------------------
-Intercept                10.180    0.474 21.457 0.000  9.250 11.110
+Intercept                10.180    0.474 21.456 0.000  9.250 11.110
 social_support_centered   0.015    0.023  0.651 0.515 -0.030  0.060
 Early_Peri               -0.044    0.021 -2.101 0.036 -0.085 -0.003
 Late_Peri                 0.002    0.031  0.050 0.960 -0.060  0.063
-Post_Menopause           -0.018    0.031 -0.573 0.566 -0.078  0.043
+Post_Menopause           -0.018    0.031 -0.573 0.567 -0.078  0.043
 Early_Peri_x_Support      0.017    0.025  0.698 0.485 -0.032  0.066
 Late_Peri_x_Support       0.066    0.037  1.797 0.072 -0.006  0.138
 Post_Menopause_x_Support  0.087    0.027  3.162 0.002  0.033  0.140
@@ -82,72 +73,29 @@ Group Var                 1.657    0.070
 ===================================================================
 
 
-AIC: nan
-BIC: nan
+AIC (ML): 49501.38
+BIC (ML): 49594.91
+Log-Likelihood (ML): -24738.69
 
 ================================================================================
-MODEL COMPARISON
+MODEL COMPARISON (using ML estimates)
 ================================================================================
-AIC difference (Main - Moderation): nan
-BIC difference (Main - Moderation): nan
 
-No substantial improvement from adding interactions
+Note: Models must be compared using ML (not REML) when fixed effects differ.
+REML estimates shown above are for interpretation only.
+
+AIC difference (Main - Moderation): -8.50
+BIC difference (Main - Moderation): -31.88
+  -> Main effects model shows better fit (AIC diff < -2)
+
+WARNING: LR statistic is negative (-2.50)
+This suggests the moderation model fits worse than main effects.
+This can happen when interactions add noise rather than signal.
 
 Likelihood Ratio Test:
   LR statistic: -2.50
   df: 3
   p-value: 1.0000
-  No significant improvement from moderation model
+  -> No significant improvement from moderation model
 
 Creating visualizations...
-
-Moderation effects plot saved to: c:\Users\julif\OneDrive\المستندات\GitHub\menopause_research\3_social_model\output\moderation\moderation_effects.png
-
-Interpreting results...
-
-================================================================================
-INTERPRETATION OF MODERATION RESULTS
-================================================================================
-
-Main Effect of Social Support:
-  Coefficient: 0.0149
-  p-value: 0.5151
-  → No significant main effect of social support
-
-Interaction Effects (Moderation):
-
-  Early Peri:
-    Coefficient: 0.0174
-    p-value: 0.4850
-    → No significant difference in social support effect
-       between Early Peri and pre-menopause
-
-  Late Peri:
-    Coefficient: 0.0661
-    p-value: 0.0724
-    → No significant difference in social support effect
-       between Late Peri and pre-menopause
-
-  Post-menopause:
-    Coefficient: 0.0866
-    p-value: 0.0016
-    → Social support has a STRONGER protective effect in Post-menopause
-       compared to pre-menopause (p < 0.05)
-
-================================================================================
-SUMMARY
-================================================================================
-
-This moderation analysis properly accounts for repeated measures by using
-mixed-effects models with random intercepts for each subject.
-
-It tests whether social support differentially predicts cognitive function
-across menopausal stages, addressing the question: Does social support
-buffer cognitive changes during the menopausal transition?
-================================================================================
-
-================================================================================
-MODERATION ANALYSIS COMPLETE
-================================================================================
-
-Results saved to: c:\Users\julif\OneDrive\المستندات\GitHub\menopause_research\3_social_model\output\moderation
