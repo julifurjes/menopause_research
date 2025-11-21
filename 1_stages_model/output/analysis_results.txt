@@ -1,8 +1,8 @@
-Analysis Run: 2025-11-21 11:27:51
+Analysis Run: 2025-11-21 15:17:53
 ================================================================================
 
 
-Running linear mixed-effects models...
+Running mixed-effects models...
 
 Mixed Model Results for TOTIDE1
 ==================================================
@@ -30,8 +30,8 @@ VISIT Var                                                      0.774
 ========================================================================================================
 
 
-Approximate Marginal R² (fixed effects): 0.0004
-Approximate Conditional R² (fixed + random): 0.8944
+Marginal R² (fixed effects): 0.0004
+Conditional R² (fixed + random): 0.8944
 
 Mixed Model Results for TOTIDE2
 ==================================================
@@ -59,8 +59,8 @@ VISIT Var                                                      0.810
 ========================================================================================================
 
 
-Approximate Marginal R² (fixed effects): 0.0003
-Approximate Conditional R² (fixed + random): 0.8961
+Marginal R² (fixed effects): 0.0003
+Conditional R² (fixed + random): 0.8961
 
 Mixed Model Results for NERVES_log
 ==================================================
@@ -88,8 +88,8 @@ VISIT Var                                                      0.009    0.001
 ========================================================================================================
 
 
-Approximate Marginal R² (fixed effects): 0.0017
-Approximate Conditional R² (fixed + random): 0.7782
+Marginal R² (fixed effects): 0.0017
+Conditional R² (fixed + random): 0.7782
 
 Mixed Model Results for SAD_sqrt
 ==================================================
@@ -117,8 +117,8 @@ VISIT Var                                                      0.001    0.000
 ========================================================================================================
 
 
-Approximate Marginal R² (fixed effects): 0.0032
-Approximate Conditional R² (fixed + random): 0.4473
+Marginal R² (fixed effects): 0.0032
+Conditional R² (fixed + random): 0.4473
 
 Mixed Model Results for FEARFULA_sqrt
 ==================================================
@@ -146,28 +146,85 @@ VISIT Var                                                      0.000    0.000
 ========================================================================================================
 
 
-Approximate Marginal R² (fixed effects): 0.0012
-Approximate Conditional R² (fixed + random): 0.4953
-Found coefficient for Early Peri: -0.070
-Found coefficient for Late Peri: -0.013
-Found coefficient for Post-menopause: -0.054
-Found coefficient for Surgical: 0.042
-Found coefficient for Early Peri: -0.075
-Found coefficient for Late Peri: -0.054
-Found coefficient for Post-menopause: -0.057
-Found coefficient for Surgical: -0.061
-Found coefficient for Early Peri: 0.065
-Found coefficient for Late Peri: 0.069
-Found coefficient for Post-menopause: 0.092
-Found coefficient for Surgical: 0.162
-Found coefficient for Early Peri: 0.012
-Found coefficient for Late Peri: 0.021
-Found coefficient for Post-menopause: 0.020
-Found coefficient for Surgical: 0.031
-Found coefficient for Early Peri: 0.015
-Found coefficient for Late Peri: 0.026
-Found coefficient for Post-menopause: 0.024
-Found coefficient for Surgical: 0.039
-Forest plot saved.
+Marginal R² (fixed effects): 0.0012
+Conditional R² (fixed + random): 0.4953
+
+================================================================================
+CLINICAL SIGNIFICANCE INTERPRETATION
+================================================================================
+
+Methodology:
+  - MCID (Minimally Clinically Important Difference) = 0.5 x baseline SD
+  - Baseline SD calculated from pre-menopause group
+  - Clinical significance: |effect| >= MCID threshold
+================================================================================
+
+TOTIDE1:
+  Baseline SD: 1.364
+  MCID threshold: 0.682 points (0.5 x 1.364)
+--------------------------------------------------------------------------------
+
+  Early Peri:
+    Effect size: -0.070 points **
+    p-value: 0.0096
+    Statistically significant: Yes (p < 0.05)
+    Clinically meaningful: No (|-0.070| < 0.682)
+    -> Statistically significant but NOT clinically meaningful
+
+  Late Peri:
+    Effect size: -0.013 points 
+    p-value: 0.7293
+    Statistically significant: No (p >= 0.05)
+    Clinically meaningful: No (|-0.013| < 0.682)
+    -> Neither statistically nor clinically significant
+
+  Post-menopause:
+    Effect size: -0.054 points 
+    p-value: 0.1712
+    Statistically significant: No (p >= 0.05)
+    Clinically meaningful: No (|-0.054| < 0.682)
+    -> Neither statistically nor clinically significant
+
+  Surgical:
+    Effect size: +0.042 points 
+    p-value: 0.5593
+    Statistically significant: No (p >= 0.05)
+    Clinically meaningful: No (|0.042| < 0.682)
+    -> Neither statistically nor clinically significant
+
+TOTIDE2:
+  Baseline SD: 1.390
+  MCID threshold: 0.695 points (0.5 x 1.390)
+--------------------------------------------------------------------------------
+
+  Early Peri:
+    Effect size: -0.075 points **
+    p-value: 0.0066
+    Statistically significant: Yes (p < 0.05)
+    Clinically meaningful: No (|-0.075| < 0.695)
+    -> Statistically significant but NOT clinically meaningful
+
+  Late Peri:
+    Effect size: -0.054 points 
+    p-value: 0.1418
+    Statistically significant: No (p >= 0.05)
+    Clinically meaningful: No (|-0.054| < 0.695)
+    -> Neither statistically nor clinically significant
+
+  Post-menopause:
+    Effect size: -0.057 points 
+    p-value: 0.1609
+    Statistically significant: No (p >= 0.05)
+    Clinically meaningful: No (|-0.057| < 0.695)
+    -> Neither statistically nor clinically significant
+
+  Surgical:
+    Effect size: -0.061 points 
+    p-value: 0.4122
+    Statistically significant: No (p >= 0.05)
+    Clinically meaningful: No (|-0.061| < 0.695)
+    -> Neither statistically nor clinically significant
+
+================================================================================
 
 Analysis complete.

@@ -9,7 +9,8 @@
       "Bash(.gitignore)",
       "Bash(cat:*)",
       "Bash(printf:*)",
-      "Bash(nul)"
+      "Bash(nul)",
+      "Bash(timeout /t 30)"
     ],
     "deny": [],
     "ask": []

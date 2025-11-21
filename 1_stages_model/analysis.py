@@ -7,15 +7,14 @@ from statsmodels.formula.api import mixedlm
 import os
 import sys
 
-from visualisations import MenopauseVisualisations
-from proportion_analysis import MenopauseDeclineAnalysis
-
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
     sys.path.append(project_root)
 
 from utils.save_output import OutputCapture, get_output_dir
 from utils.plot_config import get_significance_color, set_apa_style
+from archive.proportion_analysis import MenopauseDeclineAnalysis
+from visualisations import MenopauseVisualisations
 
 class MenopauseCognitionAnalysis:
     """Analysis of cognitive and emotional outcomes across menopausal stages using mixed-effects models."""
@@ -156,6 +155,79 @@ class MenopauseCognitionAnalysis:
         except Exception as e:
             print(f"Error in model diagnostics: {str(e)}")
 
+    def _calculate_mcid_thresholds(self):
+        """Calculate MCID thresholds using 0.5 * SD from pre-menopause baseline."""
+        mcid_thresholds = {}
+
+        if 'STATUS_Label' in self.data.columns:
+            baseline_data = self.data[self.data['STATUS_Label'] == 'Pre-menopause']
+        else:
+            baseline_data = self.data
+
+        for measure in ['TOTIDE1', 'TOTIDE2']:
+            if measure in self.data.columns:
+                measure_data = pd.to_numeric(baseline_data[measure], errors='coerce').dropna()
+                if len(measure_data) > 0:
+                    mcid_thresholds[measure] = 0.5 * measure_data.std()
+
+        return mcid_thresholds
+
+    def interpret_clinical_significance(self):
+        """Interpret model results using MCID thresholds for clinical significance."""
+        if not self.mixed_model_results:
+            return
+
+        mcid_thresholds = self._calculate_mcid_thresholds()
+
+        print("\n" + "="*80)
+        print("CLINICAL SIGNIFICANCE INTERPRETATION")
+        print("="*80)
+        print("\nMethodology:")
+        print("  - MCID (Minimally Clinically Important Difference) = 0.5 x baseline SD")
+        print("  - Baseline SD calculated from pre-menopause group")
+        print("  - Clinical significance: |effect| >= MCID threshold")
+        print("="*80)
+
+        for outcome, results in self.mixed_model_results.items():
+            if outcome in mcid_thresholds:
+                mcid = mcid_thresholds[outcome]
+                baseline_data = self.data[self.data['STATUS_Label'] == 'Pre-menopause']
+                baseline_sd = pd.to_numeric(baseline_data[outcome], errors='coerce').dropna().std()
+
+                print(f"\n{outcome}:")
+                print(f"  Baseline SD: {baseline_sd:.3f}")
+                print(f"  MCID threshold: {mcid:.3f} points (0.5 x {baseline_sd:.3f})")
+                print("-" * 80)
+
+                for stage in ['Early Peri', 'Late Peri', 'Post-menopause', 'Surgical']:
+                    param_name = f"C(STATUS_Label, Treatment('Pre-menopause'))[T.{stage}]"
+
+                    if param_name in results.params.index:
+                        coef = results.params[param_name]
+                        p_val = results.pvalues[param_name]
+
+                        stat_sig = p_val < 0.05
+                        clin_sig = abs(coef) >= mcid
+
+                        sig_stars = "***" if p_val < 0.001 else "**" if p_val < 0.01 else "*" if p_val < 0.05 else ""
+
+                        print(f"\n  {stage}:")
+                        print(f"    Effect size: {coef:+.3f} points {sig_stars}")
+                        print(f"    p-value: {p_val:.4f}")
+                        print(f"    Statistically significant: {'Yes' if stat_sig else 'No'} (p {'<' if stat_sig else '>='} 0.05)")
+                        print(f"    Clinically meaningful: {'Yes' if clin_sig else 'No'} (|{coef:.3f}| {'>=' if clin_sig else '<'} {mcid:.3f})")
+
+                        if stat_sig and clin_sig:
+                            print(f"    -> BOTH statistically significant AND clinically meaningful")
+                        elif stat_sig and not clin_sig:
+                            print(f"    -> Statistically significant but NOT clinically meaningful")
+                        elif not stat_sig and clin_sig:
+                            print(f"    -> Clinically meaningful but NOT statistically significant")
+                        else:
+                            print(f"    -> Neither statistically nor clinically significant")
+
+        print("\n" + "="*80)
+
     def _calculate_reasonable_limits(self, coefs, errors, percentile=95):
         """Calculate axis limits using percentiles to avoid extreme outliers."""
         all_ends = []
@@ -192,6 +264,8 @@ class MenopauseCognitionAnalysis:
         }
 
         status_effects = ['Early Peri', 'Late Peri', 'Post-menopause', 'Surgical']
+
+        mcid_thresholds = self._calculate_mcid_thresholds()
 
         fig, axes = plt.subplots(5, 1, figsize=(14, 24), sharex=False)
         axes = axes.flatten()
@@ -251,6 +325,18 @@ class MenopauseCognitionAnalysis:
                               arrowprops=dict(arrowstyle='->', color=color, lw=1.5))
 
             ax.axvline(x=0, color='black', linestyle='--', alpha=0.5)
+
+            # Add MCID reference lines for cognitive measures
+            if outcome in mcid_thresholds:
+                mcid = mcid_thresholds[outcome]
+                ax.axvline(x=mcid, color='orange', linestyle=':', linewidth=2, alpha=0.7, label=f'MCID threshold')
+                ax.axvline(x=-mcid, color='orange', linestyle=':', linewidth=2, alpha=0.7)
+
+                # Add text annotation for MCID
+                ax.text(mcid, len(names) - 0.5, f'  MCID: ±{mcid:.2f}',
+                       fontsize=9, color='orange', va='top', ha='left',
+                       bbox=dict(facecolor='white', alpha=0.8, boxstyle='round,pad=0.3', edgecolor='orange'))
+
             ax.set_yticks(y_positions)
             ax.set_yticklabels(names, fontsize=11)
             ax.set_title(measure_labels.get(outcome, outcome), fontsize=14)
@@ -277,6 +363,7 @@ class MenopauseCognitionAnalysis:
         try:
             print("\nRunning mixed-effects models...")
             self.run_mixed_models()
+            self.interpret_clinical_significance()
             self.plot_forest_plot_from_models()
             print("\nAnalysis complete.")
         finally:
@@ -285,7 +372,8 @@ class MenopauseCognitionAnalysis:
 
 if __name__ == "__main__":
     # Main analysis: cognitive and emotional outcomes by menopausal stage
-    analysis = MenopauseCognitionAnalysis("processed_combined_data.csv", use_langcog=False)
+    data_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "processed_combined_data.csv")
+    analysis = MenopauseCognitionAnalysis(data_path, use_langcog=False)
     analysis.run_complete_analysis()
 
     # Proportion analysis: women experiencing cognitive/emotional decline
