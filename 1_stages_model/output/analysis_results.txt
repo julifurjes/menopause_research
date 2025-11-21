@@ -1,0 +1,173 @@
+Analysis Run: 2025-11-21 11:27:51
+================================================================================
+
+
+Running linear mixed-effects models...
+
+Mixed Model Results for TOTIDE1
+==================================================
+                                 Mixed Linear Model Regression Results
+========================================================================================================
+Model:                             MixedLM                Dependent Variable:                TOTIDE1    
+No. Observations:                  22352                  Method:                            REML       
+No. Groups:                        2309                   Scale:                             0.6240     
+Min. group size:                   1                      Log-Likelihood:                    -37049.1022
+Max. group size:                   11                     Converged:                         No         
+Mean group size:                   9.7                                                                  
+--------------------------------------------------------------------------------------------------------
+                                                              Coef.  Std.Err.   z    P>|z| [0.025 0.975]
+--------------------------------------------------------------------------------------------------------
+Intercept                                                      9.913    0.835 11.869 0.000  8.276 11.550
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]        0.042    0.073  0.584 0.559 -0.100  0.185
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]     -0.070    0.027 -2.590 0.010 -0.123 -0.017
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]      -0.013    0.036 -0.346 0.729 -0.083  0.058
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause] -0.054    0.040 -1.368 0.171 -0.132  0.023
+VISIT                                                          0.010    0.019  0.531 0.596 -0.027  0.046
+AGE_BASELINE                                                   0.006    0.018  0.349 0.727 -0.029  0.042
+Group Var                                                      5.284                                    
+Group x VISIT Cov                                             -0.182                                    
+VISIT Var                                                      0.774                                    
+========================================================================================================
+
+
+Approximate Marginal R² (fixed effects): 0.0004
+Approximate Conditional R² (fixed + random): 0.8944
+
+Mixed Model Results for TOTIDE2
+==================================================
+                                 Mixed Linear Model Regression Results
+========================================================================================================
+Model:                             MixedLM                Dependent Variable:                TOTIDE2    
+No. Observations:                  22352                  Method:                            REML       
+No. Groups:                        2309                   Scale:                             0.6537     
+Min. group size:                   1                      Log-Likelihood:                    -37590.4850
+Max. group size:                   11                     Converged:                         No         
+Mean group size:                   9.7                                                                  
+--------------------------------------------------------------------------------------------------------
+                                                              Coef.  Std.Err.   z    P>|z| [0.025 0.975]
+--------------------------------------------------------------------------------------------------------
+Intercept                                                     10.017    0.863 11.601 0.000  8.324 11.709
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]       -0.061    0.074 -0.820 0.412 -0.206  0.085
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]     -0.075    0.028 -2.718 0.007 -0.129 -0.021
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]      -0.054    0.037 -1.469 0.142 -0.127  0.018
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause] -0.057    0.040 -1.402 0.161 -0.136  0.023
+VISIT                                                          0.013    0.019  0.690 0.490 -0.024  0.050
+AGE_BASELINE                                                  -0.000    0.019 -0.005 0.996 -0.037  0.037
+Group Var                                                      5.638                                    
+Group x VISIT Cov                                             -0.165                                    
+VISIT Var                                                      0.810                                    
+========================================================================================================
+
+
+Approximate Marginal R² (fixed effects): 0.0003
+Approximate Conditional R² (fixed + random): 0.8961
+
+Mixed Model Results for NERVES_log
+==================================================
+                                 Mixed Linear Model Regression Results
+========================================================================================================
+Model:                             MixedLM                Dependent Variable:                NERVES_log 
+No. Observations:                  12819                  Method:                            REML       
+No. Groups:                        2295                   Scale:                             0.2170     
+Min. group size:                   1                      Log-Likelihood:                    -11722.0625
+Max. group size:                   7                      Converged:                         Yes        
+Mean group size:                   5.6                                                                  
+--------------------------------------------------------------------------------------------------------
+                                                              Coef.  Std.Err.   z    P>|z| [0.025 0.975]
+--------------------------------------------------------------------------------------------------------
+Intercept                                                      0.903    0.236  3.834 0.000  0.442  1.365
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]        0.162    0.056  2.869 0.004  0.051  0.272
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]      0.065    0.039  1.667 0.096 -0.011  0.141
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]       0.069    0.042  1.631 0.103 -0.014  0.152
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause]  0.092    0.043  2.143 0.032  0.008  0.176
+VISIT                                                         -0.005    0.003 -1.424 0.154 -0.012  0.002
+AGE_BASELINE                                                  -0.014    0.005 -2.717 0.007 -0.024 -0.004
+Group Var                                                      0.759    0.095                           
+Group x VISIT Cov                                             -0.063    0.011                           
+VISIT Var                                                      0.009    0.001                           
+========================================================================================================
+
+
+Approximate Marginal R² (fixed effects): 0.0017
+Approximate Conditional R² (fixed + random): 0.7782
+
+Mixed Model Results for SAD_sqrt
+==================================================
+                                 Mixed Linear Model Regression Results
+========================================================================================================
+Model:                             MixedLM                 Dependent Variable:                 SAD_sqrt 
+No. Observations:                  21256                   Method:                             REML     
+No. Groups:                        2309                    Scale:                              0.0452   
+Min. group size:                   1                       Log-Likelihood:                     -209.2848
+Max. group size:                   11                      Converged:                          No       
+Mean group size:                   9.2                                                                  
+--------------------------------------------------------------------------------------------------------
+                                                              Coef.  Std.Err.   z    P>|z| [0.025 0.975]
+--------------------------------------------------------------------------------------------------------
+Intercept                                                      1.412    0.064 21.901 0.000  1.286  1.538
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]        0.031    0.014  2.254 0.024  0.004  0.057
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]      0.012    0.006  1.962 0.050  0.000  0.025
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]       0.021    0.009  2.441 0.015  0.004  0.038
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause]  0.020    0.009  2.270 0.023  0.003  0.038
+VISIT                                                         -0.005    0.001 -5.037 0.000 -0.006 -0.003
+AGE_BASELINE                                                  -0.005    0.001 -3.324 0.001 -0.007 -0.002
+Group Var                                                      0.036    0.009                           
+Group x VISIT Cov                                             -0.002    0.001                           
+VISIT Var                                                      0.001    0.000                           
+========================================================================================================
+
+
+Approximate Marginal R² (fixed effects): 0.0032
+Approximate Conditional R² (fixed + random): 0.4473
+
+Mixed Model Results for FEARFULA_sqrt
+==================================================
+                                 Mixed Linear Model Regression Results
+========================================================================================================
+Model:                           MixedLM                Dependent Variable:                FEARFULA_sqrt
+No. Observations:                21680                  Method:                            REML         
+No. Groups:                      2309                   Scale:                             0.0240       
+Min. group size:                 1                      Log-Likelihood:                    6634.3958    
+Max. group size:                 11                     Converged:                         Yes          
+Mean group size:                 9.4                                                                    
+--------------------------------------------------------------------------------------------------------
+                                                              Coef.  Std.Err.   z    P>|z| [0.025 0.975]
+--------------------------------------------------------------------------------------------------------
+Intercept                                                      1.109    0.054 20.438 0.000  1.003  1.215
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Surgical]        0.039    0.010  3.988 0.000  0.020  0.058
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Early Peri]      0.015    0.005  3.235 0.001  0.006  0.024
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Late Peri]       0.026    0.006  4.175 0.000  0.014  0.039
+C(STATUS_Label, Treatment('Pre-menopause'))[T.Post-menopause]  0.024    0.006  3.700 0.000  0.011  0.037
+VISIT                                                         -0.002    0.001 -3.636 0.000 -0.003 -0.001
+AGE_BASELINE                                                  -0.001    0.001 -0.558 0.577 -0.003  0.002
+Group Var                                                      0.023    0.007                           
+Group x VISIT Cov                                             -0.001    0.001                           
+VISIT Var                                                      0.000    0.000                           
+========================================================================================================
+
+
+Approximate Marginal R² (fixed effects): 0.0012
+Approximate Conditional R² (fixed + random): 0.4953
+Found coefficient for Early Peri: -0.070
+Found coefficient for Late Peri: -0.013
+Found coefficient for Post-menopause: -0.054
+Found coefficient for Surgical: 0.042
+Found coefficient for Early Peri: -0.075
+Found coefficient for Late Peri: -0.054
+Found coefficient for Post-menopause: -0.057
+Found coefficient for Surgical: -0.061
+Found coefficient for Early Peri: 0.065
+Found coefficient for Late Peri: 0.069
+Found coefficient for Post-menopause: 0.092
+Found coefficient for Surgical: 0.162
+Found coefficient for Early Peri: 0.012
+Found coefficient for Late Peri: 0.021
+Found coefficient for Post-menopause: 0.020
+Found coefficient for Surgical: 0.031
+Found coefficient for Early Peri: 0.015
+Found coefficient for Late Peri: 0.026
+Found coefficient for Post-menopause: 0.024
+Found coefficient for Surgical: 0.039
+Forest plot saved.
+
+Analysis complete.

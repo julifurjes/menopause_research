@@ -8,7 +8,8 @@
       "Bash(findstr:*)",
       "Bash(.gitignore)",
       "Bash(cat:*)",
-      "Bash(printf:*)"
+      "Bash(printf:*)",
+      "Bash(nul)"
     ],
     "deny": [],
     "ask": []

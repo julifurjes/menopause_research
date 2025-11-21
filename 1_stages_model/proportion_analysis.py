@@ -3,6 +3,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 import os
+import sys
+
+# Add the project root to Python path
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if project_root not in sys.path:
+    sys.path.append(project_root)
+
+from utils.plot_config import (STAGE_COLORS, get_categorical_palette,
+                               set_apa_style, CONSTRUCT_COLORS)
 
 class MenopauseDeclineAnalysis:
     """
@@ -17,8 +26,9 @@ class MenopauseDeclineAnalysis:
 
     def __init__(self, data):
         self.data = data
-        self.output_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-                                       '1_stages_model', 'output', 'longitudinal')
+        # Use centralized output directory
+        from utils.save_output import get_output_dir
+        self.output_dir = get_output_dir('1_stages_model')
         os.makedirs(self.output_dir, exist_ok=True)
 
         # Define cognitive and emotional measures
@@ -27,6 +37,9 @@ class MenopauseDeclineAnalysis:
 
         # Status order for visualization
         self.status_order = ['Pre-menopause', 'Early Peri', 'Late Peri', 'Post-menopause', 'Surgical']
+
+        # Apply APA style
+        set_apa_style()
 
         # Calculate MCID thresholds
         self.mcid_thresholds = self._calculate_mcid_thresholds()
@@ -212,9 +225,8 @@ class MenopauseDeclineAnalysis:
         fig, axes = plt.subplots(5, 1, figsize=(14, 24))
         axes = axes.flatten()
 
-        # Use the YlGn color palette
-        green_palette = sns.color_palette("YlGn", n_colors=8)
-        colors = [green_palette[2], green_palette[3], green_palette[4], green_palette[5], green_palette[6]]
+        # Use colorblind-friendly colors - one color per stage
+        stage_colors_list = [STAGE_COLORS[stage] for stage in self.status_order]
         
         for idx, measure in enumerate(measure_order):
             ax = axes[idx]
@@ -225,11 +237,11 @@ class MenopauseDeclineAnalysis:
             if measure_data.empty:
                 continue
                 
-            # Create bar plot
+            # Create bar plot with stage-specific colors
             bars = ax.bar(
-                range(len(measure_data)), 
+                range(len(measure_data)),
                 measure_data['Has_Decline'],
-                color=colors[idx],
+                color=stage_colors_list[:len(measure_data)],
                 alpha=0.8,
                 edgecolor='black',
                 linewidth=0.5
@@ -248,8 +260,9 @@ class MenopauseDeclineAnalysis:
                     fontsize=18
                 )
             
-            # Customize subplot
-            ax.set_title(f'{measure_labels[measure]}', fontsize=18, fontweight='bold')
+            # Customize subplot (APA format)
+            ax.set_title(f'{measure_labels[measure]}', fontsize=14)
+            sns.despine(ax=ax)
 
             # Set x-axis labels
             ax.set_xticks(range(len(measure_data)))

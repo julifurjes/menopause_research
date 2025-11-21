@@ -49,16 +49,41 @@ You need to download the dataset from the ICPSR: https://www.icpsr.umich.edu/web
 
 After downloading the data:
 1. Create a `data` folder in the main project directory
-2. Place all downloaded files in this `data` folder and follow the naming regulations in the code
+2. Place all downloaded files in this `data` folder
+
+**Required data files** (rename downloaded files to match these names):
+- `swan_cross_sectional.tsv` - Cross-sectional dataset
+- `swan_timestamp_0.tsv` - Baseline dataset
+- `swan_timestamp_1.tsv` - Follow-up visit 1
+- `swan_timestamp_2.tsv` - Follow-up visit 2
+- `swan_timestamp_3.tsv` - Follow-up visit 3
+- `swan_timestamp_4.tsv` - Follow-up visit 4
+- `swan_timestamp_5.tsv` - Follow-up visit 5
+- `swan_timestamp_6.tsv` - Follow-up visit 6
+- `swan_timestamp_7.tsv` - Follow-up visit 7
+- `swan_timestamp_8.tsv` - Follow-up visit 8
+- `swan_timestamp_9.tsv` - Follow-up visit 9
+- `swan_timestamp_10.tsv` - Follow-up visit 10
+
+**Note**: When downloading from ICPSR, files have technical names. Rename them to match the structure above - it's straightforward which file corresponds to which visit, except the "baseline" dataset which should be renamed to `swan_timestamp_0.tsv`.
 
 Your project structure should look like this:
 
 ```
 project-folder/
-├── data/           # Your downloaded ICPSR data goes here
-├── preparations/   # Data processing scripts
+├── data/
+│   ├── swan_cross_sectional.tsv
+│   ├── swan_timestamp_0.tsv
+│   ├── swan_timestamp_1.tsv
+│   ├── swan_timestamp_2.tsv
+│   └── ... (through timestamp_10.tsv)
+├── preparations/              # Data processing scripts
+├── output/                    # Generated analysis outputs
 ├── etc.
 ```
+
+**Output files** (automatically generated):
+- `processed_combined_data.csv` - Created by [create_dataframe.py](preparations/create_dataframe.py), used by all models
 
 ## Running the Analysis
 
@@ -94,13 +119,13 @@ The project includes three different modeling approaches. Each model can be run 
 
 ```bash
 # Model 1: Stages model
-python 1_stages_model/longitudinal.py
+python 1_stages_model/analysis.py
 
 # Model 2: Symptoms model
-python 2_symptoms_model/longitudinal.py
+python 2_symptoms_model/analysis.py
 
 # Model 3: Social model
-python 3_social_model/longitudinal.py
+python 3_social_model/analysis.py
 ```
 
 ## AI Declaration

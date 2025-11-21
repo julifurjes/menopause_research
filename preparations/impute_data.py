@@ -92,14 +92,15 @@ class ImputationValidator:
         print(f"Missingness patterns saved to: {csv_path}")
         
         # Create heatmap of missing correlations with improved formatting
-        green_palette = sns.color_palette("YlGn", n_colors=10)
+        # Use colorblind-friendly sequential palette
+        sequential_palette = sns.light_palette('#228833', n_colors=10, as_cmap=True)
         plt.figure(figsize=(12, 10))
         
         # Create heatmap with larger fonts
         ax = sns.heatmap(
             missing_corr, 
             annot=True, 
-            cmap=green_palette, 
+            cmap=sequential_palette, 
             vmin=-1, 
             vmax=1,
             annot_kws={'size': 14},  # Larger numbers in cells
@@ -334,7 +335,8 @@ class ImputationValidator:
         # Original correlations
         original_corr = self.data[self.variables].corr()
 
-        green_palette = sns.color_palette("YlGn", n_colors=10)
+        # Use colorblind-friendly sequential palette
+        sequential_palette = sns.light_palette('#228833', n_colors=10, as_cmap=True)
         
         # Plot correlation matrix
         plt.figure(figsize=(10, 8))
@@ -342,7 +344,7 @@ class ImputationValidator:
             original_corr,
             annot=True,
             fmt='.2f',
-            cmap=green_palette,
+            cmap=sequential_palette,
             vmin=-1,
             vmax=1
         )
@@ -537,7 +539,7 @@ class ImputationValidator:
             annot=True,
             fmt='.2f',
             ax=ax1,
-            cmap='coolwarm',
+            cmap='RdBu_r',
             vmin=-1,
             vmax=1,
             mask=mask1
@@ -553,7 +555,7 @@ class ImputationValidator:
             annot=True,
             fmt='.2f',
             ax=ax2,
-            cmap='coolwarm',
+            cmap='RdBu_r',
             vmin=-1,
             vmax=1,
             mask=mask2

@@ -43,18 +43,18 @@ class OutputCapture:
 def get_output_dir(model_name, type='overall'):
     """
     Creates and returns the output directory path for a specific model.
-    
+
     Args:
         model_name (str): Name of the model folder (e.g., '1_stages_model')
-        type (str): Type of output directory (default: 'overall')
+        type (str): Type of output directory (deprecated, kept for compatibility)
     Returns:
         str: Path to the output directory
     """
     # Get the root directory (where utils folder is)
     root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    
-    # Create path for model's output
-    output_dir = os.path.join(root_dir, model_name, 'output', type)
+
+    # Create output folder within each model's directory
+    output_dir = os.path.join(root_dir, model_name, 'output')
     os.makedirs(output_dir, exist_ok=True)
-    
+
     return output_dir

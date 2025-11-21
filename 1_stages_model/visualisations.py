@@ -11,6 +11,8 @@ if project_root not in sys.path:
     sys.path.append(project_root)
 
 from utils.save_output import get_output_dir
+from utils.plot_config import (STAGE_COLORS, get_categorical_palette,
+                               set_apa_style, CONSTRUCT_COLORS)
 
 class MenopauseVisualisations:
     def __init__(self, data):
@@ -24,8 +26,11 @@ class MenopauseVisualisations:
             'SAD_sqrt': 'Sadness (Sqrt)',
             'FEARFULA_sqrt': 'Fearfulness (Sqrt)'
         }
-        self.output_dir = get_output_dir('1_stages_model', 'longitudinal')
+        self.output_dir = get_output_dir('1_stages_model')
         os.makedirs(self.output_dir, exist_ok=True)
+
+        # Apply APA style for all plots
+        set_apa_style()
 
     def plot_violin_plots(self):
         """
@@ -35,9 +40,10 @@ class MenopauseVisualisations:
         # Create a figure with subplots for outcome variables (5 measures now)
         fig, axes = plt.subplots(3, 2, figsize=(16, 20))
         axes = axes.flatten()
-        
-        # Define a green color palette
-        green_palette = sns.color_palette("YlGn", n_colors=len(self.data['STATUS_Label'].cat.categories))
+
+        # Create stage color palette
+        stage_order = ['Pre-menopause', 'Early Peri', 'Late Peri', 'Post-menopause', 'Surgical']
+        stage_palette = [STAGE_COLORS.get(stage, '#888888') for stage in stage_order]
         
         # Plot each outcome measure
         for i, measure in enumerate(self.transformed_vars):
@@ -52,7 +58,7 @@ class MenopauseVisualisations:
                 legend=False,        # Don't show redundant legend
                 ax=ax,
                 inner='box',         # Show boxplot inside violin
-                palette=green_palette,  # Use green scale palette
+                palette=stage_palette,  # Use colorblind-friendly palette
             )
             
             # Add jittered stripplot with very small marker size and high transparency
@@ -68,9 +74,10 @@ class MenopauseVisualisations:
                 dodge=False           # Don't dodge points
             )
             
-            # Set title and labels
+            # Set title and labels (APA format)
             measure_name = self.var_labels.get(measure, measure)
-            ax.set_title(f'Distribution of {measure_name}', fontsize=12)
+            ax.set_title(f'Distribution of {measure_name}', fontsize=14)
+            sns.despine(ax=ax)
             ax.set_xlabel('Menopausal Stage', fontsize=10)
             ax.set_ylabel(measure_name, fontsize=10)
             
@@ -162,11 +169,9 @@ class MenopauseVisualisations:
         fig, axes = plt.subplots(5, 1, figsize=(14, 22), sharex=True)
         axes = axes.flatten()
         
-        # Define green color for lines
-        green_palette = sns.color_palette("YlGn", n_colors=8)
-        selected_greens = [green_palette[3], green_palette[5]]
-        line_color = selected_greens[0]  # Use a lighter green for lines
-        errorbar_color = selected_greens[1]  # Use a darker green for error bars
+        # Use colorblind-friendly colors for lines
+        line_color = CONSTRUCT_COLORS['cognitive_function']  # Blue
+        errorbar_color = '#004488'  # Darker blue for error bars
         
         # Create plots for each measure
         for i, measure in enumerate(self.transformed_vars):
@@ -175,8 +180,9 @@ class MenopauseVisualisations:
             # Get data for this measure
             measure_data = summary_data[summary_data['Measure'] == measure]
             
-            # Set title even if no data
+            # Set title even if no data (APA format)
             ax.set_title(self.var_labels.get(measure, measure), fontsize=14)
+            sns.despine(ax=ax)
             
             # Skip if no data for this measure
             if len(measure_data) == 0:
@@ -255,6 +261,119 @@ class MenopauseVisualisations:
         
         print("Faceted plot of stages vs. scores saved.")
 
+    def plot_trajectory_classes(self):
+        """
+        Create enhanced longitudinal trajectory plots showing how scores change
+        across visits/time points, with separate lines for different menopausal stages.
+        Similar to multi-panel trajectory class plots.
+        """
+        print("Creating trajectory class plots...")
+
+        # Use VISIT as time points
+        if 'VISIT' not in self.data.columns:
+            print("Warning: VISIT column not found. Cannot create trajectory plots.")
+            return
+
+        # Prepare data with visit information
+        trajectory_data = self.data.copy()
+
+        # Select measures to plot (similar to your example: 3 panels)
+        measures_to_plot = ['TOTIDE1', 'TOTIDE2', 'NERVES_log']
+        measure_labels_short = {
+            'TOTIDE1': 'Immediate Recall Score',
+            'TOTIDE2': 'Delayed Recall Score',
+            'NERVES_log': 'Nervousness Score (log)'
+        }
+
+        # Create 3-panel figure
+        fig, axes = plt.subplots(3, 1, figsize=(12, 14))
+
+        # Stage order for trajectories
+        stage_order = ['Pre-menopause', 'Early Peri', 'Late Peri', 'Post-menopause']
+
+        # Use stage colors
+        stage_colors_map = {
+            'Pre-menopause': STAGE_COLORS['Pre-menopause'],
+            'Early Peri': STAGE_COLORS['Early Peri'],
+            'Late Peri': STAGE_COLORS['Late Peri'],
+            'Post-menopause': STAGE_COLORS['Post-menopause']
+        }
+
+        for idx, measure in enumerate(measures_to_plot):
+            ax = axes[idx]
+
+            if measure not in trajectory_data.columns:
+                ax.text(0.5, 0.5, f'{measure} not available',
+                       ha='center', va='center', fontsize=12)
+                continue
+
+            # Calculate mean and SE for each stage at each visit
+            for stage in stage_order:
+                if stage not in trajectory_data['STATUS_Label'].values:
+                    continue
+
+                stage_data = trajectory_data[trajectory_data['STATUS_Label'] == stage].copy()
+
+                # Group by visit and calculate statistics
+                visit_stats = stage_data.groupby('VISIT').agg({
+                    measure: ['mean', 'sem', 'count']
+                }).reset_index()
+
+                visit_stats.columns = ['VISIT', 'mean', 'sem', 'count']
+
+                # Filter to visits with sufficient data
+                visit_stats = visit_stats[visit_stats['count'] >= 10]
+
+                if len(visit_stats) < 2:
+                    continue
+
+                # Calculate 95% CI
+                visit_stats['ci_lower'] = visit_stats['mean'] - 1.96 * visit_stats['sem']
+                visit_stats['ci_upper'] = visit_stats['mean'] + 1.96 * visit_stats['sem']
+
+                color = stage_colors_map.get(stage, '#888888')
+
+                # Plot mean line
+                ax.plot(visit_stats['VISIT'], visit_stats['mean'],
+                       marker='o', linewidth=2, markersize=6,
+                       color=color, label=stage, alpha=0.9)
+
+                # Add confidence interval as shaded area
+                ax.fill_between(visit_stats['VISIT'],
+                               visit_stats['ci_lower'],
+                               visit_stats['ci_upper'],
+                               color=color, alpha=0.15)
+
+            # Format subplot
+            ax.set_xlabel('Follow-up Time Point (Visit)', fontsize=12)
+            ax.set_ylabel(measure_labels_short.get(measure, measure), fontsize=12)
+            ax.set_title(f'({chr(97+idx)}) {measure_labels_short.get(measure, measure)}',
+                        fontsize=14, loc='left', fontweight='bold')
+
+            # Add legend for first panel only
+            if idx == 0:
+                ax.legend(title='Menopausal Stage', fontsize=10,
+                         title_fontsize=11, loc='upper right',
+                         frameon=True, fancybox=True, shadow=True)
+
+            # Grid and formatting
+            ax.grid(True, linestyle=':', alpha=0.3, linewidth=0.5)
+            ax.tick_params(labelsize=11)
+            sns.despine(ax=ax)
+
+        # Overall title
+        fig.suptitle('Longitudinal Trajectories of Cognitive and Emotional Outcomes\nAcross Menopausal Transition',
+                    fontsize=16, fontweight='bold', y=0.995)
+
+        plt.tight_layout(rect=[0, 0, 1, 0.99])
+
+        # Save
+        output_file = os.path.join(self.output_dir, 'trajectory_classes.png')
+        plt.savefig(output_file, dpi=300, bbox_inches='tight')
+        plt.close()
+
+        print(f"Trajectory class plot saved as: {output_file}")
+
     def create_all_visualizations(self):
         """Run all visualization methods."""
         
@@ -263,5 +382,8 @@ class MenopauseVisualisations:
 
         print("Creating faceted plot of stages vs. scores...")
         self.plot_stages_vs_scores()
-        
+
+        print("Creating trajectory class plots...")
+        self.plot_trajectory_classes()
+
         print("All visualizations completed.")
