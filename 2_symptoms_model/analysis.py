@@ -9,17 +9,17 @@ from statsmodels.formula.api import mixedlm
 import os
 import sys
 
-# Add the project root to Python path
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
     sys.path.append(project_root)
 
 from utils.save_output import OutputCapture, get_output_dir
-from utils.plot_config import (STAGE_COLORS, SYMPTOM_COLORS, SIGNIFICANCE_COLORS,
-                               get_significance_color, set_apa_style, CONSTRUCT_COLORS,
-                               get_categorical_palette, CORRELATION_CMAP)
+from utils.plot_config import (SIGNIFICANCE_COLORS, get_significance_color,
+                               set_apa_style, get_categorical_palette, CORRELATION_CMAP)
 
 class MenopauseCognitionAnalysis:
+    """Analyze relationships between menopausal symptoms and cognitive/emotional outcomes."""
+
     def __init__(self, file_path, use_langcog=True):
         self.data = pd.read_csv(file_path, low_memory=False)
         self.symptom_vars = ['NUMHOTF', 'NUMNITS', 'NUMCLDS', 'STIFF', 'IRRITAB', 'MOODCHG', 'SLEEPQL']
@@ -44,34 +44,23 @@ class MenopauseCognitionAnalysis:
             'FEARFULA': 'Fearfulness Score',
         }
         self.output_dir = get_output_dir('2_symptoms_model')
-
-        # Apply APA style for all plots
         set_apa_style()
-        
+
     def prepare_data(self):
-        """Prepare data including menopausal status categorization and transformations."""
+        """Prepare data by filtering stages, creating labels, and standardizing symptom variables."""
         self.data['STATUS'] = pd.to_numeric(self.data['STATUS'], errors='coerce')
-        # Keep only statuses of interest (surgical: 1, 8; natural: 2,3,4,5)
         self.data = self.data[self.data['STATUS'].isin([1, 2, 3, 4, 5, 8])]
 
-        # Convert variables to numeric
         all_vars = self.symptom_vars + self.outcome_vars + self.control_vars + ['SWANID', 'VISIT']
         for var in all_vars:
             if var in self.data.columns:
                 self.data[var] = pd.to_numeric(self.data[var], errors='coerce')
 
-        # Map status to more descriptive labels for natural statuses and mark surgical statuses
         status_map = {
-            1: 'Surgical',
-            2: 'Post-menopause',
-            3: 'Late Peri',
-            4: 'Early Peri',
-            5: 'Pre-menopause',
-            8: 'Surgical'
+            1: 'Surgical', 2: 'Post-menopause', 3: 'Late Peri',
+            4: 'Early Peri', 5: 'Pre-menopause', 8: 'Surgical'
         }
         self.data['STATUS_Label'] = self.data['STATUS'].map(status_map)
-
-        # Create a new variable to distinguish natural vs. surgical menopause
         self.data['Menopause_Type'] = np.where(self.data['STATUS'].isin([1, 8]), 'Surgical', 'Natural')
 
         natural_order = ['Pre-menopause', 'Early Peri', 'Late Peri', 'Post-menopause']
@@ -81,65 +70,47 @@ class MenopauseCognitionAnalysis:
             ordered=True
         )
 
-        # Create baseline age variable (age at first visit)
         self.data = self.data.sort_values(['SWANID', 'VISIT'])
         self.data['AGE_BASELINE'] = self.data.groupby('SWANID')['AGE'].transform('first')
 
-        # Standardize symptom variables
         self.data[self.symptom_vars] = (self.data[self.symptom_vars] -
                                        self.data[self.symptom_vars].mean()) / self.data[self.symptom_vars].std()
 
-        # Make language categorical if using it
         if self.use_langcog and 'LANGCOG' in self.data.columns:
             self.data['LANGCOG'] = self.data['LANGCOG'].astype('category')
 
         self.transform_variables()
-    
+
     def transform_variables(self):
-        """Apply transformations to address heteroscedasticity and multicollinearity for outcome variables."""
-        # Variables needing log transformation (highest skewness)
+        """Apply log and sqrt transformations to address skewness in symptoms and outcomes."""
         log_transform_vars = ['NERVES', 'NUMHOTF', 'NUMNITS', 'NUMCLDS']
-
-        # Variables needing sqrt transformation (moderately skewed)
         sqrt_transform_vars = ['FEARFULA', 'SAD', 'MOODCHG', 'IRRITAB', 'SLEEPQL']
-
-        # Variables to keep as-is (low skewness)
         no_transform_vars = ['STIFF']
-        
-        # Apply log transformations
+
         for var in log_transform_vars:
             if var in self.data.columns:
                 self.data[f"{var}_log"] = np.log1p(self.data[var])
                 self.transformed_symptom_vars.append(f"{var}_log")
                 self.var_labels[f"{var}_log"] = f"{self.var_labels.get(var, var)} (Log)"
-        
-        # Apply sqrt transformations
+
         for var in sqrt_transform_vars:
             if var in self.data.columns:
                 self.data[f"{var}_sqrt"] = np.sqrt(self.data[var])
                 self.transformed_symptom_vars.append(f"{var}_sqrt")
                 self.var_labels[f"{var}_sqrt"] = f"{self.var_labels.get(var, var)} (Sqrt)"
-        
-        # Add untransformed variables
+
         for var in no_transform_vars:
             if var in self.data.columns:
                 self.transformed_symptom_vars.append(var)
-        
-        # Use TOTIDE1 and TOTIDE2 separately instead of averaging
-        self.transformed_outcome_vars = []
 
-        # Add TOTIDE1 and TOTIDE2 to transformed outcomes
+        self.transformed_outcome_vars = []
         if 'TOTIDE1' in self.data.columns:
             self.transformed_outcome_vars.append('TOTIDE1')
         if 'TOTIDE2' in self.data.columns:
             self.transformed_outcome_vars.append('TOTIDE2')
 
     def run_mixed_models(self):
-        """
-        Run linear mixed-effects models for symptom-cognition relationships.
-        Uses transformed outcome variables and includes AGE and VISIT in the models.
-        Also includes weighting for unbalanced data.
-        """
+        """Run mixed-effects models analyzing symptom-cognition relationships."""
         print("\nRunning linear mixed-effects models with transformed variables...")
 
         # Get the reference language for the model (the most common one) if using LANGCOG
@@ -232,7 +203,7 @@ class MenopauseCognitionAnalysis:
                     print(f"Error in mixed model analysis for {symptom} -> {original_outcome}: {str(e)}")
     
     def check_model_diagnostics(self, model_results, outcome, transformed_outcome, symptom, data):
-        """Check model residuals and diagnostics for the mixed model."""
+        """Generate diagnostic plots for mixed model residuals."""
         try:
             # Calculate residuals
             predicted = model_results.predict(data)
@@ -306,9 +277,7 @@ class MenopauseCognitionAnalysis:
             print(f"Error in model diagnostics: {str(e)}")
     
     def plot_symptom_effects(self):
-        """
-        Create forest plots showing the effects of symptoms on cognitive outcomes.
-        """
+        """Create forest plots showing symptom effects on cognitive outcomes."""
         if not self.mixed_model_results:
             print("No mixed model results available. Run run_mixed_models() first.")
             return
@@ -452,14 +421,7 @@ class MenopauseCognitionAnalysis:
             print(f"Forest plot saved as: {file_name}")
 
     def create_stratified_forest_plot(self, outcome='TOTIDE1'):
-        """
-        Create simplified stratified forest plots showing symptom effects
-        on cognitive function across key demographic subgroups.
-        Creates separate, manageable panels for each stratification.
-
-        Args:
-            outcome: The cognitive outcome to analyze (default: 'TOTIDE1')
-        """
+        """Create stratified forest plots showing symptom effects across demographic subgroups."""
         if not self.mixed_model_results:
             print("No mixed model results available. Run run_mixed_models() first.")
             return
@@ -642,10 +604,7 @@ class MenopauseCognitionAnalysis:
         return plot_df
 
     def analyze_symptom_intensity_by_stage(self):
-        """
-        Analyze how symptom intensity (frequency, daily count, bothersomeness) 
-        varies across different menopausal stages, including surgical menopause.
-        """
+        """Analyze symptom intensity variation across menopausal stages."""
         print("\nAnalyzing symptom intensity variation across menopausal stages...")
         
         # Create output directory for these specific results
@@ -800,10 +759,7 @@ class MenopauseCognitionAnalysis:
         return results_df
 
     def plot_overall_symptom_intensity_pattern(self, results_df, output_dir):
-        """
-        Create a comprehensive visualization showing how symptom intensity 
-        patterns change across menopausal stages.
-        """
+        """Create visualization showing symptom intensity patterns across menopausal stages."""
         # Status order
         status_order = ['Pre-menopause', 'Early Peri', 'Late Peri', 'Post-menopause', 'Surgical']
         
@@ -870,11 +826,7 @@ class MenopauseCognitionAnalysis:
         plt.close()
     
     def plot_symptom_intensity_heatmap(self):
-        """
-        Create a heat map showing symptom intensity across menopausal stages.
-        5 × 4 matrix: stage (rows) × symptom group (cols).
-        Color represents z-scored intensity values.
-        """
+        """Create heatmap showing symptom intensity across menopausal stages."""
         print("\nCreating symptom intensity heat map...")
         
         # Define symptom groups (matching your analyze_symptom_intensity_by_stage method)
@@ -1020,7 +972,7 @@ class MenopauseCognitionAnalysis:
         return heatmap_data_z, heatmap_data
 
     def run_complete_analysis(self):
-        """Run the complete analysis pipeline with transformed variables."""
+        """Run the complete analysis pipeline."""
         # Create output directory if it doesn't exist
         os.makedirs(self.output_dir, exist_ok=True)
         
@@ -1054,7 +1006,6 @@ class MenopauseCognitionAnalysis:
             output_capture.close()
 
 if __name__ == "__main__":
-    file_path = "processed_combined_data.csv"
-    # Set use_langcog=True to include language as a covariate, or False to exclude it
-    analysis = MenopauseCognitionAnalysis(file_path, use_langcog=False)
+    # Symptom-cognition analysis: relationships between menopausal symptoms and outcomes
+    analysis = MenopauseCognitionAnalysis("processed_combined_data.csv", use_langcog=False)
     analysis.run_complete_analysis()

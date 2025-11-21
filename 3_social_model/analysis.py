@@ -8,7 +8,6 @@ from scipy import stats
 import os
 import sys
 
-# Add the project root to Python path
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
     sys.path.append(project_root)
@@ -18,28 +17,18 @@ from utils.plot_config import (STAGE_COLORS, CONSTRUCT_COLORS, SIGNIFICANCE_COLO
                                get_significance_color, set_apa_style, CORRELATION_CMAP)
 
 class ModerationAnalysis:
-    """
-    Mixed-effects moderation analysis testing whether social support buffers
-    the relationship between menopausal stage and cognitive function.
-
-    This properly accounts for repeated measures using random intercepts for subjects
-    while testing the interaction: Stage × Social Support → Cognition
-    """
+    """Analyze moderation effects of social support on cognitive outcomes across menopausal stages."""
 
     def __init__(self, data_path):
         self.data = pd.read_csv(data_path, low_memory=False)
         self.output_dir = get_output_dir('3_social_model')
-
-        # Define variable groups
         self.social_support_vars = ['LISTEN', 'TAKETOM', 'HELPSIC', 'CONFIDE']
         self.cognitive_vars = ['TOTIDE1', 'TOTIDE2']
         self.control_vars = ['AGE_BASELINE', 'VISIT']
-
         self.results = {}
 
     def preprocess_data(self):
-        """Prepare data for moderation analysis"""
-        # Convert variables to numeric
+        """Prepare data by creating composite scores and interaction terms."""
         relevant_vars = (self.social_support_vars + self.cognitive_vars +
                         ['STATUS', 'SWANID', 'VISIT', 'AGE'])
 
@@ -47,37 +36,24 @@ class ModerationAnalysis:
             if col in self.data.columns:
                 self.data[col] = pd.to_numeric(self.data[col], errors='coerce')
 
-        # Filter to relevant menopausal statuses
         self.data['STATUS'] = pd.to_numeric(self.data['STATUS'], errors='coerce')
         self.data = self.data[self.data['STATUS'].isin([1, 2, 3, 4, 5, 8])]
 
-        # Map status to labels
         status_map = {
-            1: 'Surgical',
-            2: 'Post-menopause',
-            3: 'Late Peri',
-            4: 'Early Peri',
-            5: 'Pre-menopause',
-            8: 'Surgical'
+            1: 'Surgical', 2: 'Post-menopause', 3: 'Late Peri',
+            4: 'Early Peri', 5: 'Pre-menopause', 8: 'Surgical'
         }
         self.data['STATUS_Label'] = self.data['STATUS'].map(status_map)
-
-        # Sort by subject and visit
         self.data = self.data.sort_values(['SWANID', 'VISIT'])
 
-        # Create baseline age
         if 'AGE' in self.data.columns:
             self.data['AGE_BASELINE'] = self.data.groupby('SWANID')['AGE'].transform('first')
 
-        # Create composite scores
         self.data['social_support'] = self.data[self.social_support_vars].mean(axis=1)
         self.data['cognitive_function'] = self.data[self.cognitive_vars].mean(axis=1)
 
-        # Center social support for interaction interpretation
         self.data['social_support_centered'] = (self.data['social_support'] -
                                                  self.data['social_support'].mean())
-
-        # Create dummy variables for STATUS with Pre-menopause as reference
         # Exclude Surgical for now to focus on natural transition
         self.data['Early_Peri'] = (self.data['STATUS_Label'] == 'Early Peri').astype(int)
         self.data['Late_Peri'] = (self.data['STATUS_Label'] == 'Late Peri').astype(int)
@@ -101,8 +77,7 @@ class ModerationAnalysis:
         print(self.data['STATUS_Label'].value_counts())
 
     def fit_moderation_models(self):
-        """Fit mixed-effects models testing moderation"""
-
+        """Fit mixed-effects models testing moderation of social support effects by menopausal stage."""
         print("MODERATION ANALYSIS: Social Support × Menopausal Stage")
         print("=" * 80)
 
@@ -211,8 +186,7 @@ class ModerationAnalysis:
         return result_main_reml, result_interaction_reml
 
     def plot_moderation_effects(self):
-        """Visualize the moderation effects"""
-
+        """Create visualizations showing moderation effects."""
         if 'moderation' not in self.results:
             print("Run fit_moderation_models() first")
             return
@@ -316,8 +290,7 @@ class ModerationAnalysis:
         print(f"\nModeration effects plot saved to: {output_path}")
 
     def interpret_results(self):
-        """Print interpretation of moderation results"""
-
+        """Print interpretation of moderation results."""
         if 'moderation' not in self.results:
             print("Run fit_moderation_models() first")
             return
@@ -369,7 +342,7 @@ class ModerationAnalysis:
                 print(f"       between {stage} and pre-menopause")
 
     def run_analysis(self):
-        """Run complete moderation analysis"""
+        """Run the complete moderation analysis pipeline."""
         os.makedirs(self.output_dir, exist_ok=True)
 
         # Apply APA style for all plots
@@ -403,6 +376,7 @@ class ModerationAnalysis:
             output_capture.close()
 
 if __name__ == "__main__":
+    # Social support moderation analysis: testing whether social support moderates stage effects
     from scipy import stats
     analysis = ModerationAnalysis("processed_combined_data.csv")
     analysis.run_analysis()
