@@ -67,7 +67,7 @@ class ModerationAnalysis:
         # Drop missing values
         required_vars = (['social_support', 'cognitive_function', 'AGE_BASELINE', 'VISIT'] +
                         ['Early_Peri', 'Late_Peri', 'Post_Menopause'])
-        self.data = self.data.dropna(subset=required_vars)
+        self.data = self.data.dropna(subset=required_vars).copy()
 
         # Ensure SWANID is string for grouping
         self.data['SWANID'] = self.data['SWANID'].astype(str)
@@ -287,7 +287,7 @@ class ModerationAnalysis:
         plt.savefig(output_path, dpi=300, bbox_inches='tight')
         plt.close()
 
-        print(f"\nModeration effects plot saved to: {output_path}")
+        print(f"\nModeration effects plot saved to: 3_social_model/output/moderation_effects.png")
 
     def interpret_results(self):
         """Print interpretation of moderation results."""
@@ -367,7 +367,7 @@ class ModerationAnalysis:
 
             print("MODERATION ANALYSIS COMPLETE")
             print("=" * 80)
-            print(f"\nResults saved to: {self.output_dir}")
+            print(f"\nResults saved to: 3_social_model/output/")
 
             return self.results
 
@@ -378,5 +378,6 @@ class ModerationAnalysis:
 if __name__ == "__main__":
     # Social support moderation analysis: testing whether social support moderates stage effects
     from scipy import stats
-    analysis = ModerationAnalysis("processed_combined_data.csv")
+    data_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "processed_combined_data.csv")
+    analysis = ModerationAnalysis(data_path)
     analysis.run_analysis()

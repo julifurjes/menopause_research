@@ -1,4 +1,4 @@
-Analysis Run: 2025-11-21 11:22:05
+Analysis Run: 2025-11-22 16:23:18
 ================================================================================
 
 
@@ -100,7 +100,7 @@ Likelihood Ratio Test:
 
 Creating visualizations...
 
-Moderation effects plot saved to: c:\Users\julif\OneDrive\المستندات\GitHub\menopause_research\3_social_model\output\moderation_effects.png
+Moderation effects plot saved to: 3_social_model/output/moderation_effects.png
 
 Interpreting results...
 INTERPRETATION OF MODERATION RESULTS
@@ -133,4 +133,4 @@ Interaction Effects (Moderation):
 MODERATION ANALYSIS COMPLETE
 ================================================================================
 
-Results saved to: c:\Users\julif\OneDrive\المستندات\GitHub\menopause_research\3_social_model\output
+Results saved to: 3_social_model/output/

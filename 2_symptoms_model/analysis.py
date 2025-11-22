@@ -89,13 +89,15 @@ class MenopauseCognitionAnalysis:
 
         for var in log_transform_vars:
             if var in self.data.columns:
-                self.data[f"{var}_log"] = np.log1p(self.data[var])
+                with np.errstate(invalid='ignore'):
+                    self.data[f"{var}_log"] = np.log1p(self.data[var].clip(lower=0))
                 self.transformed_symptom_vars.append(f"{var}_log")
                 self.var_labels[f"{var}_log"] = f"{self.var_labels.get(var, var)} (Log)"
 
         for var in sqrt_transform_vars:
             if var in self.data.columns:
-                self.data[f"{var}_sqrt"] = np.sqrt(self.data[var])
+                with np.errstate(invalid='ignore'):
+                    self.data[f"{var}_sqrt"] = np.sqrt(self.data[var].clip(lower=0))
                 self.transformed_symptom_vars.append(f"{var}_sqrt")
                 self.var_labels[f"{var}_sqrt"] = f"{self.var_labels.get(var, var)} (Sqrt)"
 
@@ -145,8 +147,8 @@ class MenopauseCognitionAnalysis:
 
                 try:
                     # Drop rows with missing values for the current variables
-                    analysis_data = self.data.dropna(subset=required_cols)
-                    
+                    analysis_data = self.data.dropna(subset=required_cols).copy()
+
                     # Reset index to avoid potential index issues
                     analysis_data = analysis_data.reset_index(drop=True)
                     
@@ -417,8 +419,8 @@ class MenopauseCognitionAnalysis:
             file_name = os.path.join(self.output_dir, f'{outcome}_forest_plot.png')
             plt.savefig(file_name, dpi=300, bbox_inches='tight')
             plt.close()
-            
-            print(f"Forest plot saved as: {file_name}")
+
+            print(f"Forest plot saved to: 2_symptoms_model/output/{outcome}_forest_plot.png")
 
     def create_stratified_forest_plot(self, outcome='TOTIDE1'):
         """Create stratified forest plots showing symptom effects across demographic subgroups."""
@@ -599,7 +601,7 @@ class MenopauseCognitionAnalysis:
         plt.savefig(output_file, dpi=300, bbox_inches='tight')
         plt.close()
 
-        print(f"Stratified forest plot saved as: {output_file}")
+        print(f"Stratified forest plot saved to: 2_symptoms_model/output/{outcome}_stratified_forest_plot.png")
 
         return plot_df
 
@@ -754,8 +756,8 @@ class MenopauseCognitionAnalysis:
         
         # Plot overall symptom intensity pattern
         self.plot_overall_symptom_intensity_pattern(results_df, intensity_dir)
-        
-        print("Symptom intensity analysis complete. Results saved to:", intensity_dir)
+
+        print("Symptom intensity analysis complete. Results saved to: 2_symptoms_model/output/symptom_intensity/")
         return results_df
 
     def plot_overall_symptom_intensity_pattern(self, results_df, output_dir):
@@ -931,8 +933,8 @@ class MenopauseCognitionAnalysis:
         file_name = os.path.join(self.output_dir, 'symptom_intensity_heatmap_zscore.png')
         plt.savefig(file_name, dpi=300, bbox_inches='tight')
         plt.close()
-        
-        print(f"Z-scored symptom intensity heat map saved as: {file_name}")
+
+        print(f"Z-scored symptom intensity heat map saved to: 2_symptoms_model/output/symptom_intensity_heatmap_zscore.png")
         
         # Create the RAW VALUES heat map
         plt.figure(figsize=(12, 8))
@@ -965,8 +967,8 @@ class MenopauseCognitionAnalysis:
         file_name_raw = os.path.join(self.output_dir, 'symptom_intensity_heatmap_raw.png')
         plt.savefig(file_name_raw, dpi=300, bbox_inches='tight')
         plt.close()
-        
-        print(f"Raw values heat map saved as: {file_name_raw}")
+
+        print(f"Raw values heat map saved to: 2_symptoms_model/output/symptom_intensity_heatmap_raw.png")
         
         # Return the data for further analysis if needed
         return heatmap_data_z, heatmap_data
@@ -1007,5 +1009,6 @@ class MenopauseCognitionAnalysis:
 
 if __name__ == "__main__":
     # Symptom-cognition analysis: relationships between menopausal symptoms and outcomes
-    analysis = MenopauseCognitionAnalysis("processed_combined_data.csv", use_langcog=False)
+    data_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "processed_combined_data.csv")
+    analysis = MenopauseCognitionAnalysis(data_path, use_langcog=False)
     analysis.run_complete_analysis()

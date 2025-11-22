@@ -1,4 +1,4 @@
-Analysis Run: 2025-11-21 11:54:07
+Analysis Run: 2025-11-22 16:20:12
 ================================================================================
 
 
@@ -517,15 +517,15 @@ However, with this large sample size, the model is still robust to moderate non-
 Creating symptom effects plots...
 
 Creating forest plots for transformed models...
-Creating forest plot for TOTIDE1 with 7 symptoms
-Forest plot saved as: c:\Users\julif\OneDrive\المستندات\GitHub\menopause_research\2_symptoms_model\output\TOTIDE1_forest_plot.png
 Creating forest plot for TOTIDE2 with 7 symptoms
-Forest plot saved as: c:\Users\julif\OneDrive\المستندات\GitHub\menopause_research\2_symptoms_model\output\TOTIDE2_forest_plot.png
+Forest plot saved to: 2_symptoms_model/output/TOTIDE2_forest_plot.png
+Creating forest plot for TOTIDE1 with 7 symptoms
+Forest plot saved to: 2_symptoms_model/output/TOTIDE1_forest_plot.png
 
 Creating stratified forest plot...
 
 Creating stratified forest plot for TOTIDE1...
-Stratified forest plot saved as: c:\Users\julif\OneDrive\المستندات\GitHub\menopause_research\2_symptoms_model\output\TOTIDE1_stratified_forest_plot.png
+Stratified forest plot saved to: 2_symptoms_model/output/TOTIDE1_stratified_forest_plot.png
 
 Analyzing symptom intensity by menopausal stage...
 
@@ -595,7 +595,7 @@ Late Peri              0.04         1825
 Post-menopause         0.09         7732
 Surgical               0.24         1155
 ================================================================================
-Symptom intensity analysis complete. Results saved to: c:\Users\julif\OneDrive\المستندات\GitHub\menopause_research\2_symptoms_model\output\symptom_intensity
+Symptom intensity analysis complete. Results saved to: 2_symptoms_model/output/symptom_intensity/
 
 Creating symptom intensity heat map...
 
@@ -606,13 +606,15 @@ Processing Cold Sweats...
 Processing Mood Symptoms...
 Processing Stiffness...
 Z-scored intensity matrix:
-                Hot Flashes  Night Sweats  Cold Sweats  Mood Symptoms  Stiffness
-Pre-menopause          0.16         -0.96        -1.67          -0.50      -1.34
-Early Peri            -0.38         -0.48         0.61           0.46      -0.51
-Late Peri             -0.20         -0.19         0.03          -0.16       0.13
-Post-menopause        -1.15         -0.04         0.13          -1.22       0.40
-Surgical               1.57          1.67         0.90           1.42       1.33
-Z-scored symptom intensity heat map saved as: c:\Users\julif\OneDrive\المستندات\GitHub\menopause_research\2_symptoms_model\output\symptom_intensity_heatmap_zscore.png
-Raw values heat map saved as: c:\Users\julif\OneDrive\المستندات\GitHub\menopause_research\2_symptoms_model\output\symptom_intensity_heatmap_raw.png
+                Hot Flashes  Night Sweats  ...  Mood Symptoms  Stiffness
+Pre-menopause          0.16         -0.96  ...          -0.50      -1.34
+Early Peri            -0.38         -0.48  ...           0.46      -0.51
+Late Peri             -0.20         -0.19  ...          -0.16       0.13
+Post-menopause        -1.15         -0.04  ...          -1.22       0.40
+Surgical               1.57          1.67  ...           1.42       1.33
+
+[5 rows x 5 columns]
+Z-scored symptom intensity heat map saved to: 2_symptoms_model/output/symptom_intensity_heatmap_zscore.png
+Raw values heat map saved to: 2_symptoms_model/output/symptom_intensity_heatmap_raw.png
 
 Analysis complete

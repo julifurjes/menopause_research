@@ -10,7 +10,8 @@
       "Bash(cat:*)",
       "Bash(printf:*)",
       "Bash(nul)",
-      "Bash(timeout /t 30)"
+      "Bash(timeout /t 30)",
+      "Bash(/dev/null)"
     ],
     "deny": [],
     "ask": []
