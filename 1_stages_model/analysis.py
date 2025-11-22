@@ -82,7 +82,7 @@ class MenopauseCognitionAnalysis:
             formula = f"{outcome} ~ C(STATUS_Label, Treatment('Pre-menopause')) + VISIT + {covariate_formula}"
 
             try:
-                analysis_data = self.data.dropna(subset=[outcome] + covariates if covariates else [outcome])
+                analysis_data = self.data.dropna(subset=[outcome] + covariates if covariates else [outcome]).copy()
 
                 status_counts = analysis_data['STATUS_Label'].value_counts()
                 analysis_data['weights'] = analysis_data['STATUS_Label'].map(
@@ -344,8 +344,11 @@ class MenopauseCognitionAnalysis:
             sns.despine(ax=ax)
 
         fig.text(0.5, 0.01, '* p<0.05   ** p<0.01   *** p<0.001', ha='center', fontsize=12)
-        plt.tight_layout(rect=[0, 0.03, 1, 0.95])
-        plt.subplots_adjust(wspace=0.3)
+        try:
+            plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+            plt.subplots_adjust(wspace=0.3)
+        except:
+            plt.subplots_adjust(left=0.15, right=0.95, top=0.95, bottom=0.05, wspace=0.3)
 
         file_name = os.path.join(self.output_dir, 'model_forest_plot.png')
         plt.savefig(file_name, dpi=300, bbox_inches='tight')

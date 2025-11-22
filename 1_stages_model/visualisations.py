@@ -107,7 +107,7 @@ class MenopauseVisualisations:
 
         melted_data['Measure_Label'] = melted_data['Measure'].map(self.var_labels)
 
-        summary_data = melted_data.groupby(['Measure', 'Measure_Label', 'STATUS_Label']).agg(
+        summary_data = melted_data.groupby(['Measure', 'Measure_Label', 'STATUS_Label'], observed=True).agg(
             Mean=('Score', 'mean'),
             SE=('Score', lambda x: x.std() / np.sqrt(len(x))),
             Count=('Score', 'count')
@@ -140,7 +140,7 @@ class MenopauseVisualisations:
                 label=self.var_labels.get(measure, measure)
             )
 
-            measure_counts = melted_data[melted_data['Measure'] == measure].groupby('STATUS_Label').size().reset_index(name='Count')
+            measure_counts = melted_data[melted_data['Measure'] == measure].groupby('STATUS_Label', observed=True).size().reset_index(name='Count')
             measure_counts = measure_counts.set_index('STATUS_Label')
 
             for j, status in enumerate(stage_order):
