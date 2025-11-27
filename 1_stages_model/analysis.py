@@ -11,10 +11,7 @@ project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
     sys.path.append(project_root)
 
-from utils.save_output import OutputCapture, get_output_dir
-from utils.plot_config import get_significance_color, set_apa_style
-from archive.proportion_analysis import MenopauseDeclineAnalysis
-from visualisations import MenopauseVisualisations
+from visualizations import create_all_visualizations, plot_forest_plot_from_models
 
 class MenopauseCognitionAnalysis:
     """Analysis of cognitive and emotional outcomes across menopausal stages using mixed-effects models."""
@@ -23,7 +20,9 @@ class MenopauseCognitionAnalysis:
         self.data = pd.read_csv(file_path, low_memory=False)
         self.outcome_vars = ['TOTIDE1', 'TOTIDE2', 'NERVES', 'SAD', 'FEARFULA']
         self.mixed_model_results = {}
-        self.output_dir = get_output_dir('1_stages_model')
+        # Create output directory
+        self.output_dir = os.path.join(os.path.dirname(__file__), 'output')
+        os.makedirs(self.output_dir, exist_ok=True)
         self.use_langcog = use_langcog
 
     def transform_variables(self):
@@ -155,29 +154,14 @@ class MenopauseCognitionAnalysis:
         except Exception as e:
             print(f"Error in model diagnostics: {str(e)}")
 
-    def _calculate_mcid_thresholds(self):
-        """Calculate MCID thresholds using 0.5 * SD from pre-menopause baseline."""
-        mcid_thresholds = {}
-
-        if 'STATUS_Label' in self.data.columns:
-            baseline_data = self.data[self.data['STATUS_Label'] == 'Pre-menopause']
-        else:
-            baseline_data = self.data
-
-        for measure in ['TOTIDE1', 'TOTIDE2']:
-            if measure in self.data.columns:
-                measure_data = pd.to_numeric(baseline_data[measure], errors='coerce').dropna()
-                if len(measure_data) > 0:
-                    mcid_thresholds[measure] = 0.5 * measure_data.std()
-
-        return mcid_thresholds
 
     def interpret_clinical_significance(self):
         """Interpret model results using MCID thresholds for clinical significance."""
         if not self.mixed_model_results:
             return
 
-        mcid_thresholds = self._calculate_mcid_thresholds()
+        from visualizations import _calculate_mcid_thresholds
+        mcid_thresholds = _calculate_mcid_thresholds(self.data)
 
         print("\n" + "="*80)
         print("CLINICAL SIGNIFICANCE INTERPRETATION")
@@ -228,150 +212,16 @@ class MenopauseCognitionAnalysis:
 
         print("\n" + "="*80)
 
-    def _calculate_reasonable_limits(self, coefs, errors, percentile=95):
-        """Calculate axis limits using percentiles to avoid extreme outliers."""
-        all_ends = []
-        for coef, error in zip(coefs, errors):
-            all_ends.append(coef + (error * 1.96))
-            all_ends.append(coef - (error * 1.96))
-
-        if all_ends:
-            min_val = np.percentile(all_ends, 100 - percentile)
-            max_val = np.percentile(all_ends, percentile)
-
-            min_val = min(min_val, 0)
-            max_val = max(max_val, 0)
-
-            range_val = max_val - min_val
-            min_val -= range_val * 0.1
-            max_val += range_val * 0.1
-
-            return min_val, max_val
-
-        return -1, 1
-
-    def plot_forest_plot_from_models(self):
-        """Create forest plot showing stage effects with confidence intervals."""
-        if not self.mixed_model_results:
-            return
-
-        measure_labels = {
-            'TOTIDE1': 'Cognitive Performance (Immediate Recall)',
-            'TOTIDE2': 'Cognitive Performance (Delayed Recall)',
-            'NERVES_log': 'Nervousness',
-            'SAD_sqrt': 'Sadness',
-            'FEARFULA_sqrt': 'Fearfulness'
-        }
-
-        status_effects = ['Early Peri', 'Late Peri', 'Post-menopause', 'Surgical']
-
-        mcid_thresholds = self._calculate_mcid_thresholds()
-
-        fig, axes = plt.subplots(5, 1, figsize=(14, 24), sharex=False)
-        axes = axes.flatten()
-        set_apa_style()
-
-        for i, (outcome, results) in enumerate(self.mixed_model_results.items()):
-            ax = axes[i]
-            coefs, errors, pvalues, names = [], [], [], []
-
-            for status in status_effects:
-                param_name = f"C(STATUS_Label, Treatment('Pre-menopause'))[T.{status}]"
-                if param_name in results.params.index:
-                    coefs.append(results.params[param_name])
-                    errors.append(results.bse[param_name])
-                    pvalues.append(results.pvalues[param_name])
-                    names.append(status)
-
-            if not coefs:
-                ax.set_visible(False)
-                continue
-
-            y_positions = np.arange(len(names))
-            min_bound, max_bound = self._calculate_reasonable_limits(coefs, errors, percentile=95)
-            ax.set_xlim(min_bound, max_bound)
-
-            for y, coef, error, p in zip(y_positions, coefs, errors, pvalues):
-                color, marker = get_significance_color(p)
-
-                lower_error = max(min_bound * 0.95, coef - error * 1.96)
-                upper_error = min(max_bound * 0.95, coef + error * 1.96)
-
-                left_err = coef - lower_error
-                right_err = upper_error - coef
-
-                ax.errorbar(
-                    x=coef, y=y,
-                    xerr=[[left_err], [right_err]],
-                    fmt='o', color=color,
-                    capsize=5, markersize=8,
-                    elinewidth=2, capthick=2
-                )
-
-                label_x = upper_error + (max_bound - min_bound) * 0.02 + 0.01
-                ax.text(
-                    label_x, y, f'{coef:.3f} {marker}',
-                    va='center', ha='right', color=color,
-                    fontweight='bold' if p < 0.05 else 'normal',
-                    bbox=dict(facecolor='white', alpha=0.7, boxstyle='round,pad=0.2', edgecolor='none')
-                )
-
-                if coef - error * 1.96 < min_bound * 0.95:
-                    ax.annotate('', xy=(min_bound * 0.98, y), xytext=(min_bound * 0.9, y),
-                              arrowprops=dict(arrowstyle='->', color=color, lw=1.5))
-
-                if coef + error * 1.96 > max_bound * 0.95:
-                    ax.annotate('', xy=(max_bound * 0.98, y), xytext=(max_bound * 0.9, y),
-                              arrowprops=dict(arrowstyle='->', color=color, lw=1.5))
-
-            ax.axvline(x=0, color='black', linestyle='--', alpha=0.5)
-
-            # Add MCID reference lines for cognitive measures
-            if outcome in mcid_thresholds:
-                mcid = mcid_thresholds[outcome]
-                ax.axvline(x=mcid, color='orange', linestyle=':', linewidth=2, alpha=0.7, label=f'MCID threshold')
-                ax.axvline(x=-mcid, color='orange', linestyle=':', linewidth=2, alpha=0.7)
-
-                # Add text annotation for MCID
-                ax.text(mcid, len(names) - 0.5, f'  MCID: ±{mcid:.2f}',
-                       fontsize=9, color='orange', va='top', ha='left',
-                       bbox=dict(facecolor='white', alpha=0.8, boxstyle='round,pad=0.3', edgecolor='orange'))
-
-            ax.set_yticks(y_positions)
-            ax.set_yticklabels(names, fontsize=11)
-            ax.set_title(measure_labels.get(outcome, outcome), fontsize=14)
-            ax.grid(True, linestyle=':', alpha=0.4)
-            sns.despine(ax=ax)
-
-        fig.text(0.5, 0.01, '* p<0.05   ** p<0.01   *** p<0.001', ha='center', fontsize=12)
-        try:
-            plt.tight_layout(rect=[0, 0.03, 1, 0.95])
-            plt.subplots_adjust(wspace=0.3)
-        except:
-            plt.subplots_adjust(left=0.15, right=0.95, top=0.95, bottom=0.05, wspace=0.3)
-
-        file_name = os.path.join(self.output_dir, 'model_forest_plot.png')
-        plt.savefig(file_name, dpi=300, bbox_inches='tight')
-        plt.close()
-
     def run_complete_analysis(self):
         """Run the complete analysis pipeline."""
-        os.makedirs(self.output_dir, exist_ok=True)
         self.transform_variables()
         self.filter_status()
 
-        output_capture = OutputCapture(self.output_dir)
-        sys.stdout = output_capture
-
-        try:
-            print("\nRunning mixed-effects models...")
-            self.run_mixed_models()
-            self.interpret_clinical_significance()
-            self.plot_forest_plot_from_models()
-            print("\nAnalysis complete.")
-        finally:
-            sys.stdout = output_capture.terminal
-            output_capture.close()
+        print("\nRunning mixed-effects models...")
+        self.run_mixed_models()
+        self.interpret_clinical_significance()
+        plot_forest_plot_from_models(self)
+        print("\nAnalysis complete.")
 
 if __name__ == "__main__":
     # Main analysis: cognitive and emotional outcomes by menopausal stage
@@ -379,10 +229,5 @@ if __name__ == "__main__":
     analysis = MenopauseCognitionAnalysis(data_path, use_langcog=False)
     analysis.run_complete_analysis()
 
-    # Proportion analysis: women experiencing cognitive/emotional decline
-    proportion_analysis = MenopauseDeclineAnalysis(analysis.data)
-    proportion_analysis.run_analysis()
-
     # Visualizations: violin plots, trajectories, and stage comparisons
-    viz = MenopauseVisualisations(analysis.data)
-    viz.create_all_visualizations()
+    create_all_visualizations(analysis)

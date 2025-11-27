@@ -179,7 +179,6 @@ class TSVDataProcessor:
         """
         Remove subjects who have both TOTIDE1 and TOTIDE2 missing for all their visits.
         """
-        
         # For each subject, check if they have any non-missing TOTIDE1 or TOTIDE2 values
         totide_counts = self.dataframes.groupby('SWANID').agg({
             'TOTIDE1': lambda x: x.notna().sum(),

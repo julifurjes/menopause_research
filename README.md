@@ -78,8 +78,23 @@ project-folder/
 │   ├── swan_timestamp_2.tsv
 │   └── ... (through timestamp_10.tsv)
 ├── preparations/              # Data processing scripts
-├── output/                    # Generated analysis outputs
-├── etc.
+├── 1_stages_model/
+│   ├── analysis.py           # Main analysis script
+│   ├── visualizations.py     # Visualization functions
+│   └── output/               # Model-specific outputs
+├── 2_symptoms_model/
+│   ├── analysis.py           # Main analysis script
+│   ├── visualizations.py     # Visualization functions
+│   └── output/               # Model-specific outputs
+├── 3_social_model/
+│   ├── analysis.py           # Main analysis script
+│   ├── visualizations.py     # Visualization functions
+│   └── output/               # Model-specific outputs
+├── utils/
+│   ├── data_preparation.py   # Shared preprocessing functions
+│   ├── data_validation.py    # Data quality checks
+│   └── plot_config.py        # Shared plotting configuration
+└── etc.
 ```
 
 **Output files** (automatically generated):
@@ -116,6 +131,16 @@ python preparations/run_data_validation.py
 ### Step 3: Running the Models
 
 The project includes three different modeling approaches. Each model can be run from the main directory:
+
+**Project Organization**: Each model follows a consistent structure:
+- `analysis.py` - Contains the main analysis logic and statistical modeling
+- `visualizations.py` - Contains all plotting and visualization functions
+- `output/` - Directory where results, plots, and diagnostics are saved
+
+**Shared Utilities**: Common functions used across all models are in the `utils/` directory:
+- `data_preparation.py` - Shared preprocessing functions (STATUS filtering, baseline age calculation, data sorting)
+- `plot_config.py` - APA-style plotting configuration and color schemes
+- `data_validation.py` - Data quality checks and validation
 
 ```bash
 # Model 1: Stages model
