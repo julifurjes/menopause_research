@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import statsmodels.formula.api as smf
 from statsmodels.formula.api import mixedlm
-from scipy import stats
 import os
 import sys
 
@@ -40,8 +39,8 @@ class ModerationAnalysis:
         self.data = self.data[self.data['STATUS'].isin([1, 2, 3, 4, 5, 8])]
 
         status_map = {
-            1: 'Surgical', 2: 'Post-menopause', 3: 'Late Peri',
-            4: 'Early Peri', 5: 'Pre-menopause', 8: 'Surgical'
+            1: 'Surgical', 2: 'Postmenopause', 3: 'Late Perimenopause',
+            4: 'Early Perimenopause', 5: 'Premenopause', 8: 'Surgical'
         }
         self.data['STATUS_Label'] = self.data['STATUS'].map(status_map)
         self.data = self.data.sort_values(['SWANID', 'VISIT'])
@@ -54,21 +53,21 @@ class ModerationAnalysis:
 
         self.data['social_support_centered'] = (self.data['social_support'] -
                                                  self.data['social_support'].mean())
-        # Create dummy variables for all menopausal stages (Pre-menopause will be reference)
-        self.data['Early_Peri'] = (self.data['STATUS_Label'] == 'Early Peri').astype(int)
-        self.data['Late_Peri'] = (self.data['STATUS_Label'] == 'Late Peri').astype(int)
-        self.data['Post_Menopause'] = (self.data['STATUS_Label'] == 'Post-menopause').astype(int)
+        # Create dummy variables for all menopausal stages (Premenopause will be reference)
+        self.data['Early_Perimenopause'] = (self.data['STATUS_Label'] == 'Early Perimenopause').astype(int)
+        self.data['Late_Perimenopause'] = (self.data['STATUS_Label'] == 'Late Perimenopause').astype(int)
+        self.data['Postmenopause'] = (self.data['STATUS_Label'] == 'Postmenopause').astype(int)
         self.data['Surgical'] = (self.data['STATUS_Label'] == 'Surgical').astype(int)
 
         # Create interaction terms for all stages
-        self.data['Early_Peri_x_Support'] = self.data['Early_Peri'] * self.data['social_support_centered']
-        self.data['Late_Peri_x_Support'] = self.data['Late_Peri'] * self.data['social_support_centered']
-        self.data['Post_Menopause_x_Support'] = self.data['Post_Menopause'] * self.data['social_support_centered']
+        self.data['Early_Perimenopause_x_Support'] = self.data['Early_Perimenopause'] * self.data['social_support_centered']
+        self.data['Late_Perimenopause_x_Support'] = self.data['Late_Perimenopause'] * self.data['social_support_centered']
+        self.data['Postmenopause_x_Support'] = self.data['Postmenopause'] * self.data['social_support_centered']
         self.data['Surgical_x_Support'] = self.data['Surgical'] * self.data['social_support_centered']
 
         # Drop missing values
         required_vars = (['social_support', 'cognitive_function', 'AGE_BASELINE', 'VISIT'] +
-                        ['Early_Peri', 'Late_Peri', 'Post_Menopause', 'Surgical'])
+                        ['Early_Perimenopause', 'Late_Perimenopause', 'Postmenopause', 'Surgical'])
         self.data = self.data.dropna(subset=required_vars).copy()
 
         # Ensure SWANID is string for grouping
@@ -88,13 +87,13 @@ class ModerationAnalysis:
         print("-" * 80)
 
         formula_main = ("cognitive_function ~ social_support_centered + "
-                       "Early_Peri + Late_Peri + Post_Menopause + Surgical + "
+                       "Early_Perimenopause + Late_Perimenopause + Postmenopause + Surgical + "
                        "AGE_BASELINE + VISIT")
 
         model_main = mixedlm(formula=formula_main,
                             data=self.data,
                             groups=self.data["SWANID"],
-                            re_formula="~1")  # Random intercept only
+                            re_formula="~VISIT")  # Random slope for VISIT
 
         # Fit with ML for model comparison (not REML)
         result_main_ml = model_main.fit(reml=False, method='lbfgs')
@@ -114,14 +113,14 @@ class ModerationAnalysis:
         print("-" * 80)
 
         formula_interaction = ("cognitive_function ~ social_support_centered + "
-                              "Early_Peri + Late_Peri + Post_Menopause + Surgical + "
-                              "Early_Peri_x_Support + Late_Peri_x_Support + Post_Menopause_x_Support + Surgical_x_Support + "
+                              "Early_Perimenopause + Late_Perimenopause + Postmenopause + Surgical + "
+                              "Early_Perimenopause_x_Support + Late_Perimenopause_x_Support + Postmenopause_x_Support + Surgical_x_Support + "
                               "AGE_BASELINE + VISIT")
 
         model_interaction = mixedlm(formula=formula_interaction,
                                     data=self.data,
                                     groups=self.data["SWANID"],
-                                    re_formula="~1")
+                                    re_formula="~VISIT")  # Random slope for VISIT
 
         # Fit with ML for model comparison (not REML)
         result_interaction_ml = model_interaction.fit(reml=False, method='lbfgs')
@@ -213,9 +212,9 @@ class ModerationAnalysis:
         print("\nInteraction Effects (Moderation):")
 
         interactions = {
-            'Early Peri': 'Early_Peri_x_Support',
-            'Late Peri': 'Late_Peri_x_Support',
-            'Post-menopause': 'Post_Menopause_x_Support',
+            'Early Perimenopause': 'Early_Perimenopause_x_Support',
+            'Late Perimenopause': 'Late_Perimenopause_x_Support',
+            'Postmenopause': 'Postmenopause_x_Support',
             'Surgical': 'Surgical_x_Support'
         }
 
@@ -230,13 +229,13 @@ class ModerationAnalysis:
             if p_val < 0.05:
                 if coef > 0:
                     print(f"    -> Social support has a STRONGER protective effect in {stage}")
-                    print(f"       compared to pre-menopause (p < 0.05)")
+                    print(f"       compared to premenopause (p < 0.05)")
                 else:
                     print(f"    -> Social support has a WEAKER protective effect in {stage}")
-                    print(f"       compared to pre-menopause (p < 0.05)")
+                    print(f"       compared to premenopause (p < 0.05)")
             else:
                 print(f"    -> No significant difference in social support effect")
-                print(f"       between {stage} and pre-menopause")
+                print(f"       between {stage} and premenopause")
 
     def run_analysis(self):
         """Run the complete moderation analysis pipeline."""
@@ -259,7 +258,6 @@ class ModerationAnalysis:
 
 if __name__ == "__main__":
     # Social support moderation analysis: testing whether social support moderates stage effects
-    from scipy import stats
     data_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "processed_combined_data.csv")
     analysis = ModerationAnalysis(data_path)
     analysis.run_analysis()

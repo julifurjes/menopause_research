@@ -10,11 +10,11 @@ import seaborn as sns
 
 # Categorical colors for menopausal stages (consistent across all models)
 STAGE_COLORS = {
-    'Pre-menopause': '#4477AA',     # Blue
-    'Early Peri': '#66CCEE',        # Cyan
-    'Late Peri': '#228833',         # Green
-    'Post-menopause': '#CCBB44',    # Yellow
-    'Surgical': '#EE6677'           # Red/Pink
+    'Premenopause': '#4477AA',           # Blue
+    'Early Perimenopause': '#66CCEE',    # Cyan
+    'Late Perimenopause': '#228833',     # Green
+    'Postmenopause': '#CCBB44',          # Yellow
+    'Surgical': '#EE6677'                # Red/Pink
 }
 
 # Categorical colors for constructs/variables (consistent across models)

@@ -118,10 +118,10 @@ class ImputationValidator:
         # Using status labels
         status_map = {
             1: 'Surgical',
-            2: 'Post-menopause',
-            3: 'Late Peri',
-            4: 'Early Peri',
-            5: 'Pre-menopause',
+            2: 'Postmenopause',
+            3: 'Late Perimenopause',
+            4: 'Early Perimenopause',
+            5: 'Premenopause',
             8: 'Surgical'
         }
 

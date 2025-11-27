@@ -32,7 +32,7 @@ def plot_violin_plots(analysis_obj):
     fig, axes = plt.subplots(3, 2, figsize=(16, 20))
     axes = axes.flatten()
 
-    stage_order = ['Pre-menopause', 'Early Peri', 'Late Peri', 'Post-menopause', 'Surgical']
+    stage_order = ['Premenopause', 'Early Perimenopause', 'Late Perimenopause', 'Postmenopause', 'Surgical']
     stage_palette = [STAGE_COLORS.get(stage, '#888888') for stage in stage_order]
 
     for i, measure in enumerate(transformed_vars):
@@ -102,7 +102,7 @@ def plot_stages_vs_scores(analysis_obj):
 
     plot_data = data.copy()
 
-    stage_order = ['Pre-menopause', 'Early Peri', 'Late Peri', 'Post-menopause', 'Surgical']
+    stage_order = ['Premenopause', 'Early Perimenopause', 'Late Perimenopause', 'Postmenopause', 'Surgical']
     plot_data['STATUS_Label'] = pd.Categorical(
         plot_data['STATUS_Label'],
         categories=stage_order,
@@ -211,13 +211,13 @@ def plot_trajectory_classes(analysis_obj):
 
     fig, axes = plt.subplots(3, 1, figsize=(12, 14))
 
-    stage_order = ['Pre-menopause', 'Early Peri', 'Late Peri', 'Post-menopause']
+    stage_order = ['Premenopause', 'Early Perimenopause', 'Late Perimenopause', 'Postmenopause']
 
     stage_colors_map = {
-        'Pre-menopause': STAGE_COLORS['Pre-menopause'],
-        'Early Peri': STAGE_COLORS['Early Peri'],
-        'Late Peri': STAGE_COLORS['Late Peri'],
-        'Post-menopause': STAGE_COLORS['Post-menopause']
+        'Premenopause': STAGE_COLORS['Premenopause'],
+        'Early Perimenopause': STAGE_COLORS['Early Perimenopause'],
+        'Late Perimenopause': STAGE_COLORS['Late Perimenopause'],
+        'Postmenopause': STAGE_COLORS['Postmenopause']
     }
 
     for idx, measure in enumerate(measures_to_plot):
@@ -317,7 +317,7 @@ def _calculate_mcid_thresholds(data):
     mcid_thresholds = {}
 
     if 'STATUS_Label' in data.columns:
-        baseline_data = data[data['STATUS_Label'] == 'Pre-menopause']
+        baseline_data = data[data['STATUS_Label'] == 'Premenopause']
     else:
         baseline_data = data
 
@@ -345,7 +345,7 @@ def plot_forest_plot_from_models(analysis_obj):
         'FEARFULA_sqrt': 'Fearfulness'
     }
 
-    status_effects = ['Early Peri', 'Late Peri', 'Post-menopause', 'Surgical']
+    status_effects = ['Early Perimenopause', 'Late Perimenopause', 'Postmenopause', 'Surgical']
 
     mcid_thresholds = _calculate_mcid_thresholds(analysis_obj.data)
 
@@ -357,7 +357,7 @@ def plot_forest_plot_from_models(analysis_obj):
         coefs, errors, pvalues, names = [], [], [], []
 
         for status in status_effects:
-            param_name = f"C(STATUS_Label, Treatment('Pre-menopause'))[T.{status}]"
+            param_name = f"C(STATUS_Label, Treatment('Premenopause'))[T.{status}]"
             if param_name in results.params.index:
                 coefs.append(results.params[param_name])
                 errors.append(results.bse[param_name])

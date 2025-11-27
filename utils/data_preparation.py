@@ -39,10 +39,10 @@ def prepare_status_labels(data):
     # Map status codes to labels (consistent across all models)
     status_map = {
         1: 'Surgical',
-        2: 'Post-menopause',
-        3: 'Late Peri',
-        4: 'Early Peri',
-        5: 'Pre-menopause',
+        2: 'Postmenopause',
+        3: 'Late Perimenopause',
+        4: 'Early Perimenopause',
+        5: 'Premenopause',
         8: 'Surgical'
     }
     data['STATUS_Label'] = data['STATUS'].map(status_map)
@@ -55,7 +55,7 @@ def prepare_status_labels(data):
     )
 
     # Create ordered categorical for STATUS_Label
-    natural_order = ['Pre-menopause', 'Early Peri', 'Late Peri', 'Post-menopause']
+    natural_order = ['Premenopause', 'Early Perimenopause', 'Late Perimenopause', 'Postmenopause']
     data['STATUS_Label'] = pd.Categorical(
         data['STATUS_Label'],
         categories=['Surgical'] + natural_order,

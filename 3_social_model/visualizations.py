@@ -45,15 +45,15 @@ def plot_moderation_effects(analysis_obj):
         pred = params['Intercept'] + params['social_support_centered'] * support_range
 
         # Add stage-specific effects
-        if stage == 'Early Peri':
-            pred += params['Early_Peri']
-            pred += params['Early_Peri_x_Support'] * support_range
-        elif stage == 'Late Peri':
-            pred += params['Late_Peri']
-            pred += params['Late_Peri_x_Support'] * support_range
-        elif stage == 'Post-menopause':
-            pred += params['Post_Menopause']
-            pred += params['Post_Menopause_x_Support'] * support_range
+        if stage == 'Early Perimenopause':
+            pred += params['Early_Perimenopause']
+            pred += params['Early_Perimenopause_x_Support'] * support_range
+        elif stage == 'Late Perimenopause':
+            pred += params['Late_Perimenopause']
+            pred += params['Late_Perimenopause_x_Support'] * support_range
+        elif stage == 'Postmenopause':
+            pred += params['Postmenopause']
+            pred += params['Postmenopause_x_Support'] * support_range
         elif stage == 'Surgical':
             pred += params['Surgical']
             pred += params['Surgical_x_Support'] * support_range
@@ -70,12 +70,12 @@ def plot_moderation_effects(analysis_obj):
     # Plot 2: Interaction coefficients
     ax = axes[1]
 
-    stages = ['Pre-menopause\n(reference)', 'Early Peri', 'Late Peri', 'Post-menopause', 'Surgical']
+    stages = ['Premenopause\n(reference)', 'Early Perimenopause', 'Late Perimenopause', 'Postmenopause', 'Surgical']
     interaction_coefs = [
         0,  # Reference
-        params.get('Early_Peri_x_Support', 0),
-        params.get('Late_Peri_x_Support', 0),
-        params.get('Post_Menopause_x_Support', 0),
+        params.get('Early_Perimenopause_x_Support', 0),
+        params.get('Late_Perimenopause_x_Support', 0),
+        params.get('Postmenopause_x_Support', 0),
         params.get('Surgical_x_Support', 0)
     ]
 
@@ -83,9 +83,9 @@ def plot_moderation_effects(analysis_obj):
     bse = result.bse
     interaction_ses = [
         0,
-        bse.get('Early_Peri_x_Support', 0),
-        bse.get('Late_Peri_x_Support', 0),
-        bse.get('Post_Menopause_x_Support', 0),
+        bse.get('Early_Perimenopause_x_Support', 0),
+        bse.get('Late_Perimenopause_x_Support', 0),
+        bse.get('Postmenopause_x_Support', 0),
         bse.get('Surgical_x_Support', 0)
     ]
 

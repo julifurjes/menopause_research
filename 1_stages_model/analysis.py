@@ -41,13 +41,13 @@ class MenopauseCognitionAnalysis:
         self.data = self.data[self.data['STATUS'].isin([1, 2, 3, 4, 5, 8])]
 
         status_map = {
-            1: 'Surgical', 2: 'Post-menopause', 3: 'Late Peri',
-            4: 'Early Peri', 5: 'Pre-menopause', 8: 'Surgical'
+            1: 'Surgical', 2: 'Postmenopause', 3: 'Late Perimenopause',
+            4: 'Early Perimenopause', 5: 'Premenopause', 8: 'Surgical'
         }
         self.data['STATUS_Label'] = self.data['STATUS'].map(status_map)
         self.data['Menopause_Type'] = np.where(self.data['STATUS'].isin([1, 8]), 'Surgical', 'Natural')
 
-        natural_order = ['Pre-menopause', 'Early Peri', 'Late Peri', 'Post-menopause']
+        natural_order = ['Premenopause', 'Early Perimenopause', 'Late Perimenopause', 'Postmenopause']
         self.data['STATUS_Label'] = pd.Categorical(
             self.data['STATUS_Label'],
             categories=['Surgical'] + natural_order,
@@ -78,7 +78,7 @@ class MenopauseCognitionAnalysis:
                 covariate_formula = f"AGE_BASELINE + C(LANGCOG, Treatment({reference_language}))"
             else:
                 covariate_formula = "AGE_BASELINE"
-            formula = f"{outcome} ~ C(STATUS_Label, Treatment('Pre-menopause')) + VISIT + {covariate_formula}"
+            formula = f"{outcome} ~ C(STATUS_Label, Treatment('Premenopause')) + VISIT + {covariate_formula}"
 
             try:
                 analysis_data = self.data.dropna(subset=[outcome] + covariates if covariates else [outcome]).copy()
@@ -168,14 +168,14 @@ class MenopauseCognitionAnalysis:
         print("="*80)
         print("\nMethodology:")
         print("  - MCID (Minimally Clinically Important Difference) = 0.5 x baseline SD")
-        print("  - Baseline SD calculated from pre-menopause group")
+        print("  - Baseline SD calculated from premenopause group")
         print("  - Clinical significance: |effect| >= MCID threshold")
         print("="*80)
 
         for outcome, results in self.mixed_model_results.items():
             if outcome in mcid_thresholds:
                 mcid = mcid_thresholds[outcome]
-                baseline_data = self.data[self.data['STATUS_Label'] == 'Pre-menopause']
+                baseline_data = self.data[self.data['STATUS_Label'] == 'Premenopause']
                 baseline_sd = pd.to_numeric(baseline_data[outcome], errors='coerce').dropna().std()
 
                 print(f"\n{outcome}:")
@@ -183,8 +183,8 @@ class MenopauseCognitionAnalysis:
                 print(f"  MCID threshold: {mcid:.3f} points (0.5 x {baseline_sd:.3f})")
                 print("-" * 80)
 
-                for stage in ['Early Peri', 'Late Peri', 'Post-menopause', 'Surgical']:
-                    param_name = f"C(STATUS_Label, Treatment('Pre-menopause'))[T.{stage}]"
+                for stage in ['Early Perimenopause', 'Late Perimenopause', 'Postmenopause', 'Surgical']:
+                    param_name = f"C(STATUS_Label, Treatment('Premenopause'))[T.{stage}]"
 
                     if param_name in results.params.index:
                         coef = results.params[param_name]

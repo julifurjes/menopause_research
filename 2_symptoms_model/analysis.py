@@ -56,13 +56,13 @@ class MenopauseCognitionAnalysis:
                 self.data[var] = pd.to_numeric(self.data[var], errors='coerce')
 
         status_map = {
-            1: 'Surgical', 2: 'Post-menopause', 3: 'Late Peri',
-            4: 'Early Peri', 5: 'Pre-menopause', 8: 'Surgical'
+            1: 'Surgical', 2: 'Postmenopause', 3: 'Late Perimenopause',
+            4: 'Early Perimenopause', 5: 'Premenopause', 8: 'Surgical'
         }
         self.data['STATUS_Label'] = self.data['STATUS'].map(status_map)
         self.data['Menopause_Type'] = np.where(self.data['STATUS'].isin([1, 8]), 'Surgical', 'Natural')
 
-        natural_order = ['Pre-menopause', 'Early Peri', 'Late Peri', 'Post-menopause']
+        natural_order = ['Premenopause', 'Early Perimenopause', 'Late Perimenopause', 'Postmenopause']
         self.data['STATUS_Label'] = pd.Categorical(
             self.data['STATUS_Label'],
             categories=['Surgical'] + natural_order,
@@ -136,11 +136,11 @@ class MenopauseCognitionAnalysis:
             for symptom in self.symptom_vars:
                 # Create formula with status, symptom, baseline age, VISIT, and optionally LANGCOG
                 if self.use_langcog and 'LANGCOG' in self.data.columns:
-                    formula = (f"{transformed_outcome} ~ {symptom} + C(STATUS_Label, Treatment('Pre-menopause')) + "
+                    formula = (f"{transformed_outcome} ~ {symptom} + C(STATUS_Label, Treatment('Premenopause')) + "
                               f"AGE_BASELINE + VISIT + C(LANGCOG, Treatment({reference_language}))")
                     required_cols = [transformed_outcome, symptom, 'STATUS_Label', 'AGE_BASELINE', 'VISIT', 'LANGCOG']
                 else:
-                    formula = (f"{transformed_outcome} ~ {symptom} + C(STATUS_Label, Treatment('Pre-menopause')) + "
+                    formula = (f"{transformed_outcome} ~ {symptom} + C(STATUS_Label, Treatment('Premenopause')) + "
                               f"AGE_BASELINE + VISIT")
                     required_cols = [transformed_outcome, symptom, 'STATUS_Label', 'AGE_BASELINE', 'VISIT']
 
