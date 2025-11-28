@@ -214,6 +214,12 @@ class MenopauseCognitionAnalysis:
 
     def run_complete_analysis(self):
         """Run the complete analysis pipeline."""
+        from datetime import datetime
+
+        print(f"Analysis Run: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        print("=" * 80)
+        print()
+
         self.transform_variables()
         self.filter_status()
 
@@ -221,13 +227,32 @@ class MenopauseCognitionAnalysis:
         self.run_mixed_models()
         self.interpret_clinical_significance()
         plot_forest_plot_from_models(self)
-        print("\nAnalysis complete.")
+
+        print("\n" + "=" * 80)
+        print("\nAnalysis complete.\n")
 
 if __name__ == "__main__":
+    import sys
+
     # Main analysis: cognitive and emotional outcomes by menopausal stage
     data_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "processed_combined_data.csv")
-    analysis = MenopauseCognitionAnalysis(data_path, use_langcog=False)
-    analysis.run_complete_analysis()
 
-    # Visualizations: violin plots, trajectories, and stage comparisons
-    create_all_visualizations(analysis)
+    # Redirect output to file
+    output_file = os.path.join(os.path.dirname(__file__), 'output', 'analysis_results.txt')
+    with open(output_file, 'w', encoding='utf-8') as f:
+        # Save original stdout
+        original_stdout = sys.stdout
+        # Redirect stdout to file
+        sys.stdout = f
+
+        try:
+            analysis = MenopauseCognitionAnalysis(data_path, use_langcog=False)
+            analysis.run_complete_analysis()
+
+            # Visualizations: violin plots, trajectories, and stage comparisons
+            create_all_visualizations(analysis)
+        finally:
+            # Restore original stdout
+            sys.stdout = original_stdout
+
+    print("Analysis complete. Results saved to: output/analysis_results.txt")

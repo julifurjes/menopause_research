@@ -96,10 +96,17 @@ class ModerationAnalysis:
                             re_formula="~VISIT")  # Random slope for VISIT
 
         # Fit with ML for model comparison (not REML)
-        result_main_ml = model_main.fit(reml=False, method='lbfgs')
+        # Try multiple optimization methods to improve convergence
+        try:
+            result_main_ml = model_main.fit(reml=False, method='powell')
+        except:
+            try:
+                result_main_ml = model_main.fit(reml=False, method='bfgs')
+            except:
+                result_main_ml = model_main.fit(reml=False, method='lbfgs')
 
         # Also fit with REML for final parameter estimates
-        result_main_reml = model_main.fit(reml=True, method='lbfgs')
+        result_main_reml = model_main.fit(reml=True, method='powell')
         self.results['main_effects'] = result_main_reml
 
         print(result_main_reml.summary())
@@ -123,10 +130,17 @@ class ModerationAnalysis:
                                     re_formula="~VISIT")  # Random slope for VISIT
 
         # Fit with ML for model comparison (not REML)
-        result_interaction_ml = model_interaction.fit(reml=False, method='lbfgs')
+        # Try multiple optimization methods to improve convergence
+        try:
+            result_interaction_ml = model_interaction.fit(reml=False, method='powell')
+        except:
+            try:
+                result_interaction_ml = model_interaction.fit(reml=False, method='bfgs')
+            except:
+                result_interaction_ml = model_interaction.fit(reml=False, method='lbfgs')
 
         # Also fit with REML for final parameter estimates
-        result_interaction_reml = model_interaction.fit(reml=True, method='lbfgs')
+        result_interaction_reml = model_interaction.fit(reml=True, method='powell')
         self.results['moderation'] = result_interaction_reml
 
         print(result_interaction_reml.summary())
@@ -239,6 +253,12 @@ class ModerationAnalysis:
 
     def run_analysis(self):
         """Run the complete moderation analysis pipeline."""
+        from datetime import datetime
+
+        print(f"Analysis Run: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        print("=" * 80)
+        print()
+
         self.preprocess_data()
 
         print("\nFitting moderation models...")
@@ -252,12 +272,29 @@ class ModerationAnalysis:
 
         print("MODERATION ANALYSIS COMPLETE")
         print("=" * 80)
-        print(f"\nResults saved to: 3_social_model/output/")
+        print("\nAnalysis complete.\n")
 
         return self.results
 
 if __name__ == "__main__":
+    import sys
+
     # Social support moderation analysis: testing whether social support moderates stage effects
     data_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "processed_combined_data.csv")
-    analysis = ModerationAnalysis(data_path)
-    analysis.run_analysis()
+
+    # Redirect output to file
+    output_file = os.path.join(os.path.dirname(__file__), 'output', 'analysis_results.txt')
+    with open(output_file, 'w', encoding='utf-8') as f:
+        # Save original stdout
+        original_stdout = sys.stdout
+        # Redirect stdout to file
+        sys.stdout = f
+
+        try:
+            analysis = ModerationAnalysis(data_path)
+            analysis.run_analysis()
+        finally:
+            # Restore original stdout
+            sys.stdout = original_stdout
+
+    print("Analysis complete. Results saved to: output/analysis_results.txt")

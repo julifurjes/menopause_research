@@ -72,9 +72,6 @@ class MenopauseCognitionAnalysis:
         self.data = self.data.sort_values(['SWANID', 'VISIT'])
         self.data['AGE_BASELINE'] = self.data.groupby('SWANID')['AGE'].transform('first')
 
-        self.data[self.symptom_vars] = (self.data[self.symptom_vars] -
-                                       self.data[self.symptom_vars].mean()) / self.data[self.symptom_vars].std()
-
         if self.use_langcog and 'LANGCOG' in self.data.columns:
             self.data['LANGCOG'] = self.data['LANGCOG'].astype('category')
 
@@ -150,23 +147,49 @@ class MenopauseCognitionAnalysis:
 
                     # Reset index to avoid potential index issues
                     analysis_data = analysis_data.reset_index(drop=True)
-                    
+
+                    # Standardize the symptom variable on the analysis-specific data to prevent numerical instability
+                    if symptom in analysis_data.columns:
+                        symptom_mean = analysis_data[symptom].mean()
+                        symptom_std = analysis_data[symptom].std()
+                        if symptom_std > 0:  # Avoid division by zero
+                            analysis_data[symptom] = (analysis_data[symptom] - symptom_mean) / symptom_std
+
                     # Add weights to handle unbalanced data (from first model)
                     status_counts = analysis_data['STATUS_Label'].value_counts()
                     analysis_data['weights'] = analysis_data['STATUS_Label'].map(
                         lambda x: 1 / (status_counts[x] / sum(status_counts))
                     )
-                    
-                    # Fit mixed model with random intercept for SWANID and random slope for VISIT (from first model)
-                    model = mixedlm(
-                        formula=formula,
-                        groups=analysis_data["SWANID"],
-                        data=analysis_data,
-                        re_formula="~VISIT"  # Random slope for VISIT (from first model)
-                    )
-                    
-                    # Add weights and fit the model
-                    results = model.fit(reml=True, weights=analysis_data['weights'])
+
+                    # Determine random effects structure based on sample size
+                    # For sparse variables (like NUMCLDS), use simpler random intercept only model
+                    n_subjects = analysis_data['SWANID'].nunique()
+
+                    if n_subjects < 1000:
+                        # Use random intercept only for small samples to improve convergence
+                        print(f"Using random intercept only model (n_subjects={n_subjects})")
+                        model = mixedlm(
+                            formula=formula,
+                            groups=analysis_data["SWANID"],
+                            data=analysis_data
+                            # No re_formula - defaults to random intercept only
+                        )
+                        results = model.fit(reml=True, maxiter=200)
+                    else:
+                        # Use random intercept and slope for larger samples
+                        print(f"Using random intercept + slope model (n_subjects={n_subjects})")
+                        model = mixedlm(
+                            formula=formula,
+                            groups=analysis_data["SWANID"],
+                            data=analysis_data,
+                            re_formula="~VISIT"
+                        )
+                        # Use powell optimizer for better convergence (weights aren't used by MixedLM anyway)
+                        results = model.fit(
+                            reml=True,
+                            maxiter=200,
+                            method='powell'
+                        )
                     key = f"{original_outcome}_{symptom}"
                     self.mixed_model_results[key] = results
                     
@@ -280,6 +303,12 @@ class MenopauseCognitionAnalysis:
 
     def run_complete_analysis(self):
         """Run the complete analysis pipeline."""
+        from datetime import datetime
+
+        print(f"Analysis Run: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+        print("=" * 80)
+        print()
+
         print("\nRunning full analysis with transformations from both models...")
         self.prepare_data()
 
@@ -298,10 +327,28 @@ class MenopauseCognitionAnalysis:
         print("\nCreating symptom intensity heat map...")
         visualizations.plot_symptom_intensity_heatmap(self)
 
-        print("\nAnalysis complete")
+        print("\n" + "=" * 80)
+        print("\nAnalysis complete.\n")
 
 if __name__ == "__main__":
+    import sys
+
     # Symptom-cognition analysis: relationships between menopausal symptoms and outcomes
     data_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "processed_combined_data.csv")
-    analysis = MenopauseCognitionAnalysis(data_path, use_langcog=False)
-    analysis.run_complete_analysis()
+
+    # Redirect output to file
+    output_file = os.path.join(os.path.dirname(__file__), 'output', 'analysis_results.txt')
+    with open(output_file, 'w', encoding='utf-8') as f:
+        # Save original stdout
+        original_stdout = sys.stdout
+        # Redirect stdout to file
+        sys.stdout = f
+
+        try:
+            analysis = MenopauseCognitionAnalysis(data_path, use_langcog=False)
+            analysis.run_complete_analysis()
+        finally:
+            # Restore original stdout
+            sys.stdout = original_stdout
+
+    print("Analysis complete. Results saved to: output/analysis_results.txt")
