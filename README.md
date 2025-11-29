@@ -13,7 +13,7 @@ This project requires Python 3.x and several libraries. A virtual environment ca
 Start by downloading the repository to your computer:
 
 ```bash
-git clone https://github.com/julifurjes/msc_thesis.git
+git clone https://github.com/julifurjes/menopause_research.git
 cd msc_thesis
 ```
 
