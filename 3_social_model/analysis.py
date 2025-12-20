@@ -22,7 +22,7 @@ class ModerationAnalysis:
         self.output_dir = os.path.join(os.path.dirname(__file__), 'output')
         os.makedirs(self.output_dir, exist_ok=True)
         self.social_support_vars = ['LISTEN', 'TAKETOM', 'HELPSIC', 'CONFIDE']
-        self.cognitive_vars = ['TOTIDE1', 'TOTIDE2']
+        self.cognitive_vars = ['TOTIDE2']  # Only delayed recall (cognitive outcome)
         self.control_vars = ['AGE_BASELINE', 'VISIT']
         self.results = {}
 
@@ -49,7 +49,7 @@ class ModerationAnalysis:
             self.data['AGE_BASELINE'] = self.data.groupby('SWANID')['AGE'].transform('first')
 
         self.data['social_support'] = self.data[self.social_support_vars].mean(axis=1)
-        self.data['cognitive_function'] = self.data[self.cognitive_vars].mean(axis=1)
+        self.data['cognitive_function'] = self.data['TOTIDE2']  # Use TOTIDE2 directly
 
         self.data['social_support_centered'] = (self.data['social_support'] -
                                                  self.data['social_support'].mean())

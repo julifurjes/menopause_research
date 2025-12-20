@@ -21,7 +21,7 @@ class MenopauseCognitionAnalysis:
     def __init__(self, file_path, use_langcog=True):
         self.data = pd.read_csv(file_path, low_memory=False)
         self.symptom_vars = ['NUMHOTF', 'NUMNITS', 'NUMCLDS', 'STIFF', 'IRRITAB', 'MOODCHG', 'SLEEPQL']
-        self.outcome_vars = ['TOTIDE1', 'TOTIDE2', 'NERVES', 'SAD', 'FEARFULA']
+        self.outcome_vars = ['TOTIDE2']  # Only cognitive outcome
         self.transformed_symptom_vars = []  # Will be populated after transformations
         self.transformed_outcome_vars = []  # Will be populated after transformations
         self.control_vars = ['STATUS', 'AGE', 'AGE_BASELINE']
@@ -35,11 +35,7 @@ class MenopauseCognitionAnalysis:
             'IRRITAB': 'Irritability',
             'MOODCHG': 'Mood Changes',
             'SLEEPQL': 'Sleep Quality',
-            'TOTIDE1': 'Cognitive Performance (Immediate Recall)',
             'TOTIDE2': 'Cognitive Performance (Delayed Recall)',
-            'NERVES': 'Nervousness Score',
-            'SAD': 'Sadness Score',
-            'FEARFULA': 'Fearfulness Score',
         }
         # Create output directory
         self.output_dir = os.path.join(os.path.dirname(__file__), 'output')
@@ -78,9 +74,9 @@ class MenopauseCognitionAnalysis:
         self.transform_variables()
 
     def transform_variables(self):
-        """Apply log and sqrt transformations to address skewness in symptoms and outcomes."""
-        log_transform_vars = ['NERVES', 'NUMHOTF', 'NUMNITS', 'NUMCLDS']
-        sqrt_transform_vars = ['FEARFULA', 'SAD', 'MOODCHG', 'IRRITAB', 'SLEEPQL']
+        """Apply log and sqrt transformations to address skewness in symptoms."""
+        log_transform_vars = ['NUMHOTF', 'NUMNITS', 'NUMCLDS']
+        sqrt_transform_vars = ['MOODCHG', 'IRRITAB', 'SLEEPQL']
         no_transform_vars = ['STIFF']
 
         for var in log_transform_vars:
@@ -102,8 +98,6 @@ class MenopauseCognitionAnalysis:
                 self.transformed_symptom_vars.append(var)
 
         self.transformed_outcome_vars = []
-        if 'TOTIDE1' in self.data.columns:
-            self.transformed_outcome_vars.append('TOTIDE1')
         if 'TOTIDE2' in self.data.columns:
             self.transformed_outcome_vars.append('TOTIDE2')
 
@@ -319,7 +313,7 @@ class MenopauseCognitionAnalysis:
         visualizations.plot_symptom_effects(self)
 
         print("\nCreating stratified forest plot...")
-        visualizations.create_stratified_forest_plot(self, outcome='TOTIDE1')
+        visualizations.create_stratified_forest_plot(self, outcome='TOTIDE2')
 
         print("\nAnalyzing symptom intensity by menopausal stage...")
         visualizations.analyze_symptom_intensity_by_stage(self)
