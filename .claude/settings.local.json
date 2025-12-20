@@ -12,7 +12,8 @@
       "Bash(nul)",
       "Bash(timeout /t 30)",
       "Bash(/dev/null)",
-      "Bash(paste:*)"
+      "Bash(paste:*)",
+      "Bash(git log:*)"
     ],
     "deny": [],
     "ask": []

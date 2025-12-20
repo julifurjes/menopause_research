@@ -9,7 +9,7 @@ project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
     sys.path.append(project_root)
 
-from utils.plot_config import STAGE_COLORS, set_apa_style, CONSTRUCT_COLORS, SIGNIFICANCE_COLORS, get_significance_color
+from utils.plot_config import STAGE_COLORS, set_apa_style, CONSTRUCT_COLORS, SIGNIFICANCE_COLORS, get_significance_color, get_categorical_palette
 
 
 def plot_violin_plots(analysis_obj):
@@ -19,17 +19,14 @@ def plot_violin_plots(analysis_obj):
     data = analysis_obj.data
     output_dir = analysis_obj.output_dir
 
-    outcome_vars = ['TOTIDE1', 'TOTIDE2', 'NERVES', 'SAD', 'FEARFULA']
-    transformed_vars = ['TOTIDE1', 'TOTIDE2', 'NERVES_log', 'SAD_sqrt', 'FEARFULA_sqrt']
+    outcome_vars = ['TOTIDE1', 'TOTIDE2']  # Only cognitive outcomes
+    transformed_vars = ['TOTIDE1', 'TOTIDE2']
     var_labels = {
         'TOTIDE1': 'Cognitive Performance (Immediate Recall)',
-        'TOTIDE2': 'Cognitive Performance (Delayed Recall)',
-        'NERVES_log': 'Nervousness (Log)',
-        'SAD_sqrt': 'Sadness (Sqrt)',
-        'FEARFULA_sqrt': 'Fearfulness (Sqrt)'
+        'TOTIDE2': 'Cognitive Performance (Delayed Recall)'
     }
 
-    fig, axes = plt.subplots(3, 2, figsize=(16, 20))
+    fig, axes = plt.subplots(1, 2, figsize=(16, 8))
     axes = axes.flatten()
 
     stage_order = ['Premenopause', 'Early Perimenopause', 'Late Perimenopause', 'Postmenopause', 'Surgical']
@@ -72,10 +69,8 @@ def plot_violin_plots(analysis_obj):
                va='top', ha='right', fontsize=8,
                bbox=dict(facecolor='white', alpha=0.8, boxstyle='round,pad=0.5'))
 
-    axes[5].set_visible(False)
-
     fig.suptitle(
-        'Distribution of Cognitive and Emotional Measures Across Menopausal Stages',
+        'Distribution of Cognitive Measures Across Menopausal Stages',
         fontsize=16, y=0.98
     )
 
@@ -91,13 +86,10 @@ def plot_stages_vs_scores(analysis_obj):
     data = analysis_obj.data
     output_dir = analysis_obj.output_dir
 
-    transformed_vars = ['TOTIDE1', 'TOTIDE2', 'NERVES_log', 'SAD_sqrt', 'FEARFULA_sqrt']
+    transformed_vars = ['TOTIDE1', 'TOTIDE2']  # Only cognitive outcomes
     var_labels = {
         'TOTIDE1': 'Cognitive Performance (Immediate Recall)',
-        'TOTIDE2': 'Cognitive Performance (Delayed Recall)',
-        'NERVES_log': 'Nervousness (Log)',
-        'SAD_sqrt': 'Sadness (Sqrt)',
-        'FEARFULA_sqrt': 'Fearfulness (Sqrt)'
+        'TOTIDE2': 'Cognitive Performance (Delayed Recall)'
     }
 
     plot_data = data.copy()
@@ -125,7 +117,7 @@ def plot_stages_vs_scores(analysis_obj):
         Count=('Score', 'count')
     ).reset_index()
 
-    fig, axes = plt.subplots(5, 1, figsize=(14, 22), sharex=True)
+    fig, axes = plt.subplots(2, 1, figsize=(14, 12), sharex=True)
     axes = axes.flatten()
 
     line_color = CONSTRUCT_COLORS['cognitive_function']
@@ -202,14 +194,13 @@ def plot_trajectory_classes(analysis_obj):
 
     trajectory_data = data.copy()
 
-    measures_to_plot = ['TOTIDE1', 'TOTIDE2', 'NERVES_log']
+    measures_to_plot = ['TOTIDE1', 'TOTIDE2']  # Only cognitive outcomes
     measure_labels_short = {
         'TOTIDE1': 'Immediate Recall Score',
-        'TOTIDE2': 'Delayed Recall Score',
-        'NERVES_log': 'Nervousness Score (log)'
+        'TOTIDE2': 'Delayed Recall Score'
     }
 
-    fig, axes = plt.subplots(3, 1, figsize=(12, 14))
+    fig, axes = plt.subplots(2, 1, figsize=(12, 10))
 
     stage_order = ['Premenopause', 'Early Perimenopause', 'Late Perimenopause', 'Postmenopause']
 
@@ -265,14 +256,14 @@ def plot_trajectory_classes(analysis_obj):
 
         if idx == 0:
             ax.legend(title='Menopausal Stage', fontsize=10,
-                     title_fontsize=11, loc='upper right',
+                     title_fontsize=11, loc='upper left', bbox_to_anchor=(1.02, 1),
                      frameon=True, fancybox=True, shadow=True)
 
         ax.grid(True, linestyle=':', alpha=0.3, linewidth=0.5)
         ax.tick_params(labelsize=11)
         sns.despine(ax=ax)
 
-    fig.suptitle('Longitudinal Trajectories of Cognitive and Emotional Outcomes\nAcross Menopausal Transition',
+    fig.suptitle('Longitudinal Trajectories of Cognitive Outcomes\nAcross Menopausal Transition',
                 fontsize=16, fontweight='bold', y=0.995)
 
     plt.tight_layout(rect=[0, 0, 1, 0.99])
@@ -282,11 +273,116 @@ def plot_trajectory_classes(analysis_obj):
     plt.close()
 
 
+def plot_decline_proportions_mcid(analysis_obj):
+    """Plot proportions of participants showing clinically meaningful decline (> MCID) by stage."""
+    set_apa_style()
+
+    data = analysis_obj.data
+    output_dir = analysis_obj.output_dir
+
+    # Calculate MCID thresholds
+    mcid_thresholds = _calculate_mcid_thresholds(data)
+
+    # Only analyze cognitive measures
+    measures = ['TOTIDE1', 'TOTIDE2']
+    measure_labels = {
+        'TOTIDE1': 'Cognitive Performance\n(Immediate Recall)',
+        'TOTIDE2': 'Cognitive Performance\n(Delayed Recall)'
+    }
+
+    stage_order = ['Premenopause', 'Early Perimenopause', 'Late Perimenopause', 'Postmenopause', 'Surgical']
+
+    # Create figure
+    fig, axes = plt.subplots(1, 2, figsize=(14, 6))
+
+    for idx, measure in enumerate(measures):
+        ax = axes[idx]
+
+        if measure not in mcid_thresholds:
+            continue
+
+        mcid = mcid_thresholds[measure]
+
+        # Calculate baseline (premenopause) mean
+        baseline_data = data[data['STATUS_Label'] == 'Premenopause']
+        baseline_mean = pd.to_numeric(baseline_data[measure], errors='coerce').mean()
+
+        # For each stage, calculate proportion with clinically meaningful decline
+        proportions = []
+        counts = []
+        total_ns = []
+
+        for stage in stage_order:
+            stage_data = data[data['STATUS_Label'] == stage]
+            stage_values = pd.to_numeric(stage_data[measure], errors='coerce').dropna()
+
+            if len(stage_values) == 0:
+                proportions.append(0)
+                counts.append(0)
+                total_ns.append(0)
+                continue
+
+            # Calculate decline from baseline
+            declines = baseline_mean - stage_values
+
+            # Count those with decline > MCID
+            meaningful_decline = (declines > mcid).sum()
+            total = len(stage_values)
+
+            proportions.append((meaningful_decline / total) * 100)
+            counts.append(meaningful_decline)
+            total_ns.append(total)
+
+        # Create bar plot
+        x_pos = np.arange(len(stage_order))
+        bars = ax.bar(x_pos, proportions, color=get_categorical_palette(len(stage_order)),
+                     edgecolor='black', linewidth=1.5)
+
+        # Add percentage labels on top of bars
+        for i, (bar, proportion, total_n) in enumerate(zip(bars, proportions, total_ns)):
+            height = bar.get_height()
+            if total_n > 0:
+                ax.text(bar.get_x() + bar.get_width()/2., height + 1,
+                       f'{proportion:.1f}%',
+                       ha='center', va='bottom', fontsize=11, fontweight='bold')
+
+        # Formatting
+        ax.set_xlabel('Menopausal Stage', fontsize=12)
+        ax.set_ylabel('Proportion with Clinically\nMeaningful Decline (%)', fontsize=12)
+        ax.set_title(measure_labels.get(measure, measure), fontsize=13, fontweight='bold')
+        ax.set_xticks(x_pos)
+        ax.set_xticklabels(stage_order, rotation=45, ha='right', fontsize=10)
+        ax.set_ylim(0, max(proportions) * 1.25 if max(proportions) > 0 else 10)
+        ax.grid(True, axis='y', linestyle=':', alpha=0.3)
+
+        # Add MCID threshold note with improved styling
+        ax.text(0.02, 0.98, f'MCID Threshold: {mcid:.2f} points\n(0.5 × baseline SD)',
+               transform=ax.transAxes, fontsize=10,
+               verticalalignment='top', horizontalalignment='left',
+               bbox=dict(boxstyle='round,pad=0.5', facecolor='lightblue',
+                        edgecolor='navy', alpha=0.8, linewidth=1.5))
+
+        sns.despine(ax=ax)
+
+    fig.suptitle('Proportion of Participants with Clinically Meaningful Cognitive Decline\n(Decline > MCID from Premenopause Baseline)',
+                fontsize=14, fontweight='bold', y=1.02)
+
+    plt.tight_layout()
+
+    # Save
+    output_file = os.path.join(output_dir, 'menopausal_decline_proportions_mcid.png')
+    plt.savefig(output_file, dpi=300, bbox_inches='tight')
+    plt.close()
+
+    print(f"Decline proportions plot saved to: 1_stages_model/output/menopausal_decline_proportions_mcid.png")
+
+
 def create_all_visualizations(analysis_obj):
     """Generate all visualization outputs."""
     plot_violin_plots(analysis_obj)
     plot_stages_vs_scores(analysis_obj)
     plot_trajectory_classes(analysis_obj)
+    plot_decline_proportions_mcid(analysis_obj)
 
 
 def _calculate_reasonable_limits(coefs, errors, percentile=95):
@@ -339,17 +435,14 @@ def plot_forest_plot_from_models(analysis_obj):
 
     measure_labels = {
         'TOTIDE1': 'Cognitive Performance (Immediate Recall)',
-        'TOTIDE2': 'Cognitive Performance (Delayed Recall)',
-        'NERVES_log': 'Nervousness',
-        'SAD_sqrt': 'Sadness',
-        'FEARFULA_sqrt': 'Fearfulness'
+        'TOTIDE2': 'Cognitive Performance (Delayed Recall)'
     }
 
     status_effects = ['Early Perimenopause', 'Late Perimenopause', 'Postmenopause', 'Surgical']
 
     mcid_thresholds = _calculate_mcid_thresholds(analysis_obj.data)
 
-    fig, axes = plt.subplots(5, 1, figsize=(14, 24), sharex=False)
+    fig, axes = plt.subplots(2, 1, figsize=(14, 12), sharex=False)
     axes = axes.flatten()
 
     for i, (outcome, results) in enumerate(analysis_obj.mixed_model_results.items()):
@@ -413,9 +506,9 @@ def plot_forest_plot_from_models(analysis_obj):
             ax.axvline(x=mcid, color='orange', linestyle=':', linewidth=2, alpha=0.7, label=f'MCID threshold')
             ax.axvline(x=-mcid, color='orange', linestyle=':', linewidth=2, alpha=0.7)
 
-            # Add text annotation for MCID
-            ax.text(mcid, len(names) - 0.5, f'  MCID: ±{mcid:.2f}',
-                   fontsize=9, color='orange', va='top', ha='left',
+            # Add text annotation for MCID - positioned above the plot to avoid overlap
+            ax.text(mcid, len(names), f'  MCID: ±{mcid:.2f}',
+                   fontsize=9, color='orange', va='bottom', ha='left',
                    bbox=dict(facecolor='white', alpha=0.8, boxstyle='round,pad=0.3', edgecolor='orange'))
 
         ax.set_yticks(y_positions)

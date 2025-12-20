@@ -14,11 +14,11 @@ if project_root not in sys.path:
 from visualizations import create_all_visualizations, plot_forest_plot_from_models
 
 class MenopauseCognitionAnalysis:
-    """Analysis of cognitive and emotional outcomes across menopausal stages using mixed-effects models."""
+    """Analysis of cognitive outcomes across menopausal stages using mixed-effects models."""
 
     def __init__(self, file_path, use_langcog=True):
         self.data = pd.read_csv(file_path, low_memory=False)
-        self.outcome_vars = ['TOTIDE1', 'TOTIDE2', 'NERVES', 'SAD', 'FEARFULA']
+        self.outcome_vars = ['TOTIDE1', 'TOTIDE2']  # Only cognitive outcomes
         self.mixed_model_results = {}
         # Create output directory
         self.output_dir = os.path.join(os.path.dirname(__file__), 'output')
@@ -26,12 +26,7 @@ class MenopauseCognitionAnalysis:
         self.use_langcog = use_langcog
 
     def transform_variables(self):
-        """Apply log and sqrt transformations to address skewness."""
-        self.data['NERVES_log'] = np.log1p(self.data['NERVES'])
-        self.data['SAD_sqrt'] = np.sqrt(self.data['SAD'])
-        self.data['FEARFULA_sqrt'] = np.sqrt(self.data['FEARFULA'])
-        self.outcome_vars = ['TOTIDE1', 'TOTIDE2', 'NERVES_log', 'SAD_sqrt', 'FEARFULA_sqrt']
-
+        """No transformations needed for cognitive outcomes."""
         if self.use_langcog and 'LANGCOG' in self.data.columns:
             self.data['LANGCOG'] = self.data['LANGCOG'].astype('category')
 

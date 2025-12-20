@@ -1,4 +1,4 @@
-Analysis Run: 2025-11-28 10:56:42
+Analysis Run: 2025-12-20 12:56:03
 ================================================================================
 
 
@@ -23,30 +23,30 @@ Model 1: Main Effects Only
 ==================================================================
 Model:              MixedLM Dependent Variable: cognitive_function
 No. Observations:   17924   Method:             REML              
-No. Groups:         2309    Scale:              0.5564            
-Min. group size:    1       Log-Likelihood:     -24490.3303       
+No. Groups:         2309    Scale:              0.7004            
+Min. group size:    1       Log-Likelihood:     -26392.6667       
 Max. group size:    9       Converged:          Yes               
 Mean group size:    7.8                                           
 ------------------------------------------------------------------
                         Coef.  Std.Err.   z    P>|z| [0.025 0.975]
 ------------------------------------------------------------------
-Intercept               10.200    0.469 21.737 0.000  9.281 11.120
-social_support_centered  0.050    0.013  3.765 0.000  0.024  0.075
-Early_Perimenopause     -0.081    0.024 -3.450 0.001 -0.128 -0.035
-Late_Perimenopause      -0.044    0.034 -1.320 0.187 -0.111  0.022
-Postmenopause           -0.076    0.035 -2.159 0.031 -0.146 -0.007
-Surgical                -0.164    0.055 -3.005 0.003 -0.271 -0.057
-AGE_BASELINE            -0.002    0.010 -0.197 0.843 -0.022  0.018
-VISIT                    0.016    0.004  4.531 0.000  0.009  0.023
-Group Var                1.974    0.094                           
-Group x VISIT Cov       -0.051    0.006                           
-VISIT Var                0.006    0.001                           
+Intercept               10.336    0.495 20.877 0.000  9.366 11.306
+social_support_centered  0.058    0.015  3.960 0.000  0.029  0.087
+Early_Perimenopause     -0.086    0.026 -3.245 0.001 -0.137 -0.034
+Late_Perimenopause      -0.053    0.038 -1.407 0.159 -0.127  0.021
+Postmenopause           -0.086    0.040 -2.172 0.030 -0.164 -0.008
+Surgical                -0.208    0.061 -3.417 0.001 -0.327 -0.089
+AGE_BASELINE            -0.007    0.011 -0.659 0.510 -0.028  0.014
+VISIT                    0.019    0.004  4.773 0.000  0.011  0.027
+Group Var                2.210    0.094                           
+Group x VISIT Cov       -0.061    0.006                           
+VISIT Var                0.007    0.001                           
 ==================================================================
 
 
-AIC (ML): 49004.66
-BIC (ML): 49098.19
-Log-Likelihood (ML): -24490.33
+AIC (ML): 52809.34
+BIC (ML): 52902.86
+Log-Likelihood (ML): -26392.67
 
 ================================================================================
 Model 2: Moderation Model (with interactions)
@@ -55,46 +55,50 @@ Model 2: Moderation Model (with interactions)
 ========================================================================
 Model:                MixedLM   Dependent Variable:   cognitive_function
 No. Observations:     17924     Method:               REML              
-No. Groups:           2309      Scale:                0.5556            
-Min. group size:      1         Log-Likelihood:       -24489.4903       
+No. Groups:           2309      Scale:                0.7001            
+Min. group size:      1         Log-Likelihood:       -26396.7407       
 Max. group size:      9         Converged:            Yes               
 Mean group size:      7.8                                               
 ------------------------------------------------------------------------
                               Coef.  Std.Err.   z    P>|z| [0.025 0.975]
 ------------------------------------------------------------------------
-Intercept                     10.192    0.469 21.733 0.000  9.273 11.111
-social_support_centered        0.004    0.026  0.166 0.868 -0.047  0.055
-Early_Perimenopause           -0.082    0.024 -3.468 0.001 -0.128 -0.036
-Late_Perimenopause            -0.046    0.034 -1.372 0.170 -0.112  0.020
-Postmenopause                 -0.081    0.035 -2.286 0.022 -0.150 -0.012
-Surgical                      -0.164    0.055 -3.005 0.003 -0.271 -0.057
-Early_Perimenopause_x_Support  0.019    0.027  0.675 0.500 -0.035  0.072
-Late_Perimenopause_x_Support   0.075    0.038  1.985 0.047  0.001  0.150
-Postmenopause_x_Support        0.111    0.031  3.605 0.000  0.051  0.171
-Surgical_x_Support            -0.029    0.053 -0.539 0.590 -0.132  0.075
-AGE_BASELINE                  -0.002    0.010 -0.181 0.856 -0.022  0.018
-VISIT                          0.016    0.004  4.595 0.000  0.009  0.023
-Group Var                      1.984    0.094                           
-Group x VISIT Cov             -0.052    0.006                           
-VISIT Var                      0.006    0.001                           
+Intercept                     10.329    0.495 20.873 0.000  9.359 11.299
+social_support_centered        0.020    0.029  0.698 0.485 -0.037  0.077
+Early_Perimenopause           -0.086    0.026 -3.255 0.001 -0.138 -0.034
+Late_Perimenopause            -0.055    0.038 -1.446 0.148 -0.129  0.019
+Postmenopause                 -0.089    0.040 -2.259 0.024 -0.167 -0.012
+Surgical                      -0.208    0.061 -3.424 0.001 -0.327 -0.089
+Early_Perimenopause_x_Support  0.019    0.031  0.624 0.533 -0.041  0.079
+Late_Perimenopause_x_Support   0.064    0.043  1.508 0.132 -0.019  0.148
+Postmenopause_x_Support        0.089    0.034  2.585 0.010  0.021  0.156
+Surgical_x_Support            -0.037    0.059 -0.633 0.526 -0.153  0.078
+AGE_BASELINE                  -0.007    0.011 -0.646 0.518 -0.028  0.014
+VISIT                          0.019    0.004  4.814 0.000  0.011  0.027
+Group Var                      2.217    0.095                           
+Group x VISIT Cov             -0.062    0.006                           
+VISIT Var                      0.008    0.001                           
 ========================================================================
 
 
-AIC (ML): 49010.98
-BIC (ML): 49135.68
-Log-Likelihood (ML): -24489.49
+AIC (ML): 52825.47
+BIC (ML): 52950.17
+Log-Likelihood (ML): -26396.73
 
 ================================================================================
 MODEL COMPARISON (using ML estimates)
 ================================================================================
-AIC difference (Main - Moderation): -6.32
-BIC difference (Main - Moderation): -37.50
+AIC difference (Main - Moderation): -16.13
+BIC difference (Main - Moderation): -47.31
   -> Main effects model shows better fit (AIC diff < -2)
 
+LR statistic is negative (-8.13)
+This suggests the moderation model fits worse than main effects.
+This can happen when interactions add noise rather than signal.
+
 Likelihood Ratio Test:
-  LR statistic: 1.68
+  LR statistic: -8.13
   df: 4
-  p-value: 0.7945
+  p-value: 1.0000
   -> No significant improvement from moderation model
 
 Creating visualizations...
@@ -106,33 +110,33 @@ INTERPRETATION OF MODERATION RESULTS
 ================================================================================
 
 Main Effect of Social Support:
-  Coefficient: 0.0043
-  p-value: 0.8678
+  Coefficient: 0.0203
+  p-value: 0.4850
   -> No significant main effect of social support
 
 Interaction Effects (Moderation):
 
   Early Perimenopause:
-    Coefficient: 0.0185
-    p-value: 0.5000
+    Coefficient: 0.0192
+    p-value: 0.5326
     -> No significant difference in social support effect
        between Early Perimenopause and premenopause
 
   Late Perimenopause:
-    Coefficient: 0.0755
-    p-value: 0.0472
-    -> Social support has a STRONGER protective effect in Late Perimenopause
-       compared to premenopause (p < 0.05)
+    Coefficient: 0.0642
+    p-value: 0.1315
+    -> No significant difference in social support effect
+       between Late Perimenopause and premenopause
 
   Postmenopause:
-    Coefficient: 0.1108
-    p-value: 0.0003
+    Coefficient: 0.0888
+    p-value: 0.0097
     -> Social support has a STRONGER protective effect in Postmenopause
        compared to premenopause (p < 0.05)
 
   Surgical:
-    Coefficient: -0.0285
-    p-value: 0.5897
+    Coefficient: -0.0374
+    p-value: 0.5264
     -> No significant difference in social support effect
        between Surgical and premenopause
 MODERATION ANALYSIS COMPLETE

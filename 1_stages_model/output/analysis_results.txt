@@ -1,4 +1,4 @@
-Analysis Run: 2025-11-28 10:52:30
+Analysis Run: 2025-12-20 13:32:12
 ================================================================================
 
 
@@ -61,93 +61,6 @@ VISIT Var                                                          0.810
 
 Marginal R² (fixed effects): 0.0003
 Conditional R² (fixed + random): 0.8961
-
-Mixed Model Results for NERVES_log
-==================================================
-                                   Mixed Linear Model Regression Results
-============================================================================================================
-Model:                             MixedLM                  Dependent Variable:                  NERVES_log 
-No. Observations:                  12819                    Method:                              REML       
-No. Groups:                        2295                     Scale:                               0.2170     
-Min. group size:                   1                        Log-Likelihood:                      -11722.0625
-Max. group size:                   7                        Converged:                           Yes        
-Mean group size:                   5.6                                                                      
-------------------------------------------------------------------------------------------------------------
-                                                                  Coef.  Std.Err.   z    P>|z| [0.025 0.975]
-------------------------------------------------------------------------------------------------------------
-Intercept                                                          0.903    0.236  3.834 0.000  0.442  1.365
-C(STATUS_Label, Treatment('Premenopause'))[T.Surgical]             0.162    0.056  2.869 0.004  0.051  0.272
-C(STATUS_Label, Treatment('Premenopause'))[T.Early Perimenopause]  0.065    0.039  1.667 0.096 -0.011  0.141
-C(STATUS_Label, Treatment('Premenopause'))[T.Late Perimenopause]   0.069    0.042  1.631 0.103 -0.014  0.152
-C(STATUS_Label, Treatment('Premenopause'))[T.Postmenopause]        0.092    0.043  2.143 0.032  0.008  0.176
-VISIT                                                             -0.005    0.003 -1.424 0.154 -0.012  0.002
-AGE_BASELINE                                                      -0.014    0.005 -2.717 0.007 -0.024 -0.004
-Group Var                                                          0.759    0.095                           
-Group x VISIT Cov                                                 -0.063    0.011                           
-VISIT Var                                                          0.009    0.001                           
-============================================================================================================
-
-
-Marginal R² (fixed effects): 0.0017
-Conditional R² (fixed + random): 0.7782
-
-Mixed Model Results for SAD_sqrt
-==================================================
-                                   Mixed Linear Model Regression Results
-============================================================================================================
-Model:                               MixedLM                  Dependent Variable:                  SAD_sqrt 
-No. Observations:                    21256                    Method:                              REML     
-No. Groups:                          2309                     Scale:                               0.0452   
-Min. group size:                     1                        Log-Likelihood:                      -209.2848
-Max. group size:                     11                       Converged:                           No       
-Mean group size:                     9.2                                                                    
-------------------------------------------------------------------------------------------------------------
-                                                                  Coef.  Std.Err.   z    P>|z| [0.025 0.975]
-------------------------------------------------------------------------------------------------------------
-Intercept                                                          1.412    0.064 21.901 0.000  1.286  1.538
-C(STATUS_Label, Treatment('Premenopause'))[T.Surgical]             0.031    0.014  2.254 0.024  0.004  0.057
-C(STATUS_Label, Treatment('Premenopause'))[T.Early Perimenopause]  0.012    0.006  1.962 0.050  0.000  0.025
-C(STATUS_Label, Treatment('Premenopause'))[T.Late Perimenopause]   0.021    0.009  2.441 0.015  0.004  0.038
-C(STATUS_Label, Treatment('Premenopause'))[T.Postmenopause]        0.020    0.009  2.270 0.023  0.003  0.038
-VISIT                                                             -0.005    0.001 -5.037 0.000 -0.006 -0.003
-AGE_BASELINE                                                      -0.005    0.001 -3.324 0.001 -0.007 -0.002
-Group Var                                                          0.036    0.009                           
-Group x VISIT Cov                                                 -0.002    0.001                           
-VISIT Var                                                          0.001    0.000                           
-============================================================================================================
-
-
-Marginal R² (fixed effects): 0.0032
-Conditional R² (fixed + random): 0.4473
-
-Mixed Model Results for FEARFULA_sqrt
-==================================================
-                                   Mixed Linear Model Regression Results
-============================================================================================================
-Model:                             MixedLM                 Dependent Variable:                 FEARFULA_sqrt
-No. Observations:                  21680                   Method:                             REML         
-No. Groups:                        2309                    Scale:                              0.0240       
-Min. group size:                   1                       Log-Likelihood:                     6634.3958    
-Max. group size:                   11                      Converged:                          Yes          
-Mean group size:                   9.4                                                                      
-------------------------------------------------------------------------------------------------------------
-                                                                  Coef.  Std.Err.   z    P>|z| [0.025 0.975]
-------------------------------------------------------------------------------------------------------------
-Intercept                                                          1.109    0.054 20.438 0.000  1.003  1.215
-C(STATUS_Label, Treatment('Premenopause'))[T.Surgical]             0.039    0.010  3.988 0.000  0.020  0.058
-C(STATUS_Label, Treatment('Premenopause'))[T.Early Perimenopause]  0.015    0.005  3.235 0.001  0.006  0.024
-C(STATUS_Label, Treatment('Premenopause'))[T.Late Perimenopause]   0.026    0.006  4.175 0.000  0.014  0.039
-C(STATUS_Label, Treatment('Premenopause'))[T.Postmenopause]        0.024    0.006  3.700 0.000  0.011  0.037
-VISIT                                                             -0.002    0.001 -3.636 0.000 -0.003 -0.001
-AGE_BASELINE                                                      -0.001    0.001 -0.558 0.577 -0.003  0.002
-Group Var                                                          0.023    0.007                           
-Group x VISIT Cov                                                 -0.001    0.001                           
-VISIT Var                                                          0.000    0.000                           
-============================================================================================================
-
-
-Marginal R² (fixed effects): 0.0012
-Conditional R² (fixed + random): 0.4953
 
 ================================================================================
 CLINICAL SIGNIFICANCE INTERPRETATION
@@ -231,3 +144,4 @@ TOTIDE2:
 
 Analysis complete.
 
+Decline proportions plot saved to: 1_stages_model/output/menopausal_decline_proportions_mcid.png
