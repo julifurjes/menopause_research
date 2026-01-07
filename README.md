@@ -97,8 +97,9 @@ project-folder/
 └── etc.
 ```
 
-**Output files** (automatically generated):
-- `processed_combined_data.csv` - Created by [create_dataframe.py](preparations/create_dataframe.py), used by all models
+**Output files** (automatically generated during data processing):
+- `processed_data_original.csv` - Created by [create_dataframe.py](preparations/create_dataframe.py), contains the merged dataset with missing values
+- `processed_data_with_imputation.csv` - Created by [impute_data.py](preparations/impute_data.py), contains the dataset after KNN imputation, used by all models
 
 ## Running the Analysis
 
@@ -109,12 +110,16 @@ project-folder/
 The analysis requires specific data preparation steps that must be completed in order. Run these scripts from the main directory:
 
 ```bash
-# First: Create the main data structure
+# First: Create the main data structure (outputs processed_data_original.csv)
 python preparations/create_dataframe.py
 
-# Second: Handle missing data
+# Second: Handle missing data with KNN imputation (outputs processed_data_with_imputation.csv)
 python preparations/impute_data.py
 ```
+
+**About the data files:**
+- `processed_data_original.csv`: The merged longitudinal dataset containing missing values (~58% missing for cognitive measures)
+- `processed_data_with_imputation.csv`: The same dataset after stratified KNN imputation (k=4) within participants. This file is used by all subsequent analyses to maximize statistical power while preserving temporal patterns.
 
 ### Step 2: Optional Data Description
 

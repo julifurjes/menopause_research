@@ -209,7 +209,7 @@ class DemographicAnalyzer:
 
 
 if __name__ == "__main__":
-    data_file = "processed_data.csv"
+    data_file = "processed_data_original.csv"  # Use original data for descriptive statistics
     cross_sectional_file = os.path.join("data", "swan_cross_sectional.tsv")
     analyzer = DemographicAnalyzer(data_file, cross_sectional_file)
     analyzer.main()

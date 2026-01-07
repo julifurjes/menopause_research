@@ -13,7 +13,14 @@
       "Bash(timeout /t 30)",
       "Bash(/dev/null)",
       "Bash(paste:*)",
-      "Bash(git log:*)"
+      "Bash(git log:*)",
+      "Bash(if [ -f \"processed_combined_data.csv\" ])",
+      "Bash(then mv processed_combined_data.csv processed_data_with_imputation.csv)",
+      "Bash(else echo \"File processed_combined_data.csv not found\")",
+      "Bash(fi)",
+      "Bash(if [ -f \"processed_data.csv\" ])",
+      "Bash(then mv processed_data.csv processed_data_original.csv)",
+      "Bash(else echo \"File processed_data.csv not found\")"
     ],
     "deny": [],
     "ask": []

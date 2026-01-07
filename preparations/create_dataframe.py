@@ -370,7 +370,7 @@ class TSVDataProcessor:
 
 if __name__ == "__main__":
     data_folder = 'data'  # Folder containing the .tsv files
-    output_file = 'processed_data.csv'  # Output file for the processed data
+    output_file = 'processed_data_original.csv'  # Output file for the processed data (before imputation)
     cross_sectional_file = 'swan_cross_sectional.tsv'  # Cross-sectional data file
     processor = TSVDataProcessor(data_folder, output_file, cross_sectional_file)
     processor.main()

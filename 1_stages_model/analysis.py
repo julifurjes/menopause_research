@@ -230,7 +230,7 @@ if __name__ == "__main__":
     import sys
 
     # Main analysis: cognitive and emotional outcomes by menopausal stage
-    data_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "processed_combined_data.csv")
+    data_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "processed_data_with_imputation.csv")
 
     # Redirect output to file
     output_file = os.path.join(os.path.dirname(__file__), 'output', 'analysis_results.txt')

@@ -705,12 +705,14 @@ class ImputationValidator:
 
 if __name__ == "__main__":
     # Initialize validator with your data file
+    # Input: Original data with missing values
+    # Output: Data after KNN imputation
     validator = ImputationValidator(
-        input_file="../processed_data.csv",
-        output_file="../processed_combined_data.csv",
+        input_file="../processed_data_original.csv",
+        output_file="../processed_data_with_imputation.csv",
         run_sensitivity=True,
         output_dir="output/imputation_validation"
     )
-    
+
     # Run all validation checks
     validator.run_all_checks()
