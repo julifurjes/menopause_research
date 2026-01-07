@@ -11,7 +11,12 @@ project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if project_root not in sys.path:
     sys.path.append(project_root)
 
-from visualizations import plot_moderation_effects
+try:
+    from visualizations import plot_moderation_effects
+    HAS_VISUALIZATIONS = True
+except ImportError:
+    HAS_VISUALIZATIONS = False
+    plot_moderation_effects = None
 
 class ModerationAnalysis:
     """Analyze moderation effects of social support on cognitive outcomes across menopausal stages."""
@@ -264,8 +269,11 @@ class ModerationAnalysis:
         print("\nFitting moderation models...")
         main_result, mod_result = self.fit_moderation_models()
 
-        print("\nCreating visualizations...")
-        plot_moderation_effects(self)
+        if HAS_VISUALIZATIONS:
+            print("\nCreating visualizations...")
+            plot_moderation_effects(self)
+        else:
+            print("\nSkipping visualizations (module not available)...")
 
         print("\nInterpreting results...")
         self.interpret_results()

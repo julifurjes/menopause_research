@@ -46,11 +46,12 @@ class ImputationComparator:
         print(f"Running STAGES MODEL with {data_type.upper()} DATA")
         print(f"{'='*80}\n")
 
-        model_dir = os.path.join(os.path.dirname(__file__), '1_stages_model')
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        model_dir = os.path.join(project_root, '1_stages_model')
         sys.path.insert(0, model_dir)
 
         try:
-            module_path = os.path.join(model_dir, 'longitudinal.py')
+            module_path = os.path.join(model_dir, 'analysis.py')
             spec = importlib.util.spec_from_file_location(f"stages_{data_type}", module_path)
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
@@ -78,11 +79,12 @@ class ImputationComparator:
         print(f"Running SYMPTOMS MODEL with {data_type.upper()} DATA")
         print(f"{'='*80}\n")
 
-        model_dir = os.path.join(os.path.dirname(__file__), '2_symptoms_model')
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        model_dir = os.path.join(project_root, '2_symptoms_model')
         sys.path.insert(0, model_dir)
 
         try:
-            module_path = os.path.join(model_dir, 'longitudinal.py')
+            module_path = os.path.join(model_dir, 'analysis.py')
             spec = importlib.util.spec_from_file_location(f"symptoms_{data_type}", module_path)
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
@@ -113,17 +115,19 @@ class ImputationComparator:
         print(f"Running SOCIAL MODEL with {data_type.upper()} DATA")
         print(f"{'='*80}\n")
 
-        model_dir = os.path.join(os.path.dirname(__file__), '3_social_model')
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        model_dir = os.path.join(project_root, '3_social_model')
         sys.path.insert(0, model_dir)
 
         try:
-            module_path = os.path.join(model_dir, 'longitudinal.py')
+            module_path = os.path.join(model_dir, 'analysis.py')
             spec = importlib.util.spec_from_file_location(f"social_{data_type}", module_path)
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
 
-            analyzer = module.MenopauseCognitionMixedModels(data_file)
-            results = analyzer.run_complete_analysis()
+            analyzer = module.ModerationAnalysis(data_file)
+            analyzer.preprocess_data()
+            analyzer.fit_moderation_models()
 
             # Store sample size (after preprocessing)
             self.sample_sizes['social'][data_type] = {
@@ -131,7 +135,7 @@ class ImputationComparator:
                 'n_subjects': analyzer.data['SWANID'].nunique() if 'SWANID' in analyzer.data.columns else 'N/A'
             }
 
-            return results
+            return analyzer.results
 
         finally:
             sys.path.remove(model_dir)
@@ -450,8 +454,9 @@ class ImputationComparator:
 
 def main():
     # Paths to data files (relative to project root)
-    with_imputation_file = os.path.join("..", "processed_data_with_imputation.csv")
-    original_file = os.path.join("..", "processed_data_original.csv")
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    with_imputation_file = os.path.join(project_root, "processed_data_with_imputation.csv")
+    original_file = os.path.join(project_root, "processed_data_original.csv")
 
     if not os.path.exists(with_imputation_file):
         print(f"Error: Data file with imputation not found at {with_imputation_file}")

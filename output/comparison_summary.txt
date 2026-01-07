@@ -1,0 +1,214 @@
+================================================================================
+IMPUTATION COMPARISON SUMMARY REPORT
+Generated: 2026-01-07 11:23:55
+================================================================================
+
+SAMPLE SIZE CHANGES
+--------------------------------------------------------------------------------
+
+STAGES MODEL:
+  TOTIDE1:
+    With imputation: 22352 obs, 2309 subjects
+    Original: 9424 obs, 2297 subjects
+    Gained: 12928 obs (57.8%)
+  TOTIDE2:
+    With imputation: 22352 obs, 2309 subjects
+    Original: 9419 obs, 2297 subjects
+    Gained: 12933 obs (57.9%)
+
+SYMPTOMS MODEL:
+  TOTIDE2_NUMHOTF_log:
+    With imputation: 15773 obs, 1628 subjects
+    Original: 2889 obs, 1487 subjects
+    Gained: 12884 obs (81.7%)
+  TOTIDE2_NUMNITS_log:
+    With imputation: 12557 obs, 1304 subjects
+    Original: 2086 obs, 1158 subjects
+    Gained: 10471 obs (83.4%)
+  TOTIDE2_NUMCLDS_log:
+    With imputation: 5013 obs, 525 subjects
+    Original: 606 obs, 430 subjects
+    Gained: 4407 obs (87.9%)
+  TOTIDE2_MOODCHG_sqrt:
+    With imputation: 21945 obs, 2309 subjects
+    Original: 9256 obs, 2289 subjects
+    Gained: 12689 obs (57.8%)
+  TOTIDE2_IRRITAB_sqrt:
+    With imputation: 21937 obs, 2309 subjects
+    Original: 9256 obs, 2289 subjects
+    Gained: 12681 obs (57.8%)
+  TOTIDE2_SLEEPQL_sqrt:
+    With imputation: 22335 obs, 2307 subjects
+    Original: 9184 obs, 2284 subjects
+    Gained: 13151 obs (58.9%)
+  TOTIDE2_STIFF:
+    With imputation: 21952 obs, 2309 subjects
+    Original: 9260 obs, 2289 subjects
+    Gained: 12692 obs (57.8%)
+
+SOCIAL MODEL:
+  cognitive_function:
+    With imputation: 17924 obs, 2309 subjects
+    Original: 6921 obs, 2285 subjects
+    Gained: 11003 obs (61.4%)
+
+
+SIGNIFICANCE CHANGES
+--------------------------------------------------------------------------------
+Total predictors with significance changes: 6
+
+Model: Stages_TOTIDE1
+  Predictor: C(STATUS_Label, Treatment('Premenopause'))[T.Surgical]
+  Change: Lost significance (original data was sig)
+  P-value (with imputation): 0.5593
+  P-value (original): 0.0086
+  Coefficient change: 111.10%
+
+Model: Stages_TOTIDE1
+  Predictor: C(STATUS_Label, Treatment('Premenopause'))[T.Early Perimenopause]
+  Change: Gained significance (with imputation)
+  P-value (with imputation): 0.0096
+  P-value (original): 0.1584
+  Coefficient change: 56.23%
+
+Model: Stages_TOTIDE1
+  Predictor: VISIT
+  Change: Lost significance (original data was sig)
+  P-value (with imputation): 0.5955
+  P-value (original): 0.0000
+  Coefficient change: -78.51%
+
+Model: Stages_TOTIDE2
+  Predictor: C(STATUS_Label, Treatment('Premenopause'))[T.Surgical]
+  Change: Lost significance (original data was sig)
+  P-value (with imputation): 0.4122
+  P-value (original): 0.0025
+  Coefficient change: 86.67%
+
+Model: Stages_TOTIDE2
+  Predictor: C(STATUS_Label, Treatment('Premenopause'))[T.Early Perimenopause]
+  Change: Gained significance (with imputation)
+  P-value (with imputation): 0.0066
+  P-value (original): 0.2323
+  Coefficient change: 46.24%
+
+Model: Stages_TOTIDE2
+  Predictor: VISIT
+  Change: Lost significance (original data was sig)
+  P-value (with imputation): 0.4905
+  P-value (original): 0.0000
+  Coefficient change: -77.08%
+
+
+LARGE COEFFICIENT CHANGES (>20%)
+--------------------------------------------------------------------------------
+Total predictors with >20% change: 18
+
+Model: Stages_TOTIDE1
+  Predictor: VISIT Var
+  Coefficient (with imputation): 1.2404
+  Coefficient (original): 0.0046
+  Percent change: 26592.38%
+
+Model: Stages_TOTIDE2
+  Predictor: VISIT Var
+  Coefficient (with imputation): 1.2385
+  Coefficient (original): 0.0047
+  Percent change: 26207.72%
+
+Model: Stages_TOTIDE1
+  Predictor: Group Var
+  Coefficient (with imputation): 8.4682
+  Coefficient (original): 0.9519
+  Percent change: 789.66%
+
+Model: Stages_TOTIDE2
+  Predictor: Group Var
+  Coefficient (with imputation): 8.6250
+  Coefficient (original): 1.0376
+  Percent change: 731.27%
+
+Model: Stages_TOTIDE1
+  Predictor: Group x VISIT Cov
+  Coefficient (with imputation): -0.2917
+  Coefficient (original): -0.0448
+  Percent change: -551.23%
+
+Model: Stages_TOTIDE2
+  Predictor: Group x VISIT Cov
+  Coefficient (with imputation): -0.2520
+  Coefficient (original): -0.0473
+  Percent change: -432.78%
+
+Model: Stages_TOTIDE1
+  Predictor: C(STATUS_Label, Treatment('Premenopause'))[T.Surgical]
+  Coefficient (with imputation): 0.0424
+  Coefficient (original): -0.3816
+  Percent change: 111.10%
+
+Model: Stages_TOTIDE2
+  Predictor: AGE_BASELINE
+  Coefficient (with imputation): -0.0001
+  Coefficient (original): -0.0016
+  Percent change: 93.67%
+
+Model: Stages_TOTIDE2
+  Predictor: C(STATUS_Label, Treatment('Premenopause'))[T.Surgical]
+  Coefficient (with imputation): -0.0609
+  Coefficient (original): -0.4569
+  Percent change: 86.67%
+
+Model: Stages_TOTIDE1
+  Predictor: C(STATUS_Label, Treatment('Premenopause'))[T.Late Perimenopause]
+  Coefficient (with imputation): -0.0125
+  Coefficient (original): -0.0801
+  Percent change: 84.37%
+
+Model: Stages_TOTIDE1
+  Predictor: VISIT
+  Coefficient (with imputation): 0.0099
+  Coefficient (original): 0.0460
+  Percent change: -78.51%
+
+Model: Stages_TOTIDE2
+  Predictor: VISIT
+  Coefficient (with imputation): 0.0131
+  Coefficient (original): 0.0572
+  Percent change: -77.08%
+
+Model: Stages_TOTIDE1
+  Predictor: C(STATUS_Label, Treatment('Premenopause'))[T.Postmenopause]
+  Coefficient (with imputation): -0.0541
+  Coefficient (original): -0.1942
+  Percent change: 72.16%
+
+Model: Stages_TOTIDE2
+  Predictor: C(STATUS_Label, Treatment('Premenopause'))[T.Postmenopause]
+  Coefficient (with imputation): -0.0567
+  Coefficient (original): -0.1971
+  Percent change: 71.21%
+
+Model: Stages_TOTIDE1
+  Predictor: C(STATUS_Label, Treatment('Premenopause'))[T.Early Perimenopause]
+  Coefficient (with imputation): -0.0697
+  Coefficient (original): -0.1594
+  Percent change: 56.23%
+
+Model: Stages_TOTIDE2
+  Predictor: C(STATUS_Label, Treatment('Premenopause'))[T.Late Perimenopause]
+  Coefficient (with imputation): -0.0544
+  Coefficient (original): -0.1151
+  Percent change: 52.72%
+
+Model: Stages_TOTIDE2
+  Predictor: C(STATUS_Label, Treatment('Premenopause'))[T.Early Perimenopause]
+  Coefficient (with imputation): -0.0749
+  Coefficient (original): -0.1394
+  Percent change: 46.24%
+
+Model: Stages_TOTIDE1
+  Predictor: AGE_BASELINE
+  Coefficient (with imputation): 0.0063
+  Coefficient (original): 0.0086
+  Percent change: -26.08%
+

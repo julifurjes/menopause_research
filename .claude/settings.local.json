@@ -20,7 +20,9 @@
       "Bash(fi)",
       "Bash(if [ -f \"processed_data.csv\" ])",
       "Bash(then mv processed_data.csv processed_data_original.csv)",
-      "Bash(else echo \"File processed_data.csv not found\")"
+      "Bash(else echo \"File processed_data.csv not found\")",
+      "Bash(ls:*)",
+      "Bash(tee:*)"
     ],
     "deny": [],
     "ask": []

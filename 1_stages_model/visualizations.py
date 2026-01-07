@@ -274,7 +274,7 @@ def plot_trajectory_classes(analysis_obj):
 
 
 def plot_decline_proportions_mcid(analysis_obj):
-    """Plot proportions of participants showing clinically meaningful decline (> MCID) by stage."""
+    """Plot proportions of participants showing clinically meaningful difference (> MCID) by stage."""
     set_apa_style()
 
     data = analysis_obj.data
@@ -307,7 +307,7 @@ def plot_decline_proportions_mcid(analysis_obj):
         baseline_data = data[data['STATUS_Label'] == 'Premenopause']
         baseline_mean = pd.to_numeric(baseline_data[measure], errors='coerce').mean()
 
-        # For each stage, calculate proportion with clinically meaningful decline
+        # For each stage, calculate proportion with clinically meaningful difference
         proportions = []
         counts = []
         total_ns = []
@@ -322,15 +322,15 @@ def plot_decline_proportions_mcid(analysis_obj):
                 total_ns.append(0)
                 continue
 
-            # Calculate decline from baseline
-            declines = baseline_mean - stage_values
+            # Calculate difference from baseline
+            differences = baseline_mean - stage_values
 
-            # Count those with decline > MCID
-            meaningful_decline = (declines > mcid).sum()
+            # Count those with difference > MCID
+            meaningful_difference = (differences > mcid).sum()
             total = len(stage_values)
 
-            proportions.append((meaningful_decline / total) * 100)
-            counts.append(meaningful_decline)
+            proportions.append((meaningful_difference / total) * 100)
+            counts.append(meaningful_difference)
             total_ns.append(total)
 
         # Create bar plot
@@ -348,7 +348,7 @@ def plot_decline_proportions_mcid(analysis_obj):
 
         # Formatting
         ax.set_xlabel('Menopausal Stage', fontsize=12)
-        ax.set_ylabel('Proportion with Clinically\nMeaningful Decline (%)', fontsize=12)
+        ax.set_ylabel('Proportion with Clinically\nMeaningful Difference (%)', fontsize=12)
         ax.set_title(measure_labels.get(measure, measure), fontsize=13, fontweight='bold')
         ax.set_xticks(x_pos)
         ax.set_xticklabels(stage_order, rotation=45, ha='right', fontsize=10)
@@ -364,7 +364,7 @@ def plot_decline_proportions_mcid(analysis_obj):
 
         sns.despine(ax=ax)
 
-    fig.suptitle('Proportion of Participants with Clinically Meaningful Cognitive Decline\n(Decline > MCID from Premenopause Baseline)',
+    fig.suptitle('Proportion of Participants with Clinically Meaningful Cognitive Difference\n(Difference > MCID from Premenopause Baseline)',
                 fontsize=14, fontweight='bold', y=1.02)
 
     plt.tight_layout()
@@ -374,7 +374,7 @@ def plot_decline_proportions_mcid(analysis_obj):
     plt.savefig(output_file, dpi=300, bbox_inches='tight')
     plt.close()
 
-    print(f"Decline proportions plot saved to: 1_stages_model/output/menopausal_decline_proportions_mcid.png")
+    print(f"MCID proportions plot saved to: 1_stages_model/output/menopausal_decline_proportions_mcid.png")
 
 
 def create_all_visualizations(analysis_obj):

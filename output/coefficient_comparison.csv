@@ -1,0 +1,21 @@
+Model,Predictor,Coef_With_Imputation,Coef_Original,Pct_Change,PValue_With_Imputation,PValue_Original,Sig_Change
+Stages_TOTIDE1,"C(STATUS_Label, Treatment('Premenopause'))[T.Surgical]",0.0424,-0.3816,111.1018,0.5593,0.0086,Lost significance (original data was sig)
+Stages_TOTIDE1,Group x VISIT Cov,-0.2917,-0.0448,-551.2322,,0.0077,No change
+Stages_TOTIDE1,"C(STATUS_Label, Treatment('Premenopause'))[T.Early Perimenopause]",-0.0697,-0.1594,56.2311,0.0096,0.1584,Gained significance (with imputation)
+Stages_TOTIDE1,"C(STATUS_Label, Treatment('Premenopause'))[T.Postmenopause]",-0.0541,-0.1942,72.158,0.1712,0.1091,No change
+Stages_TOTIDE1,VISIT Var,1.2404,0.0046,26592.3829,,0.0358,No change
+Stages_TOTIDE1,AGE_BASELINE,0.0063,0.0086,-26.0844,0.727,0.4141,No change
+Stages_TOTIDE1,Group Var,8.4682,0.9519,789.6578,,0.0,No change
+Stages_TOTIDE1,VISIT,0.0099,0.046,-78.5113,0.5955,0.0,Lost significance (original data was sig)
+Stages_TOTIDE1,Intercept,9.9135,9.712,2.0748,0.0,0.0,No change
+Stages_TOTIDE1,"C(STATUS_Label, Treatment('Premenopause'))[T.Late Perimenopause]",-0.0125,-0.0801,84.3734,0.7293,0.5128,No change
+Stages_TOTIDE2,"C(STATUS_Label, Treatment('Premenopause'))[T.Surgical]",-0.0609,-0.4569,86.669,0.4122,0.0025,Lost significance (original data was sig)
+Stages_TOTIDE2,Group x VISIT Cov,-0.252,-0.0473,-432.7831,,0.0052,No change
+Stages_TOTIDE2,"C(STATUS_Label, Treatment('Premenopause'))[T.Early Perimenopause]",-0.0749,-0.1394,46.2379,0.0066,0.2323,Gained significance (with imputation)
+Stages_TOTIDE2,"C(STATUS_Label, Treatment('Premenopause'))[T.Postmenopause]",-0.0567,-0.1971,71.2143,0.1609,0.1163,No change
+Stages_TOTIDE2,VISIT Var,1.2385,0.0047,26207.7228,,0.0331,No change
+Stages_TOTIDE2,AGE_BASELINE,-0.0001,-0.0016,93.6723,0.9956,0.8831,No change
+Stages_TOTIDE2,Group Var,8.625,1.0376,731.2686,,0.0,No change
+Stages_TOTIDE2,VISIT,0.0131,0.0572,-77.0751,0.4905,0.0,Lost significance (original data was sig)
+Stages_TOTIDE2,Intercept,10.0168,9.9258,0.9162,0.0,0.0,No change
+Stages_TOTIDE2,"C(STATUS_Label, Treatment('Premenopause'))[T.Late Perimenopause]",-0.0544,-0.1151,52.7232,0.1418,0.3628,No change
